@@ -1,0 +1,8 @@
+*.la
+Makefile
+stamp-h1
+config.h.in Makefile.in
+.libs
+.deps
+*.o
+*.lo

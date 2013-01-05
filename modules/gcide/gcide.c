@@ -632,6 +632,7 @@ gcide_result_ref(struct gcide_result *res)
 
 #define GOF_IGNORE 0x0001000
 #define GOF_AS     0x0002000
+#define GOF_CHEM   0x0004000
 
 struct output_closure {
     dico_stream_t stream;
@@ -639,12 +640,78 @@ struct output_closure {
     int rc;
 };
 
+static const char* div_tags[] = {
+    "rj", "q", "qau", 0,
+};
+
+static const char* verbatim_tags[] = {
+    "h1", "h2", "pre", "it", "tt", "table", "tr", "td", "caption", 0,
+};
+
+static int
+is_in_tags(const char* tag, const char** tags)
+{
+    int i;
+    for (i = 0; tags[i]; i++) {
+	if (strcasecmp(tags[i], tag) == 0) {
+	    return 1;
+	}
+    }
+    return 0;
+}
+
+static int
+is_div(const char* tag) {
+    return is_in_tags(tag, div_tags);
+}
+
+static const char* supscript_tags[] = {
+    "sups", "supr", "sup", "exp", 0,
+};
+
+static const char* subscript_tags[] = {
+    "sub", "subs", 0,
+};
+
+static const char* subscript_number_tags[] = {
+    "chform", "chformi", 0,
+};
+
+static const char* par_tags[] = {
+    "def", "sn", 0,
+};
+
+static int
+is_par_tags(const char* tag) {
+    return is_in_tags(tag, par_tags);
+}
+
+static int
+is_number_subscript(const char* tag) {
+    return is_in_tags(tag, subscript_number_tags);
+}
+    
+static int
+is_subscript(const char* tag) {
+    return is_in_tags(tag, subscript_tags);
+}
+
+static int
+is_superscript(const char* tag) {
+    return is_in_tags(tag, supscript_tags);
+}
+
+static int
+is_verbatim(const char* tag) {
+    return is_in_tags(tag, verbatim_tags);
+}
+
 static int
 print_text(int end, struct gcide_tag *tag, void *data)
 {
     struct output_closure *clos = data;
     static char *quote[2] = { "“", "”" };
-    static char *ref[2] = { "{" , "}" };
+    static char *ref[2] = { "{{" , "}}" };
 
     switch (tag->tag_type) {
     case gcide_content_unspecified:
@@ -665,13 +732,27 @@ print_text(int end, struct gcide_tag *tag, void *data)
 		dico_stream_write(clos->stream, s, strlen(s));
 	    } else
 		dico_stream_write(clos->stream, quote[0], strlen(quote[0]));
+	} else if (clos->flags & GOF_CHEM) {
+	    char *s = tag->tag_v.text;
+	    
+	    while (*s) {
+		if (!isdigit(*s)) {
+		    dico_stream_write(clos->stream, s++, 1);
+		} else {
+		    dico_stream_write(clos->stream, "<sub>", strlen("<sub>"));
+		    while (*s && isdigit(*s)) {
+			dico_stream_write(clos->stream, s++, 1);
+		    }
+		    dico_stream_write(clos->stream, "</sub>", strlen("</sub>"));
+		}
+	    }
 	} else
 	    dico_stream_write(clos->stream, tag->tag_v.text,
 			      strlen(tag->tag_v.text));
 	break;
     case gcide_content_taglist:
 	if (tag->tag_parmc) {
-	    clos->flags &= ~GOF_AS;
+	    clos->flags &= ~(GOF_AS|GOF_CHEM);
 	    if (end) {
 		if (strcmp(tag->tag_name, "pr") == 0 &&
 			 clos->flags & GCIDE_NOPR)
@@ -680,20 +761,54 @@ print_text(int end, struct gcide_tag *tag, void *data)
 		    break;
 		else if (strcmp(tag->tag_name, "as") == 0)
 		    dico_stream_write(clos->stream, quote[1], strlen(quote[1]));
-		else if (strcmp(tag->tag_name, "er") == 0)
-		    dico_stream_write(clos->stream, ref[1], strlen(ref[1]));
+		else if (is_number_subscript(tag->tag_name)) {
+		} else if (strcmp(tag->tag_name, "p") == 0)
+		    ;
+		else if (is_verbatim(tag->tag_name)) {
+		    dico_stream_write(clos->stream, "</", strlen("</"));
+		    dico_stream_write(clos->stream, tag->tag_name, strlen(tag->tag_name));
+		    dico_stream_write(clos->stream, ">", strlen(">"));
+		}
+		else if (is_superscript(tag->tag_name)) {
+		    dico_stream_write(clos->stream, "</sup>", strlen("</sup>"));
+		} else if (is_subscript(tag->tag_name)) {
+		    dico_stream_write(clos->stream, "</sub>", strlen("</sub>"));
+		} else if (is_div(tag->tag_name)) {
+		    dico_stream_write(clos->stream, "</div>", strlen("</div>"));
+		}
+		else dico_stream_write(clos->stream, "</span>", strlen("</span>"));
 	    } else {
 		if (strcmp(tag->tag_name, "pr") == 0 &&
 			 clos->flags & GCIDE_NOPR)
 		    clos->flags |= GOF_IGNORE;
 		else if (clos->flags & GOF_IGNORE)
 		    break;
-		else if (strcmp(tag->tag_name, "sn") == 0)
-		    dico_stream_write(clos->stream, "\n", 1);
 		else if (strcmp(tag->tag_name, "as") == 0)
 		    clos->flags |= GOF_AS;
-		else if (strcmp(tag->tag_name, "er") == 0)
-		    dico_stream_write(clos->stream, ref[0], strlen(ref[0]));
+		else if (is_number_subscript(tag->tag_name)) {
+		    clos->flags |= GOF_CHEM;
+		} else if (strcmp(tag->tag_name, "p") == 0)
+		    dico_stream_write(clos->stream, "<p/>", strlen("<p/>"));
+		else if (is_superscript(tag->tag_name)) {
+		    dico_stream_write(clos->stream, "<sup>", strlen("<sup>"));
+		} else if (is_subscript(tag->tag_name)) {
+		    dico_stream_write(clos->stream, "<sub>", strlen("<sub>"));
+		} else if (is_verbatim(tag->tag_name)) {
+		    dico_stream_write(clos->stream, "<", strlen("<"));
+		    dico_stream_write(clos->stream, tag->tag_name, strlen(tag->tag_name));
+		    dico_stream_write(clos->stream, ">", strlen(">"));
+		} else {
+		    if (is_par_tags(tag->tag_name)) {
+			dico_stream_write(clos->stream, "<p/>", strlen("<p/>"));
+		    }
+		    if (is_div(tag->tag_name)) {
+			dico_stream_write(clos->stream, "<div class='cl-", strlen("<div class='cl-"));
+		    } else {
+			dico_stream_write(clos->stream, "<span class='cl-", strlen("<span class='cl-"));
+		    }
+		    dico_stream_write(clos->stream, tag->tag_name, strlen(tag->tag_name));
+		    dico_stream_write(clos->stream, "'>", strlen("'>"));
+		}
 	    }
 	}
     }

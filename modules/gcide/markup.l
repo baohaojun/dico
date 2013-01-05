@@ -267,7 +267,6 @@ XD [0-9a-f]
 <INITIAL>{
   "<--"    BEGIN_COMMENT("-->");
   "<!"     BEGIN_COMMENT("!>");
-  "<p>"|"</p>" ;
   "<"[a-zA-Z][^/>]*">" {
       struct gcide_tag *tag;
 

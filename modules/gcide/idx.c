@@ -217,6 +217,7 @@ _cache_promote(struct gcide_idx_file *file, int n)
 static struct gcide_idx_cache *
 _cache_find_page(struct gcide_idx_file *file, size_t n)
 {
+    return NULL;
     size_t i;
     
     for (i = 0; i < file->cache_used; i++) {
@@ -335,8 +336,9 @@ _idx_page_locate(struct gcide_idx_file *file, char *headword, size_t hwlen)
 	    return REF_NOT_FOUND;
 
 	res = _compare(file, headword, &page->ipg_ref[0], hwlen);
-	if (res < 0)
+	if (res < 0) {
 	    u = idx;
+	}
 	else if (res == 0)
 	    return idx;
 	else {
@@ -392,6 +394,8 @@ gcide_idx_locate(struct gcide_idx_file *file, char *headword, size_t hwlen)
 	return NULL;
 
     for (;;) {
+	if (_compare(file, headword, &page->ipg_ref[refno], hwlen) == 0)
+	    break;
 	if (_compare(file, headword, &page->ipg_ref[refno-1], hwlen) > 0)
 	    break;
 	if (--refno==0) {

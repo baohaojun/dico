@@ -72,7 +72,7 @@ static struct gcide_entity gcide_entity[] = {
     { "nsm",    "ṉ" },   /* "n sub-macron" */
     { "sharp",  "♯" },
     { "flat",   "♭" },
-    { "th",     "th" },
+    { "th",     "<span class='cl-it'>th</span>" },
     { "imac",   "ī" },
     { "emac",   "ē" },
     { "dsdot",  "ḍ" },   /* Sanskrit/Tamil d dot */
@@ -90,6 +90,7 @@ static struct gcide_entity gcide_entity[] = {
     { "ucr",    "ŭ" },
     { "acr",    "ă" },
     { "ymac",   "ȳ" },
+    { "oomac",  "o͝o" },
     { "asl",    "a" },   /* FIXME: a "semilong" (has a macron above with a short */
     { "esl",    "e" },   /* FIXME: e "semilong" */ 
     { "isl",    "i" },   /* FIXME: i "semilong" */
@@ -242,13 +243,13 @@ static struct gcide_entity gcide_entity[] = {
     { "Dagger",   "‡" },
     { "ddag",     "‡" },
     { "para",     "§" },
-    { "gt",       ">" },
-    { "lt",       "<" },
+    { "gt",       "&gt;" },
+    { "lt",       "&lt;" },
     { "rarr",     "→" },
     { "larr",     "←" },
     { "schwa",    "ə" },
       
-    { "br",       "\n" },
+    { "br",       "<br/>" },
     { "and",      "and" },
     { "or",       "or" },
     { "sec",      "˝" },
