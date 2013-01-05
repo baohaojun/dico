@@ -1,0 +1,45 @@
+[[de:drzwi]] [[el:drzwi]] [[en:drzwi]] [[eo:drzwi]] [[fr:drzwi]] [[ko:drzwi]] [[hr:drzwi]] [[ug:drzwi]] [[fi:drzwi]] [[tr:drzwi]]
+== drzwi ({{język polski}}) ==
+[[Grafika:Doorway Hamptonne in Jersey.jpg|thumb|right|200px|drzwi (1.1)]] 
+{{wymowa}} {{IPA|dʐvi}} {{audio|pl-drzwi.ogg}}
+{{znaczenia}}
+''rzeczownik, rodzaj niemęskoosobowy''
+:(1.1) [[ruchomy|ruchome]] [[zakrycie]] [[otwór|otworu]] [[w]] [[ściana|ścianie]] [[umożliwiać|umożliwiającego]] [[przejście]]; [[sam]] [[taki]] [[otwór]]
+:(1.2) [[zakrycie]] [[każdy|każdego]] [[otwór|otworu]] [[na]] [[podobieństwo]] drzwi (1.1)
+{{odmiana}} (1) ''bez'' {{lp}}; {{lm}} drzwi, ~, ~om, ~, ~ami, ~ach, ~
+{{przykłady}}
+: (1.1) ''[[stary|Stare]] '''drzwi''' [[otwierać|otwierają]] [[się]] [[z]] [[głośny]]m [[pisk]]iem.''
+{{składnia}}
+{{kolokacje}} (1.1) [[dębowy|dębowe]]/[[metalowy|metalowe]]/[[pancerny|pancerne]]/[[antywłamaniowy|antywłamaniowe]]/... drzwi; [[otwierać]]/[[zamykać]] drzwi; [[otwierać]] drzwi [[na oścież]]; [[trzaskać]] drzwiami; drzwi [[do]] [[pokój|pokoju]]/[[toaleta|toalety]]/[[garaż]]u/[[stajnia|stajni]]/[[samochód|samochodu]]...; [[skrzydło]] drzwi; [[framuga]]/[[zamek]]/[[klamka]]/... drzwi; [[stać]]/[[oczekiwać]] [[pod]] drzwiami; [[drzwi obrotowe]]; (1.2) drzwi [[do]] [[szafa|szafy]]/[[piec]]a/...
+{{synonimy}}
+{{antonimy}}
+{{pokrewne}} (1) {{zdrobn}} [[drzwiczki]]; {{przym}} [[drzwiowy]]
+{{frazeologia}} (1.1) [[pokazywać komuś drzwi]], [[pi razy drzwi]]
+{{etymologia}}
+{{uwagi}}
+{{tłumaczenia}}
+* angielski: (1.1) [[door]]
+* arabski: (1.1) [[بَابٌ]] (bāb) {{m}}; [[أبْوَاب]] (’abwāb) {{lm}} 
+* aramejski: (1.1) [[ܬܲܪܥܵܐ]]
+* chorwacki: (1.1) [[vrata]] {{lm}}
+* czeski: (1.1) [[dveře]] {{lm}}
+* dolnołużycki: (1.1) [[źurja]] {{lm}}
+* duński: (1.1) [[dør]] ''w''
+* esperanto: (1.1) [[pordo]]
+* estoński: (1.1) [[uks]]
+* fiński: (1.1) [[ovi]]
+* francuski: (1.1) [[porte]] {{f}}
+* górnołużycki: (1.1) [[durje]] {{lm}}
+* grecki: (1.1) [[πόρτα]] {{f}}
+* hebrajski: (1.1) [[דֵלֶת]]
+* hiszpański: (1.1) [[puerta]] ''f''
+* islandzki: (1.1) [[hurð]] {{f}}
+* niemiecki: (1.1) [[Tür]] {{f}}
+* norweski (bokmål): (1.1) [[dør]] ''m/f''
+* rosyjski: (1.1) [[дверь]] {{f}}
+* serbski: (1.1) [[врата]]/[[vrata]]
+* slovio: (1.1) [[двер]]/[[dver]]
+* słowacki: (1.1) [[dvere]]
+* słoweński: (1.1) [[vrata]]
+* staropolski: (1.1) [[dźwirze]]
+* szwedzki: (1.1) [[dörr]] ''w''

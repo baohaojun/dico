@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load dictlookup %}
+
+{% block search %}
+
+<div id="searchform">
+  <form id="form" method="get" action="">
+    <table width="600">
+      <tbody>
+	<tr>
+          <td align="right" style="width:25%">{% trans "Search term:" %}</td>
+	  <td>
+	    <input type="text" id="q" name="q" size="35" value="{{ q|escape }}" />
+            <a href="./#" id="toggle_options">{% trans "more options" %}</a>
+	  </td>
+	</tr>
+      </tbody>
+      <tbody id="options" class="hidden">
+	{% if selects.sv %}
+	<tr>
+	  <td align="right">{% trans "DICT server:" %}</td>
+	  <td>
+            <select name="server">
+              {{ selects.sv.html|safe }}
+	    </select>
+	  </td>
+	</tr>
+	{% endif %}
+	<tr>
+	  <td align="right">{% trans "Database:" %}</td>
+	  <td>
+            <select name="db" style="width:350px">
+              {{ selects.db.html|safe }}
+	    </select>
+	  </td>
+	</tr>
+	<tr>
+	  <td align="right">{% trans "Match strategy:" %}</td>
+	  <td>
+            <select name="strategy" style="width:350px">
+	      {{ selects.st.html|safe }}
+	    </select>
+	  </td>
+	</tr>
+      </tbody>
+      <tbody>
+	<tr>
+	  <td></td>
+	  <td>
+	    <input type="submit" name="search" value="{% trans "Search" %}" />
+	    <input type="submit" name="define" value="{% trans "Define (I'm feeling lucky)" %}" />
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+
+{% endblock %}
+{% block results %}
+
+{% if result.error %}
+<div class="derror">
+  {{ result.msg }}
+</div>
+{% else %}
+
+{% if result.definitions %}
+  <div class="definition results">
+    {% if mtc.matches %}
+    <a href="#match-results" class="link-lmr">{% trans "last match results" %}</a>
+    {% endif %}
+    <h3>
+      {% blocktrans count result.count as rc %}Found one definition{% plural %}Found {{ rc }} definitions{% endblocktrans %}
+    </h3>
+    {% for df in result.definitions %}
+    <pre>
+      {% trans "From" %} <a href="?q={{ df.db|urlencode }}&amp;db=dbinfo">{% firstof df.db_fullname df.db %}</a>:
+      <br /><br />
+      {% if df.format_html %}
+{{ df.desc|safe }}
+      {% else %}
+{{ df.desc|safe|linebreaksbr }}
+      {% endif %}
+    </pre>
+    {% endfor %}
+  </div>
+{% else %}
+{% if result.desc %}
+  <div class="results">
+    <pre>
+{{ result.desc|linebreaksbr }}
+    </pre>
+  </div>
+{% endif %}
+{% endif %}
+
+{% if mtc.matches %}
+  <div class="match results">
+    <h3><a name="match-results"></a>{% trans "Last match results" %}</h3>
+    <ul>
+      {% for mt in mtc.matches.items %}
+      <li>
+	<span class="dbname-short" title="{{ mtc.dbnames|dictlookup:mt.0 }}">{{ mt.0 }}</span>:
+        {% for term in mt.1 %}
+        <a href="?q={{ term|urlencode }}&amp;db={{ mt.0|urlencode }}&amp;define=1" title="{% blocktrans %}Define {{ term }}{% endblocktrans %}">{{ term }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+{% endif %}
+
+<script type="text/javascript">
+var gettext_msg = {
+  'more options': '{% trans "more options" %}',
+  'less options': '{% trans "less options" %}'
+};
+</script>
+{% endblock %}

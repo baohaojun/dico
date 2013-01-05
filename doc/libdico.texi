@@ -1,0 +1,776 @@
+@c @appendix The Libdico Library
+
+@menu
+* strat::
+* argcv::
+* lists::
+* assoc::
+* diag::
+* filter::
+* parseopt::
+* stream::
+* url::
+* utf8::
+* util::
+* xlat::
+@end menu
+
+@node strat
+@section Strategies
+@UNREVISED
+
+@smallexample
+struct dico_strategy @{
+    char *name;
+    char *descr;
+    dico_select_t sel;
+    void *closure;
+    int is_default;
+@};
+@end smallexample
+
+@deftypefn Function dico_strategy_t dico_strategy_dup (const dico_strategy_t @
+ @var{strat})
+@end deftypefn
+
+@deftypefn Function dico_strategy_t dico_strategy_find (const char *@var{name})
+@end deftypefn
+
+@deftypefn Function int dico_strategy_add (const dico_strategy_t @var{strat})
+@end deftypefn
+
+@deftypefn Function dico_iterator_t  dico_strategy_iterator (void)
+@end deftypefn
+
+@deftypefn Function void dico_strategy_iterate (dico_list_iterator_t @
+ @var{itr}, void *@var{data})
+@end deftypefn
+ 
+@deftypefn Function size_t dico_strategy_count (void)
+@end deftypefn
+
+@deftypefn Function int dico_set_default_strategy (const char *@var{name})
+@end deftypefn
+
+@deftypefn Function {const dico_strategy_t} dico_get_default_strategy (void)
+@end deftypefn
+
+@deftypefn Function int dico_strategy_is_default_p (dico_strategy_t @var{strat})
+@end deftypefn
+
+@node argcv
+@section argcv
+@UNREVISED
+
+@deftp enum dico_argcv_quoting_style
+@end deftp
+
+@deftypevr Variable {enum dico_argcv_quoting_style} dico_argcv_quoting_style
+@end deftypevr
+
+@deftypefn Function int dico_argcv_get (const char *@var{command}, @
+       const char *@var{delim}, const char *@var{cmnt}, @
+       int *@var{argc}, char ***@var{argv})
+@deftypefnx Function int dico_argcv_get_n (const char *@var{command}, @
+       int @var{len}, @
+       const char *@var{delim}, const char *@var{cmnt}, @
+       int *@var{argc}, char ***@var{argv})
+@deftypefnx Function int dico_argcv_get_np (const char *@var{command}, @
+        int @var{len}, @
+        const char *@var{delim}, const char *@var{cmnt}, @
+        int @var{flags}, @
+        int *@var{argc}, char ***@var{argv}, char **@var{endp})
+@end deftypefn
+  
+@deftypefn Function int dico_argcv_string (int @var{argc}, @
+  const char **@var{argv}, char **@var{string})
+@end deftypefn
+  
+@deftypefn Function void dico_argcv_free (int @var{argc}, char **@var{argv})
+@end deftypefn
+
+@deftypefn Function void dico_argv_free (char **@var{argv})
+@end deftypefn
+
+@deftypefn Function int dico_argcv_unquote_char (int @var{c})
+@end deftypefn
+
+@deftypefn Function int dico_argcv_quote_char (int @var{c})
+@end deftypefn
+
+@deftypefn Function size_t dico_argcv_quoted_length (const char *@var{str}, @
+  int *@var{quote})
+@end deftypefn
+
+@deftypefn Function void dico_argcv_unquote_copy (char *@var{dst}, @
+  const char *@var{src}, size_t @var{n})
+@end deftypefn
+  
+@deftypefn Function void dico_argcv_quote_copy (char *@var{dst}, @
+  const char *@var{src})
+@end deftypefn
+  
+@deftypefn Function void dico_argcv_remove (int *@var{argc}, @
+  char ***@var{argv}, @
+  int (*@var{sel}) (const char *, void *), void *@var{data})
+@end deftypefn
+
+@node lists
+@section Lists
+@UNREVISED
+
+@deftp Type dico_list_t
+@end deftp
+
+@deftp Type dico_iterator_t
+@end deftp
+
+@deftp {Function Type} dico_list_iterator_t
+@smallexample
+typedef int (*dico_list_iterator_t)(void *item, void *data);
+@end smallexample
+@end deftp
+
+@deftp {Function Type} dico_list_comp_t
+@smallexample
+typedef int (*dico_list_comp_t)(const void *, const void *);
+@end smallexample
+@end deftp
+
+@deftypefn Function dico_list_t dico_list_create (void)
+@end deftypefn
+
+@deftypefn Function void dico_list_destroy (dico_list_t *@var{list}, @
+  dico_list_iterator_t @var{free}, void *@var{data})
+@end deftypefn
+  
+@deftypefn Function void dico_list_iterate (dico_list_t @var{list}, @
+  dico_list_iterator_t @var{itr}, void *@var{data})
+@end deftypefn
+  
+@deftypefn Function {void *} dico_list_item (dico_list_t @var{list}, @
+  size_t @var{n})
+@end deftypefn
+
+@deftypefn Function size_t dico_list_count (dico_list_t @var{list})
+@end deftypefn
+
+@deftypefn Function int dico_list_append (dico_list_t @var{list}, void *@var{data})
+@end deftypefn
+
+@deftypefn Function int dico_list_prepend (dico_list_t @var{list}, void *@var{data})
+@deftypefnx Function int dico_list_push (dico_list_t @var{list}, void *@var{data})
+@end deftypefn
+
+@deftypefn Function int dico_list_insert_sorted (dico_list_t @var{list}, @
+  void *@var{data}, dico_list_comp_t @var{cmp})
+@end deftypefn
+  
+@deftypefn Function dico_list_t dico_list_intersect (dico_list_t @var{a}, @
+  dico_list_t @var{b}, dico_list_comp_t @var{cmp})
+@end deftypefn
+  
+@deftypefn Function int dico_list_intersect_p (dico_list_t @var{a}, @
+  dico_list_t @var{b}, dico_list_comp_t @var{cmp})
+@end deftypefn
+  
+@deftypefn Function {void *} dico_list_pop (dico_list_t @var{list})
+@end deftypefn
+
+@deftypefn Function {void *} dico_list_locate (dico_list_t @var{list}, @
+  void *@var{data}, dico_list_comp_t @var{cmp})
+@end deftypefn
+
+@deftypefn Function {void *} dico_list_remove (dico_list_t @var{list}, @
+  void *@var{data}, dico_list_comp_t @var{cmp})
+@end deftypefn
+
+@deftypefn Function {void *} dico_iterator_current (dico_iterator_t @var{itr})
+@end deftypefn
+
+@deftypefn Function dico_iterator_t dico_iterator_create (dico_list_t @var{list})
+@end deftypefn
+
+@deftypefn Function void dico_iterator_destroy (dico_iterator_t *@var{pitr})
+@end deftypefn
+
+@deftypefn Function {void *} dico_iterator_first (dico_iterator_t @var{itr})
+@end deftypefn
+
+@deftypefn Function {void *} dico_iterator_next (dico_iterator_t @var{itr})
+@end deftypefn
+
+@deftypefn Function {void *} dico_iterator_remove_current (dico_iterator_t @var{itr})
+@end deftypefn
+
+@deftypefn Function void dico_iterator_set_data (dico_iterator_t @var{itr}, @
+  void *@var{data})
+@end deftypefn
+
+@node assoc
+@section Associative lists
+@UNREVISED
+
+@smallexample
+struct dico_assoc @{
+    char *key;
+    char *value;
+@};
+@end smallexample
+
+@deftp Type dico_assoc_list_t
+@end deftp
+
+@deftypefn Function dico_assoc_list_t dico_assoc_create (void)
+@end deftypefn
+
+@deftypefn Function void dico_assoc_destroy (dico_assoc_list_t *@var{passoc})
+@end deftypefn
+
+@deftypefn Function int dico_assoc_add (dico_assoc_list_t @var{assoc}, @
+  const char *@var{key}, const char *@var{value})
+@end deftypefn
+
+@deftypefn Function {const char *} dico_assoc_find (@
+   dico_assoc_list_t @var{assoc},  const char *@var{key})
+@end deftypefn
+
+@deftypefn Function void dico_assoc_remove (@
+   dico_assoc_list_t @var{assoc}, const char *@var{key})
+@end deftypefn
+
+@node diag
+@section Diagnostics Functions
+@UNREVISED
+
+@table @var
+@item L_DEBUG     
+@item L_INFO      
+@item L_NOTICE    
+@item L_WARN      
+@item L_ERR       
+@item L_CRIT      
+@item L_ALERT     
+@item L_EMERG     
+@end table
+
+@deftypevr Variable {const char *} dico_program_name
+@end deftypevr
+
+@deftypevr Variable {const char *} dico_invocation_name
+@end deftypevr
+
+@deftypefn Function void dico_set_program_name (char *@var{name})
+@end deftypefn
+
+@deftypefn {Function Type} void dico_log_printer_t (@
+  int @var{lvl}, int @var{exitcode}, int @var{errcode}, @
+  const char *@var{fmt}, @
+  va_list @var{ap})
+@end deftypefn
+
+@deftypefn Function void dico_set_log_printer (dico_log_printer_t @var{prt})
+@end deftypefn
+
+@deftypefn Function void dico_vlog (@
+  int @var{lvl}, int @var{errcode}, const char *@var{fmt}, va_list @var{ap})
+@end deftypefn
+  
+@deftypefn Function void dico_log (int @var{lvl}, int @var{errcode}, @
+  const char *@var{fmt}, ...)
+@end deftypefn
+  
+@deftypefn Function void dico_die (int @var{exitcode}, int @var{lvl}, @
+  int @var{errcode}, char *@var{fmt}, ...)
+@end deftypefn
+
+@deftypefn Function int dico_str_to_diag_level (const char *@var{str})
+@end deftypefn
+
+@deftypefn Function dico_stream_t dico_log_stream_create (int @var{level})
+@end deftypefn
+
+@node filter
+@section Filter
+
+@defvr Define FILTER_ENCODE
+@end defvr
+
+@defvr Define FILTER_DECODE
+@end defvr
+
+@deftp {Function Type} filter_xcode_t
+@smallexample
+typedef int (*filter_xcode_t) (const char *, size_t,
+                               char *, size_t, size_t *, size_t, size_t *);
+@end smallexample
+@end deftp
+
+@deftypefn Function dico_stream_t filter_stream_create ( @
+    dico_stream_t @var{str}, @
+    size_t @var{min_level}, @
+    size_t @var{max_line_length}, @
+    filter_xcode_t @var{xcode}, @
+    int @var{mode})
+@end deftypefn
+   
+@deftypefn Function dico_stream_t dico_codec_stream_create (@
+     const char *@var{encoding}, int @var{mode}, dico_stream_t @
+     @var{transport})
+@end deftypefn
+     
+
+@deftypefn Function dico_stream_t dico_base64_stream_create (@
+     dico_stream_t @var{str}, int @var{mode})
+@end deftypefn
+     
+@deftypefn Function dico_stream_t dico_qp_stream_create (@
+     dico_stream_t @var{str}, int @var{mode})
+@end deftypefn
+     
+@deftypefn Function int dico_base64_input (char @var{c})
+@end deftypefn
+
+@deftypefn Function int dico_base64_decode (@
+     const char *@var{iptr}, size_t @var{isize}, @
+     char *@var{optr}, size_t @var{osize}, @
+     size_t *@var{pnbytes}, @
+     size_t @var{line_max}, size_t *@var{pline_len})
+@end deftypefn
+     
+@deftypefn Function int dico_base64_encode (@
+     const char *@var{iptr}, size_t @var{isize}, @
+     char *@var{optr}, size_t @var{osize}, @
+     size_t *@var{pnbytes}, size_t @var{line_max}, @
+     size_t *@var{pline_len})
+@end deftypefn
+     
+@deftypefn Function int dico_qp_decode (@
+     const char *@var{iptr}, size_t @var{isize}, @
+     char *@var{optr}, size_t @var{osize}, @ 
+     size_t *@var{pnbytes}, @
+     size_t @var{line_max}, size_t *@var{pline_len}) 
+@end deftypefn
+     
+@deftypefn Function int dico_qp_encode (@
+     const char *@var{iptr}, size_t @var{isize}, @
+     char *@var{optr}, size_t @var{osize}, @
+     size_t *@var{pnbytes}, @
+     size_t @var{line_max}, size_t *@var{pline_len})
+@end deftypefn
+     
+@node parseopt
+@section parseopt
+@UNREVISED
+
+@table @code
+@item DICO_PARSEOPT_PARSE_ARGV0
+@item DICO_PARSEOPT_PERMUTE
+@end table
+
+@deftp Enumeration dico_opt_type
+
+@table @code
+@item dico_opt_null
+@item dico_opt_bool
+@item dico_opt_bitmask
+@item dico_opt_bitmask_rev
+@item dico_opt_long
+@item dico_opt_string
+@item dico_opt_enum
+@item dico_opt_const
+@item dico_opt_const_string
+@end table
+@end deftp
+
+@deftp struct dico_option
+
+@smallexample
+struct dico_option @{
+    const char *name;
+    size_t len;
+    enum dico_opt_type type;
+    void *data;
+    union @{
+        long value;
+        const char **enumstr;
+    @} v;
+    int (*func) (struct dico_option *, const char *);
+@};
+@end smallexample
+@end deftp
+
+@deffn Macro DICO_OPTSTR name
+@end deffn
+
+@deftypefn Function int dico_parseopt (struct dico_option *@var{opt}, @
+  int @var{argc}, char **@var{argv}, int @var{flags}, int *@var{index})
+@end deftypefn
+  
+@node stream
+@section stream
+@UNREVISED
+
+@deftypefn Function int dico_stream_create (dico_stream_t *@var{pstream}, @
+  int @var{flags}, void *@var{data})
+@table @code
+@item DICO_STREAM_READ  
+@item DICO_STREAM_WRITE  
+@item DICO_STREAM_SEEK
+@end table
+@end deftypefn
+
+@deftypefn Function int dico_stream_open (dico_stream_t @var{stream})
+@end deftypefn
+
+@deftypefn Function void dico_stream_set_open (@
+  dico_stream_t @var{stream}, int (*@var{openfn}) (void *, int))
+@end deftypefn
+  
+@deftypefn Function void dico_stream_set_seek (@
+  dico_stream_t @var{stream}, @
+  int (*@var{fun_seek}) (void *, off_t, int, off_t *))
+@end deftypefn
+  
+@deftypefn Function void dico_stream_set_size (@
+  dico_stream_t @var{stream}, int (*@var{sizefn}) (void *, off_t *))
+@end deftypefn
+  
+@deftypefn Function void dico_stream_set_read (@
+  dico_stream_t @var{stream}, @
+  int (*@var{readfn}) (void *, char *, size_t, size_t *))
+@end deftypefn
+  
+@deftypefn Function void dico_stream_set_write (@
+  dico_stream_t @var{stream}, @
+  int (*@var{writefn}) (void *, const char *, size_t, size_t *))
+@end deftypefn
+  
+@deftypefn Function void dico_stream_set_flush (@
+  dico_stream_t @var{stream}, int (*@var{flushfn}) (void *))
+@end deftypefn
+  
+@deftypefn Function void dico_stream_set_close (@
+  dico_stream_t @var{stream}, int (*@var{closefn}) (void *))
+@end deftypefn
+  
+@deftypefn Function void dico_stream_set_destroy (@
+  dico_stream_t @var{stream}, int (*@var{destroyfn}) (void *))
+@end deftypefn
+
+@deftypefn Function void dico_stream_set_ioctl (@
+  dico_stream_t @var{stream}, int (*@var{ctl}) (void *, int, void *))
+@end deftypefn  
+
+@deftypefn Function void dico_stream_set_error_string (@
+  dico_stream_t @var{stream}, @
+  const char *(*@var{error_string}) (void *, int))
+@end deftypefn
+  
+@deftypefn Function int dico_stream_set_buffer (@
+  dico_stream_t @var{stream}, @
+  enum dico_buffer_type @var{type}, @
+  size_t size)
+
+@deftp Enumeration dico_buffer_type
+@table @code
+@item dico_buffer_none
+@item dico_buffer_line
+@item dico_buffer_full
+@end table
+@end deftp
+
+@end deftypefn
+
+@deftypefn Function off_t dico_stream_seek (@
+  dico_stream_t @var{stream}, off_t @var{offset}, int @var{whence})
+
+@table @code
+@item DICO_SEEK_SET
+@item DICO_SEEK_CUR
+@item DICO_SEEK_END
+@end table
+
+@end deftypefn
+
+@deftypefn Function int dico_stream_size (dico_stream_t @var{stream}, @
+   off_t *@var{psize})
+@end deftypefn
+   
+@deftypefn Function int dico_stream_read_unbuffered (@
+  dico_stream_t @var{stream}, @
+  void *@var{buf}, size_t @var{size}, @
+  size_t *@var{pread})
+@end deftypefn
+  
+@deftypefn Function int dico_stream_write_unbuffered (@
+  dico_stream_t @var{stream}, @
+  const void *@var{buf}, size_t @var{size}, @
+  size_t *@var{pwrite})
+@end deftypefn
+  
+@deftypefn Function int dico_stream_read (@
+  dico_stream_t @var{stream},@
+  void *@var{buf}, size_t @var{size},@
+  size_t *@var{pread})
+@end deftypefn
+  
+@deftypefn Function int dico_stream_readln (@
+  dico_stream_t @var{stream},@
+  char *@var{buf}, size_t @var{size},@
+  size_t *@var{pread})
+@end deftypefn
+  
+@deftypefn Function int dico_stream_getdelim (@
+  dico_stream_t @var{stream},@
+  char **@var{pbuf}, size_t *@var{psize},@
+  int @var{delim}, size_t *@var{pread})
+@end deftypefn
+  
+@deftypefn Function int dico_stream_getline (@
+  dico_stream_t @var{stream},@
+  char **@var{pbuf}, size_t *@var{psize},@
+  size_t *@var{pread})
+@end deftypefn
+  
+@deftypefn Function int dico_stream_write (@
+  dico_stream_t @var{stream}, const void *@var{buf}, size_t @var{size})
+@end deftypefn
+  
+@deftypefn Function int dico_stream_writeln (@
+  dico_stream_t @var{stream}, const char *@var{buf}, size_t @var{size})
+@end deftypefn
+
+@deftypefn Function int dico_stream_ioctl (@
+  dico_stream_t @var{stream}, int @var{code}, void *@var{ptr})
+@end deftypefn
+  
+@deftypefn Function {const char *} dico_stream_strerror (@
+  dico_stream_t @var{stream}, int @var{rc})
+@end deftypefn
+  
+@deftypefn Function int dico_stream_last_error (dico_stream_t @var{stream})
+@end deftypefn
+
+@deftypefn Function void dico_stream_clearerr (dico_stream_t @var{stream})
+@end deftypefn
+
+@deftypefn Function int dico_stream_eof (dico_stream_t @var{stream})
+@end deftypefn
+
+@deftypefn Function int dico_stream_flush (dico_stream_t @var{stream})
+@end deftypefn
+
+@deftypefn Function int dico_stream_close (dico_stream_t @var{stream})
+@end deftypefn
+
+@deftypefn Function void dico_stream_destroy (dico_stream_t *@var{stream})
+@end deftypefn
+
+@deftypefn Function off_t dico_stream_bytes_in (dico_stream_t @var{stream})
+@end deftypefn
+
+@deftypefn Function off_t dico_stream_bytes_out (dico_stream_t @var{stream})
+@end deftypefn
+
+@node url
+@section url
+@UNREVISED
+
+@deftp struct dico_url
+@smallexample
+#define DICO_REQUEST_DEFINE 0
+#define DICO_REQUEST_MATCH 1
+
+struct dico_request @{
+    int type;
+    char *word;
+    char *database;
+    char *strategy;
+    unsigned long n;
+@};
+
+struct dico_url @{
+    char *string;
+    char *proto;
+    char *host;
+    int port;
+    char *path;
+    char *user;
+    char *passwd;
+    dico_assoc_list_t args;
+    struct dico_request req;
+@};
+@end smallexample
+@end deftp
+
+@deftp Pointer dico_url_t
+@end deftp
+
+@deftypefn Function int dico_url_parse (dico_url_t *@var{purl}, @
+  const char *@var{str})
+@end deftypefn
+  
+@deftypefn Function void dico_url_destroy (dico_url_t *@var{purl})
+@end deftypefn
+
+@deftypefn Function {const char *} dico_url_get_arg (@
+  dico_url_t @var{url}, const char *@var{argname})
+@end deftypefn
+  
+@deftypefn Function {char *} dico_url_full_path (dico_url_t @var{url})
+@end deftypefn
+
+@node utf8
+@section UTF-8
+@UNREVISED
+
+@deftypefn Function size_t utf8_char_width (const unsigned char *@var{cp})
+@end deftypefn
+
+@deftypefn Function size_t utf8_strlen (const char *@var{str})
+@end deftypefn
+
+@deftp struct utf8_iterator
+@smallexample
+struct utf8_iterator @{
+    char *string;
+    char *curptr;
+    unsigned curwidth;
+@};
+@end smallexample
+@end deftp
+
+@deftypefn Function int utf8_iter_isascii (struct utf8_iterator @var{itr}) 
+@end deftypefn
+
+@deftypefn Function int utf8_iter_end_p (struct utf8_iterator *@var{itr})
+@end deftypefn
+
+@deftypefn Function int utf8_iter_first (struct utf8_iterator *@var{itr}, @
+  unsigned char *@var{ptr})
+@end deftypefn
+
+@deftypefn Function int utf8_iter_next (struct utf8_iterator *@var{itr})
+@end deftypefn
+
+@deftypefn Function int utf8_mbtowc_internal (void *@var{data}, @
+  int (*@var{read}) (void*), unsigned int *@var{pwc})
+@end deftypefn
+  
+@deftypefn Function int utf8_wctomb (unsigned char *@var{r}, @
+  unsigned int @var{wc})
+@end deftypefn
+
+@deftypefn Function int utf8_symcmp (unsigned char *@var{a}, @
+  unsigned char *@var{b})
+@end deftypefn
+
+@deftypefn Function int utf8_symcasecmp (unsigned char *@var{a}, @
+  unsigned char *@var{b})
+@end deftypefn
+  
+@deftypefn Function int utf8_strcasecmp (unsigned char *@var{a}, @
+  unsigned char *@var{b})
+@end deftypefn
+  
+@deftypefn Function int utf8_strncasecmp (unsigned char *@var{a}, @
+  unsigned char *@var{b}, size_t @var{maxlen})
+@end deftypefn
+  
+
+@deftypefn Function unsigned utf8_wc_toupper (unsigned @var{wc})
+@end deftypefn
+
+@deftypefn Function int utf8_toupper (char *@var{s}, size_t @var{len})
+@end deftypefn
+
+@deftypefn Function unsigned utf8_wc_tolower (unsigned @var{wc})
+@end deftypefn
+
+@deftypefn Function int utf8_tolower (char *@var{s}, size_t @var{len})
+@end deftypefn
+
+@deftypefn Function size_t utf8_wc_strlen (const unsigned *@var{s})
+@end deftypefn
+
+@deftypefn Function {unsigned *} utf8_wc_strdup (const unsigned *@var{s})
+@end deftypefn
+
+@deftypefn Function size_t utf8_wc_hash_string (const unsigned *@var{ws}, @
+  size_t @var{n_buckets})
+@end deftypefn
+  
+@deftypefn Function int utf8_wc_strcmp (const unsigned *@var{a}, @
+  const unsigned *@var{b})
+@end deftypefn
+  
+@deftypefn Function int utf8_wc_to_mbstr (const unsigned *@var{wordbuf}, @
+  size_t @var{wordlen}, char *@var{s}, size_t @var{size})
+@end deftypefn
+  
+@deftypefn Function int utf8_mbstr_to_wc (const char *@var{str}, @
+  unsigned **@var{wptr})
+@end deftypefn
+  
+@deftypefn Function int utf8_mbstr_to_norm_wc (const char *@var{str}, @
+  unsigned **@var{wptr})
+@end deftypefn
+  
+@deftypefn Function int dico_levenshtein_distance (const char *@var{a}, @
+  const char *@var{b}, int @var{flags})
+@table @code
+@item DICO_LEV_NORM
+@item DICO_LEV_DAMERAU
+@end table
+@end deftypefn
+  
+@deftypefn Function int dico_soundex (const char *@var{s}, @
+  char @var{codestr}[DICO_SOUNDEX_SIZE])
+@defvr Define DICO_SOUNDEX_SIZE
+5
+@end defvr
+@end deftypefn
+  
+@node util
+@section util
+@UNREVISED
+
+@deftypefn Function {char *} dico_full_file_name (const char *@var{dir}, @
+  const char *@var{file})
+@end deftypefn
+  
+@deftypefn Function size_t dico_trim_nl (char *@var{buf})
+@end deftypefn
+
+@deftypefn Function size_t dico_trim_ws (char *@var{buf})
+@end deftypefn
+
+
+@node xlat
+@section xlat
+@UNREVISED
+
+@deftp struct xlat_tab
+@smallexample
+struct xlat_tab @{
+    char *string;
+    int num;
+@};
+@end smallexample
+@end deftp
+
+@deftypefn Function int xlat_string (struct xlat_tab *@var{tab}, @
+  const char *@var{string}, size_t @var{len}, @
+  int @var{flags}, int *@var{result})
+@deftypefnx Function int xlat_c_string (struct xlat_tab *@var{tab}, @
+  const char *@var{string}, @
+  int @var{flags}, int *@var{result});
+
+@table @code
+@item XLAT_ICASE
+@end table
+
+@end deftypefn
+  
+

@@ -1,0 +1,7 @@
+# @configure_input@                                     -*- shell-script -*-
+# Configurable variable values for Dico test suite.
+# Copyright (C) 2012 Sergey Poznyakoff
+
+PATH=@abs_builddir@:@abs_top_builddir@/dicod:@abs_top_builddir@/modules/gcide:$PATH
+DICTDIR=@abs_srcdir@/dict
+IDXDIR=@abs_builddir@

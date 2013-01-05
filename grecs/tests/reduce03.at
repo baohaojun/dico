@@ -1,0 +1,42 @@
+# This file is part of grecs  -*- Autotest -*-
+# Copyright (C) 2007, 2009-2012 Sergey Poznyakoff
+#
+# Grecs is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# Grecs is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Grecs.  If not, see <http://www.gnu.org/licenses/>.
+
+AT_SETUP([Reduction: table driven])
+AT_KEYWORDS([reduce reduce03])
+
+GRECS_TEST([
+scalar bar;
+listvar (1, 2);
+listvar foo;
+logging {
+  facility local1;
+  tag prog;
+}
+listvar (3, 4);
+scalar baz;
+logging {
+  facility mail;
+}
+],
+[gcfset -reduce],
+[0],
+[Global settings:
+scalar = baz
+listvar = "1" "2" "foo" "3" "4"
+logging: 0/mail/prog/0
+])
+
+AT_CLEANUP

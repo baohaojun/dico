@@ -1,0 +1,38 @@
+# This file is part of grecs  -*- Autotest -*-
+# Copyright (C) 2007, 2009-2012 Sergey Poznyakoff
+#
+# Grecs is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# Grecs is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Grecs.  If not, see <http://www.gnu.org/licenses/>.
+
+AT_SETUP([Format: locus])
+AT_KEYWORDS([format format01])
+
+AT_CHECK([gcffmt -locus $abs_srcdir/gcf1.conf|sed 's|^.*/gcf1.conf||'],
+[0],
+[:19.1-10: .scalar: "yes"
+:22.1-26: .listvar: ("a", "2", "b", "c")
+:25.1-19: .compound: "stmt" "2" "foo"
+:28.3-69: .mailbox.mailbox-pattern: "maildir:/var/mail;type=index;param=2;user=${user}"
+:29.3-24: .mailbox.mailbox-type: "maildir"
+:33.4-13: .logging.syslog: "yes"
+:34.4-16: .logging.facility: "mail"
+:39.9-18: .program="foo".logging.syslog: "yes"
+:40.9-23: .program="foo".logging.facility: "local1"
+:42.4-12: .program="foo".scalar: "no"
+:47.9-17: .program="bar".logging.syslog: "no"
+:48.9-23: .program="bar".logging.facility: "local2"
+:49.9-17: .program="bar".logging.tag: "baz"
+:51.4-12: .program="bar".scalar: "25"
+])
+
+AT_CLEANUP

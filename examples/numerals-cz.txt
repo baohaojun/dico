@@ -1,0 +1,36 @@
+-- To handle this file use textdict.py from this directory.
+-- Format:
+-- Comments begin with double-dash.
+-- Empty lines are ignored.
+-- There may be at most one `descr:' entry.
+descr: Short English-Czech numerals dictionary
+-- Any number of `info:' entries are allowed.  These are concatenated
+-- to make a single info statement.
+info: Short English-Czech dictionary of numerals (1 - 10)
+info: Hardly worth copyrighting, but just in case:
+info: 
+info: This dictionary is public domain. You can do with it whatever you
+info: like to do, except changing the meaning of the words, of course.
+-- A single `lang:' statement is allowed, which informs about the languages
+-- this dictionary supports.  Its arguments are two space-delimited lists of
+-- language abbreviations, separated by a colon.  The list on the left gives
+-- `source' languages, i.e. the ones in which the headwords are written,
+-- and the list on the right gives `destination' languages, i.e. the ones to
+-- which the headwords are translated.
+lang: en : cz
+
+-- Anything having two fields is taken to be a word definition:
+
+one  jeden
+two  dva
+three  tři
+four  čtyři
+five  pět
+six  šest
+seven  sedm
+eight  osm
+nine  devět
+ten deset
+
+-- Errors are silently ignored:
+bye

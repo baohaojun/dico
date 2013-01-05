@@ -1,0 +1,23 @@
+;; -*- scheme -*-
+;; To handle this file use the listdict.scm module.
+(; Short info (for show db):
+ "Short English-Polish numerals dictionary"
+ ; Complete info (for show info):
+ "Short English-Polish dictionary of numerals (1 - 10)\n\
+Hardly worth copyrighting, but just in case:\n\
+\n\
+This dictionary is public domain. You can do with it whatever you\n\
+info: like to do, except changing the meaning of the words, of course.\n"
+ ; Supported languages (source . dest):
+ ("en" . "pl")
+ ; Dictionary corpus
+ ("one" . "jeden")
+ ("two" . "dwa")
+ ("three" . "trzy")
+ ("four" . "cztery")
+ ("five" . "pięc")
+ ("six" . "sześć")
+ ("seven" . "siedem")
+ ("eight" . "osiem")
+ ("nine" . "dziewięć")
+ ("ten" . "dziesięć"))

@@ -1,0 +1,200 @@
+/* This file is part of GNU Dico. -*- c -*-
+   Copyright (C) 1998-2000, 2008, 2010, 2012 Sergey Poznyakoff
+
+   GNU Dico is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 3, or (at your option)
+   any later version.
+
+   GNU Dico is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with GNU Dico.  If not, see <http://www.gnu.org/licenses/>. */
+
+#include <dico-priv.h>
+#include <getopt.h>
+#include <sysexits.h>
+
+OPTIONS_BEGIN("dico",
+              [<GNU dictionary client program>],
+	      [<[URL-or-WORD]>],
+	      [<gnu>],
+	      [<gnupackage>],
+	      [<copyright_year=2005-2012>],
+	      [<copyright_holder=Free Software Foundation, Inc.>])
+
+GROUP([<Server selection>])
+	      
+OPTION(host,,SERVER,
+       [<Connect to this server.>])
+BEGIN
+  xdico_assign_string(&dico_url.host, optarg);
+END
+
+OPTION(port,p,SERVICE,
+       [<Specify port to connect to.>])
+BEGIN
+  dico_url.port = str2port(optarg);
+  if (dico_url.port == -1)
+      dico_die(1, L_ERR, 0, _("Invalid port"));  
+END
+
+OPTION(database,d,NAME,
+       [<Select a database to search.>])
+BEGIN
+  xdico_assign_string(&dico_url.req.database, optarg);  
+END
+
+OPTION(source,,ADDR,
+       [<Set a source address for TCP connections.>])
+BEGIN
+  source_addr = get_ipaddr(optarg);
+  if (source_addr == 0)
+    dico_die(1, 0, L_ERR, _("%s: Invalid IP or unknown host name"),
+             optarg);
+END
+
+GROUP([<Operation modes>])
+
+OPTION(match,m,,
+       [<Match instead of define.>])
+BEGIN
+  mode = mode_match;   
+END
+
+OPTION(strategy,s,NAME,
+       [<Select a strategy for matching.  Implies --match.>])
+BEGIN
+  xdico_assign_string(&dico_url.req.strategy, optarg);
+  mode = mode_match;
+END
+
+OPTION(levdist,,N,
+       [<Set maximum Levenshtein distance to N.>])
+ALIAS(levenshtein-distance)
+BEGIN
+  char *p;
+  levenshtein_threshold = strtoul(optarg, &p, 10);
+  if (*p)
+      dico_die(1, L_ERR, 0, _("%s: invalid number"), optarg);
+END
+
+OPTION(dbs,D,,
+       [<Show available databases.>])
+BEGIN
+  mode = mode_dbs;  
+END
+
+OPTION(strategies,S,,
+       [<Show available search strategies.>])
+BEGIN
+  mode = mode_strats;
+END
+
+OPTION(serverhelp,H,,
+       [<show server help.>])
+BEGIN
+  mode = mode_help;
+END
+
+OPTION(info,i,DBNAME,
+       [<Show information about database DBNAME.>])
+BEGIN
+  mode = mode_info;
+  dico_url.req.database = optarg;
+END
+
+OPTION(serverinfo,I,,
+       [<Show information about the server.>])
+BEGIN
+  mode = mode_server;
+END
+
+OPTION(quiet, q,,
+       [<Do not print the normal dico welcome.>])
+BEGIN
+  quiet_option = 1;
+END
+
+GROUP([<Authentication>])
+
+OPTION(noauth,a,,
+       [<Disable authentication.>])
+BEGIN
+  noauth_option = 1;
+END
+
+OPTION(sasl,,,
+       [<Enable SASL authentication (default).>])
+BEGIN
+  sasl_enable(1);
+END
+
+OPTION(nosasl,,,
+       [<Disable SASL authentication.>])
+BEGIN
+  sasl_enable(0);
+END
+
+OPTION(user,u,NAME,
+       [<Set user name for authentication.>])
+BEGIN
+  default_cred.user = optarg;
+END
+
+OPTION(key, k, STRING,
+       [<Set shared secret for authentication.>])
+ALIAS(password)       
+BEGIN
+  default_cred.pass = optarg;
+END
+
+OPTION(autologin,, NAME,
+       [<Set the name of autologin file to use.>])
+BEGIN
+  autologin_file = optarg;
+END  
+
+OPTION(client,c, STRING,
+       [<Additional text for client command.>])
+BEGIN
+  client = optarg;
+END
+
+GROUP([<Debugging>])
+OPTION(transcript,t,,
+       [<Enable session transcript.>])
+BEGIN
+  transcript = 1;
+END
+
+OPTION(verbose,v,,
+       [<Increase debugging verbosity level.>])
+BEGIN
+  debug_level++;
+END
+
+OPTION(time-stamp,,,
+       [<Include time stamp in the debugging output.>])
+BEGIN
+  int n = 1;
+  dico_stream_ioctl(debug_stream, DICO_DBG_CTL_SET_TS, &n);
+END  
+
+OPTION(source-info,,,
+       [<Include source line information in the debugging output.>])
+BEGIN
+  debug_source_info = 1;
+END  
+
+OPTIONS_END
+
+void
+get_options (int argc, char *argv[], int *index)
+{
+    GETOPT(argc, argv, *index)
+}
+

@@ -1,0 +1,79 @@
+GNU Dico - Dicoweb INSTALL
+Copyright (C) 2008-2010, 2012 Wojciech Polak
+
+* Dicoweb requirements
+======================
+
+- Django 1.0+ -- a Python Web framework (http://www.djangoproject.com/)
+- Wit -- a wiki translator distributed within GNU Dico.
+  (http://puszcza.gnu.org.ua/projects/wit/)
+
+* Installation instructions
+===========================
+
+Rename 'settings-sample.py' to 'settings.py' and edit your
+local Dicoweb site configuration.
+
+
+** The development/test server
+------------------------------
+
+Change the current working directory into the `dicoweb' directory
+and run the command `python manage.py runserver'. You will see
+the following output:
+
+ Validating models...
+ 0 errors found.
+
+ Django version 1.0, using settings 'dicoweb.settings'
+ Development server is running at http://127.0.0.1:8000/
+ Quit the server with CONTROL-C.
+
+** Production server with mod_wsgi
+----------------------------------
+
+Apache configuration:
+
+  LoadModule wsgi_module modules/mod_wsgi.so
+  WSGIScriptAlias / /usr/local/django/dicoweb/dicoweb.wsgi
+  Alias /static "/usr/local/django/dicoweb/static"
+
+More detailed information is available at:
+http://code.google.com/p/modwsgi/wiki/IntegrationWithDjango
+
+** Production server with mod_python
+------------------------------------
+
+Apache configuration:
+
+ LoadModule python_module modules/mod_python.so
+ <Location "/">
+   SetHandler python-program
+   PythonHandler django.core.handlers.modpython
+   PythonPath "sys.path + ['/usr/local/django', '/usr/local/django/dicoweb']"
+   SetEnv DJANGO_SETTINGS_MODULE dicoweb.settings
+   PythonInterpreter dicoweb
+   PythonDebug Off
+ </Location>
+
+ <Location "/static">
+   SetHandler None
+ </Location>
+ <Location "/favicon.ico">
+   SetHandler None
+ </Location>
+
+ <Directory "/usr/local/django/dicoweb/">
+   AllowOverride All
+   Options None
+   Order allow,deny
+   Allow from all
+ </Directory>
+
+
+
+Local Variables:
+mode: outline
+paragraph-separate: "[ 	]*$"
+version-control: never
+End:

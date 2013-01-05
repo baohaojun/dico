@@ -1,0 +1,17 @@
+== Section headings ==
+
+''Headings'' organize your writing into
+sections. The Wiki software can automatically
+generate a [[table of contents]] from them.
+
+=== Subsection ===
+Using more "equals" (=) signs creates a subsection.
+
+==== A smaller subsection ====
+
+Don't skip levels,
+like from two to four equals signs.
+
+Start with 2 equals signs not 1
+because 1 creates H1 tags
+which should be reserved for page title.

@@ -1,0 +1,20 @@
+@macro xopindex{option,text}
+@opindex \option\, --\option\ @r{option, \text\}
+@end macro
+
+@macro opsummary{option}
+@c option --\option\
+@ifclear ANCHOR--\option\
+@set ANCHOR--\option\ 1
+@anchor{--\option\}
+@end ifclear
+@xopindex{\option\, summary}
+@end macro
+
+@macro xprindex{option}
+@ifclear ANCHOR-PR-\option\
+@set ANCHOR-PR-\option\ 1
+@anchor{pragma \option\}
+@end ifclear
+@end macro
+

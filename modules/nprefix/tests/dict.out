@@ -1,0 +1,36 @@
+* Description
+Test dictionary for nprefix
+
+* Info
+No special info available
+
+* Dictionary   
+
+** aa
+
+** aab
+
+** ab
+
+** abab
+
+** ababab
+
+** ababab
+
+** ababoo
+
+** ababoox
+
+** abazoo
+
+** bab
+
+** babar
+
+
+Local Variables:
+mode: outline
+paragraph-separate: "[ 	]*$"
+version-control: never
+End:

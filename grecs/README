@@ -1,0 +1,85 @@
+Grecs README
+Copyright (C) 2011-2012 Sergey Poznyakoff
+See the end of file for copying conditions.
+
+* Introduction
+
+This file contains brief information about using Grecs as a submodule.
+You will find a complete documentation for Grecs, in form of man
+pages, in the doc/ subdirectory. 
+
+An online copy of the documentation in various formats is available
+at http://grecs.man.gnu.org.ua.
+
+If you are interested in libgrecs, a standalone library implementation
+of Grecs, see the file README.standalone in this directory, or visit
+http://grecs.man.gnu.org.ua.
+
+* Overview
+
+Grecs is a library for parsing structured configuration files from
+C programs. A structured configuration file has hierarchical
+structure, with block statements enclosing lower-level
+statements. Such configurations files are used by many programs, such
+as, e.g. Bind or Dico.
+
+Grecs provides primitives for parsing such files into an internal
+tree-like structure and for basic operations on such structures. These
+operations include value lookups by keyword paths, traversing trees
+recursively, joining several trees together, reductions, etc.
+
+* Usage
+
+1. Install grecs as a submodule:
+
+   git submodule add git://git.gnu.org.ua/grecs.git grecs
+
+2. Add a call to GRECS_SETUP to your configure.ac.  It can be as
+simple as:
+
+   GRECS_SETUP
+
+If the subproject directory is not 'grecs', supply the actual
+directory name as the first argument to this macro, e.g.:
+
+   GRECS_SETUP(lib/grecs)
+
+For a detailed description of the GRECS_SETUP macro, run
+`man doc/GRECS_SETUP.3'.
+
+3. In your Makefile.am, add @GRECS_INCLUDES@ to the INCLUDES value,
+and @GRECS_LDADD@ to LDADD, e.g.:
+
+   INCLUDES = @GRECS_INCLUDES@
+   LDADD = @GRECS_LDADD@
+   
+4. Include "grecs.h"
+
+5. Use the library to handle your configuration files.  See the
+documentation for a detailed discussion.
+
+* Bug reporting.		
+
+Send bug reports to <gray+grecs@gnu.org.ua>. 
+
+
+* Copyright information:
+
+Copyright (C) 2011 Sergey Poznyakoff
+
+   Permission is granted to anyone to make or distribute verbatim copies
+   of this document as received, in any medium, provided that the
+   copyright notice and this permission notice are preserved,
+   thus giving the recipient permission to redistribute in turn.
+
+   Permission is granted to distribute modified versions
+   of this document, or of portions of it,
+   under the above conditions, provided also that they
+   carry prominent notices stating who last changed them.
+
+
+Local Variables:
+mode: outline
+paragraph-separate: "[ 	]*$"
+version-control: never
+End:

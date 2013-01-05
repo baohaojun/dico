@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>GNU Dico WebSearch</ShortName>
+  <Description>GNU Dico WebSearch Interface</Description>
+  <Url type="text/html" method="get" template="{{ url_query }}?q={searchTerms}"/>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="16" height="16">{{ url_media }}/favicon.ico</Image>
+</OpenSearchDescription>

@@ -1,0 +1,33 @@
+# This file is part of GNU Dico. -*- Autotest -*-
+# Copyright (C) 2012 Sergey Poznyakoff
+#
+# GNU Dico is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# GNU Dico is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Dico.  If not, see <http://www.gnu.org/licenses/>.
+
+AT_SETUP(define)
+AT_KEYWORDS([define])
+AT_DICOD([define cznum seven
+quit
+],
+[220
+150 1 definitions found: list follows
+151 "seven" cznum "Short English-Czech numerals dictionary"
+1. sedm
+---------
+.
+250
+221
+])
+AT_CLEANUP
+
+

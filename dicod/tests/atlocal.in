@@ -1,0 +1,5 @@
+# @configure_input@                                     -*- shell-script -*-
+# Configurable variable values for Dico test suite.
+# Copyright (C) 2012 Sergey Poznyakoff
+
+PATH=@abs_top_builddir@/dicod:@abs_builddir@:$PATH

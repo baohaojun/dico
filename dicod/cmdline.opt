@@ -1,0 +1,189 @@
+/* This file is part of GNU Dico. -*- c -*-
+   Copyright (C) 1998-2000, 2008, 2010, 2012 Sergey Poznyakoff
+
+   GNU Dico is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 3, or (at your option)
+   any later version.
+
+   GNU Dico is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with GNU Dico.  If not, see <http://www.gnu.org/licenses/>. */
+
+#include <dicod.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <getopt.h>
+#include <gettext.h>
+
+static struct grecs_txtacc *pp_cmd_acc;
+
+OPTIONS_BEGIN("dicod",
+              [<GNU dictionary server>],
+	      [<>],
+	      [<gnu>],
+	      [<gnupackage>],
+	      [<copyright_year=2005-2012>],
+	      [<copyright_holder=Free Software Foundation, Inc.>])
+
+GROUP(Select program mode)
+OPTION(,E,,
+       [<Preprocess configuration file and exit>])
+BEGIN
+   mode = MODE_PREPROC;
+END
+
+OPTION(lint,t,,
+       [<Check configuration file syntax and exit.>])
+BEGIN
+   config_lint_option = 1;
+END
+
+OPTION(inetd, i,,
+       [<Inetd mode.>])
+BEGIN
+   mode = MODE_INETD;
+END
+
+GROUP(Modifiers)
+    
+OPTION(config,,FILE,
+       [<Read this configuration file.>])
+BEGIN
+   config_file = optarg;
+END
+
+OPTION(foreground, f,,
+       [<Operate in foreground.>])
+BEGIN
+   foreground = 1;
+END
+
+OPTION(stderr,,,
+       [<Output diagnostic to stderr.>])
+BEGIN
+   log_to_stderr = 1;
+END
+
+OPTION(syslog,,,
+       [<Output diagnostic to syslog (default).>])
+BEGIN
+   log_to_stderr = 0;
+END
+
+OPTION(single-process, s,,
+       [<Single-process mode.>])
+BEGIN
+   single_process = 1;
+END
+
+GROUP(Debugging)
+    
+OPTION(transcript, T,,
+       [<Enable session transcript.>])
+BEGIN
+   conf->transcript = 1;
+END
+
+OPTION(no-transcript,,,
+       [<Disable session transcript.>])
+BEGIN
+   conf->transcript = 0;
+END
+
+OPTION(debug, x, LEVEL-SPEC,
+       [<Set debug verbosity level.>])
+BEGIN
+   debug_level_str = optarg;
+   debug_level = atoi(optarg);
+END
+
+OPTION(source-info,,,
+       [<Include source line information in the debugging output.>])
+BEGIN
+  debug_source_info = 1;
+END  
+
+OPTION(trace-grammar,,,
+       [<Trace parsing of configuration file.>])
+BEGIN
+   grecs_gram_trace(1);
+END
+
+OPTION(trace-lex,,,
+       [<Trace config file lexer.>])
+BEGIN
+   grecs_lex_trace(1);
+END
+
+GROUP([<Additional help>])
+
+OPTION(config-help,,,
+       [<Show configuration file summary.>])
+BEGIN
+   config_help();
+   exit(0);
+END   
+
+GROUP(Preprocessor control)
+    
+OPTION(preprocessor,,PROG,
+       [<Use PROG as a preprocessor for config file.>])
+BEGIN
+   grecs_preprocessor = optarg;
+END
+
+OPTION(no-preprocessor,,,
+       [<Do not use external preprocessor.>])
+BEGIN
+   grecs_preprocessor = NULL;
+END
+
+OPTION(include-dir,I,DIR,
+       [<Add the directory DIR to the list of directories to be searched for preprocessor include files>])
+BEGIN
+   grecs_preproc_add_include_dir(optarg); 
+END
+
+OPTION(define,D,SYMBOL[=VALUE],
+       [<define a preprocessor symbol>])
+BEGIN
+   char *p;
+
+   if (!pp_cmd_acc)
+       pp_cmd_acc = grecs_txtacc_create();
+   grecs_txtacc_grow(pp_cmd_acc, " \"-D", 4);
+   for (p = optarg; *p; p++) {
+       if (*p == '\\' || *p == '"')
+	   grecs_txtacc_grow_char(pp_cmd_acc, '\\');
+       grecs_txtacc_grow_char(pp_cmd_acc, *p);
+   }
+   grecs_txtacc_grow_char(pp_cmd_acc, '"');			
+END
+
+
+OPTIONS_END
+
+void
+get_options(int argc, char *argv[], struct dicod_conf_override *conf)
+{
+    GETOPT(argc, argv,, exit(EX_USAGE))
+    if (pp_cmd_acc && grecs_preprocessor) {
+	char *args, *cmd;
+
+	grecs_txtacc_grow_char(pp_cmd_acc, 0);
+	args = grecs_txtacc_finish(pp_cmd_acc, 0);
+	cmd = grecs_malloc(strlen(grecs_preprocessor) +
+			   strlen(args) + 1);
+	strcpy(cmd, grecs_preprocessor);
+	strcat(cmd, args);
+	grecs_preprocessor = cmd;
+    }
+    grecs_txtacc_free(pp_cmd_acc);
+}

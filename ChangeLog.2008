@@ -1,0 +1,654 @@
+2008-05-05  Sergey Poznyakoff  <gray@gnu.org.ua>
+	
+	Moved to the new project. Namespace cleanup.
+
+2008-05-04  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Further fixes.
+	
+	* dictd/Makefile.am (LDADD): Change libgnu.a to libgnu.la
+	* makedict/Makefile.am: Likewise.
+
+	Minor fixes.
+	
+	* dictd/dictd.h (handler_extern): Replace with
+	handler_loadable. All uses changed.
+	* dictd/main.c (set_handler_type): Bugfix.
+
+	Add preliminary ltdl support.
+	
+	* .gitignore: Add libtool and libltdl
+	* Makefile.am (SUBDIRS): Add libltdl
+	* README-hacking: Update.
+	* bootstrap: Pass --ltdl flag to libtoolize, if necessary.
+	* configure.ac: Use ltdl.
+	
+	* makedict/index.c: Minor changes.
+
+	* doc: New directory
+	* doc/rfc2229.txt: New file.
+
+	Document configuration statements.
+	
+	* dictd/Makefile.am (dictd_SOURCES): Add config-format.c
+	* dictd/config-format.c: New file.
+	* dictd/cmdline.opt: New option `--config-help'.
+	* dictd/config-gram.y: Reflect changes to struct config_keyword.
+	* dictd/dbtext.c: Shut gcc warnings.
+	* dictd/dictd.h (cfg_callback): Remove.
+	(struct config_keyword): New members argname and docstring.
+	(format_statement_array, config_help, dictd_server): New
+	prototypes.
+	* dictd/main.c: Provide docstrings for configuration statements.
+	(config_help): New function.
+
+2008-05-03  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Implement AUTH command.
+	
+	* dictd/Makefile.am (dictd_SOURCES): Add auth.c, dbtext.c, udb.c.
+	* dictd/auth.c, dictd/dbtext.c, dictd/udb.c: New files.
+	* dictd/capa.c (dictd_capa_add): Fail if init finction returns
+	non-zero.
+	* dictd/dictd.c (msg_id): New global.
+	(initial_banner): Save msg_id for further use.
+	(trim): Move to the library. All uses updated.
+	* dictd/dictd.h (msg_id): New declaration.
+	Add udb prototypes and declarations.
+	* dictd/main.c (user_db): New global.
+	(user_db_config): Call udb_create.
+	(main): Call udb_init and register_auth.
+	* include/dico.h (struct dict_assoc): New data type. 
+	(dict_assoc_create, dict_assoc_destroy, dict_assoc_add,
+	dict_assoc_find, dict_assoc_remove): New prototypes.
+	(struct dict_url,dict_url_t): New data types.
+	(dict_url_parse, dict_url_destroy, dict_url_get_arg)
+	(dict_url_full_path): New prototypes.
+	(make_full_file_name, trimnl): New prototypes.
+	* lib/Makefile.am (libgjdict_a_SOURCES): Add assoc.c, url.c,
+	util.c.
+	* lib/assoc.c, lib/url.c, lib/util.c: New files.
+
+	Fix handling of continuation strings in configuration file.
+	
+	* dictd/config-gram.y (stmt_end): Get kw as argument and use it to
+	compute target pointer.
+	(slist,slist0): Fix algorithm for coalescing string parts.
+	* dictd/config-lex.l: Return QSTRING for quoted strings.
+	* dictd/main.c (user-db): New configuration block statement.
+	(set_handler, set_dictionary): Fix handling of callback_set_value.
+	* include/dico.h (dict_list_intersect): New prototype.
+	* lib/list.c (dict_list_intersect): New function.
+
+	Capability framework.
+	
+	* dictd/Makefile.am (dictd_SOURCES): Add capa.c
+	* dictd/capa.c: New file.
+	* dictd/commands.c (command_tab): Remove capability-dependent
+	commands.
+	(command_list): New variable.
+	(dictd_add_command, dictd_init_command_tab): New finctions.
+	(dictd_show_std_help,locate_command): Rewrite using list of
+	commands.
+	* dictd/dictd.c (output_capabilities): Implement.
+	* dictd/dictd.h (dictd_init_command_tab,dictd_add_command)
+	(dictd_capa_register, dictd_capa_add)
+	(dictd_capa_iterate): New protos.
+	* dictd/main.c (keywords): New statement `capability'.
+	(main): Initialize command and capability lists.
+
+2008-05-01  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Redo command handling. Improve daemon help output. Control
+	inactivity timeouts.
+	
+	* dictd/commands.c (dictd_help): Use help strings provided in the
+	command tab.  If help-text (config) begins with a `+', append it
+	to the default help output.
+	(dictd_show): Split into separate functions for each show
+	subcommand:
+	(dictd_show_info, dictd_show_databases, dictd_show_server);
+	(command_tab): Use new structure.
+	(locate_command): Take into account arguments, so that "SHOW INFO"
+	and "SHOW DB" are recognized as different commands (no matter what
+	the amount of whitespace between the keywords).
+	(dictd_show_std_help): New function.
+	* dictd/dictd.c: Handle inactivity timeout.
+	* dictd/dictd.h (struct dictd_command): Rewritten.
+	* dictd/main.c (inactivity_timeout): New variable.
+	(keywords): New statement `inactivity-timeout'.
+	* dictd/server.c (handle_connection): Reset signals in child.
+	* gnulib.modules: Add crypto/md5 and hash.
+	* include/dico.h: Move #endif to the end of file.
+
+2008-04-30  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Preliminary implementation of "SHOW" commands.
+	
+	* dictd/commands.c: Preliminary implementation of "SHOW" commands.
+	* dictd/dictd.c (stream_write_multiline): New function.
+	* dictd/dictd.h (dictionary_list, server_info): New declarations.
+	(stream_write_multiline, find_dictionary): New prototype.
+	* dictd/main.c (find_dictionary): New function. 
+
+	Implement RFC 2229 dialog.
+	
+	* dictd/commands.c: New file.
+	* dictd/Makefile.am (dictd_SOURCES): Add commands.c
+	* dictd/cmdline.opt: New option `--inetd' (`-i')
+	* dictd/config-lex.l (quote_char): New function.
+	* dictd/dictd.c: Implement RFC 2229 dialog.
+	(tokenize_input, stream_writez)
+	(stream_printf, output_capabilities, initial_banner): New
+	functions.
+	* dictd/dictd.h (mode, hostname, program_version)
+	(initial_banner_text, got_quit, help_text): New globals.
+	(quote_char, unquote_char): New functions.
+	(stream_writez, stream_printf): New functions.
+	(dictd_cmd_fn, struct dictd_command): New data types.
+	(dictd_handle_command): New function.
+	* dictd/main.c (hostname, initial_banner_text, help_text): New
+	globals.
+	(initial-banner-text, help-text, hostname): New config statements.
+	* dictd/server.c (dictd_server): Refuse to restart if the
+	configuration file name is not a full file name.
+	* gnulib.modules: Add xgethostname.
+	* include/dico.h: Add utf8 prototypes and declarations.
+	* lib/utf8.c (utf8_char_width, utf8_strlen, utf8_strbytelen)
+	(utf8_iter_end_p, utf8_iter_first, utf8_iter_next): New functions.
+	Normalize the namespace.
+	* utils/getopt.m4 (GETOPT): Exit if an invalid option is given.
+	(program_version): Make global.
+
+2008-04-29  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor changes.
+	
+	* lib/utf8.c: New file.
+	* lib/Makefile.am (libgjdict_a_SOURCES): Add utf8.c.
+	* gnulib.modules: Add c-strcase
+	* makedict/Makefile.am (LDADD) Swap libgjdict.a and libgnu.a. Add
+	libextra.a. 
+
+	Implement daemon and inetd modes.
+	
+	* dictd/dictd.c, dictd/server.c: New files.
+	* dictd/Makefile.am (dictd_SOURCES): Add dictd.c and server.c
+	(LDADD): Swap libgjdict.a and libgnu.a. Add libextra.a.
+	* lib/userprivs.c: New file.
+	* lib/Makefile.am (noinst_LIBRARIES): Add libextra.a
+	(libgjdict_a_SOURCES): Add userprivs.c; remove xalloc-die.c.
+	(libextra_a_SOURCES): Add xalloc-die.c.
+	* lib/iputil.c (sockaddr_to_str, sockaddr_to_astr): New functions.
+	* configure.ac: Check for setegid, setregid, setresgid, seteuid,
+	setreuid, sysconf, getdtablesize.
+	(PIDFILE): Remove define.
+	* dictd/cmdline.opt (console-logging): Rename to stderr.
+	* dictd/dictd.h: Update.
+	* dictd/main.c (pidfile_name, shutdown_timeout): New globals.
+	(user): Replace with :
+	(user_id, group_id): New variables.
+	(keywords): New configuration file statements `pidfile' and
+	`shutdown-timeout'.
+	(main): Call dictd driver appropriate for the current mode.
+	* dictd/stream.c (stream_set_error_string): Change type to void.
+	* include/dico.h (offsetof, GD_ARG_UNUSED, GD_PRINTFLIKE): New
+	defines (move from ../dictd/dictd.h).
+	(logmsg, die): Mark with GD_PRINTFLIKE.
+	(sockaddr_to_str, sockaddr_to_astr, switch_to_privs): New protos.
+
+2008-04-28  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Add stream I/O framework.
+	
+	* README-hacking: New file.
+	* dictd/fdio.c, dictd/linebuf.c, dictd/stream.c: New files.
+	* dictd/Makefile.am (dictd_SOURCES): Add new files.
+
+	* include/dico.h (dict_list_t, dict_iterator_t): Change
+	definitions. All uses updated.
+	* lib/list.c: Likewise.
+	
+	* dictd/config-gram.y: Reflect changes to dict_list_t. Add missing
+	gettext markers.
+	
+	* gnulib.modules: Add strerror.
+	* configure.ac (LOG_FACILITY): New configuration variable.
+	* dictd/dictd.h (LOG_FACILITY): New define.
+	Reflect changes to dict_list_t.
+	Add linebuf and stream prototypes and declarations.
+	(dictd_dictionary_t): New field `info'.
+	* dictd/main.c: Reflect changes to dict_list_t.
+
+2008-04-27  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Finish configuration framework. Some minor issues still remain,
+	though.
+	
+	* lib/list.c, lib/xlat.c: New files.
+	* lib/Makefile.am: Add list.c and xlat.c
+	* dictd/config-gram.y: Remove unneeded productions.  Implement C
+	code. 
+	* dictd/config-lex.l: Remove NUMBER.
+	* dictd/dictd.h: Add more includes and new prototypes.
+	* dictd/main.c: Add configuration structures.
+	* gnulib.modules: More modules.
+	* include/dico.h: Add prototypes for list and xlat functions.
+
+	* lib/bushu.dat, lib/diag.c, lib/iputil.c, lib/jiscvt.c: Add
+	copyleft headers.
+	* lib/list.c (dict_iterator_remove_current)
+	(dict_iterator_set_data): New functions.
+	
+2008-04-26  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Implement configuration framework for dictd.
+	
+	* configure.ac: Add AC_PROG_LEX
+	* dictd/Makefile.am: Add config-gram.y and config-lex.l.
+	* dictd/config-gram.y, dictd/config-lex.l: New files.
+	* dictd/cmdline.opt: Implement the --config option. New options
+	--trace-gram and --trace-lex.
+	* dictd/dictd.h: Add new protos.
+	* dictd/main.c (main): Call config_parse.
+	* include/dico.h (vlogmsg): New proto.
+	* lib/diag.c (vlogmsg): New function.
+
+2008-04-23  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Use gnulib. Remove old server. Start to write dictd.
+	
+	* bootstrap, bootstrap.conf, gnulib.modules: New files.
+	* dictd/.gitignore, dictd/Makefile.am, dictd/cmdline.opt: New files.
+	* lib/xmalloc.c: remove.
+	* dictd/dictd.h, dictd/main.c: New file.
+	* include/gjdictd.h: Delete.
+	* lib/xalloc-die.c: New file.
+	
+	* server/*: Remove.
+
+2008-04-22  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Finish new makedict.
+	
+	* makedict/Makefile.am: Add romaji.c.
+	* makedict/romaji.c: Rewrite from scratch.
+	* makedict/index.c: Implement all indexes.
+	* makedict/makedict.h (romaji_out_fn): New data type.
+	(kana_to_romaji,kana_to_romaji_str): New prototypes.
+
+	Begin switching to Berkeley DB.
+	
+	* Makefile.am: Remove dbs
+	* configure.ac: Check for Berkeley DB.
+	Remove dbs
+	* include/Makefile.am: Remove dbs
+	* include/dict.h: Remove include dbs.h.
+	(*_TREE macros): use `.db' suffix.
+	(DictEntry): Use Bushu structure. Text entries are represented by
+	their offsets after the end of the structure.
+	(DICT_PTR, DICT_ENGLISH_PTR, DICT_PINYIN_PTR, DICT_KANJI_PTR,
+	DICT_YOMI_PTR): New macros.
+
+	* include/dico.h: Include stdlib.h.
+	(xmalloc, xzalloc, xcalloc, xrealloc): New functions.
+	* include/gjdictd.h: Remove include dbs.h.
+	
+	* dbs/Makefile.am, dbs/dclose.c, dbs/dcreate.c, dbs/dflush.c,
+	dbs/dmode.c, dbs/dopen.c, dbs/dread.c, dbs/dreadpriv.c,
+	dbs/dseek.c, dbs/dwrite.c, dbs/dwritepriv.c, dbs/iadd.c,
+	dbs/iblk.c, dbs/ibottom.c, dbs/ibuild.c, dbs/iclose.c, dbs/icmp.c,
+	dbs/icmplen.c, dbs/icreate.c, dbs/ilock.c, dbs/imode.c,
+	dbs/iopen.c, dbs/irecno.c, dbs/iseek.c, dbs/iseq.c, dbs/iskip.c,
+	dbs/isync.c, dbs/itop.c, dbs/ivalue.c, dbs/mem.c, dbs/reorder.c,
+	include/dbs.h, makedict/btree.opt, makedict/check.c,
+	makedict/info.c, makedict/output.c: Remove.
+
+	* makedict/.gitignore: Remove btree
+	* makedict/Makefile.am: Remove btree.
+	Rewrite makedict using Berkeley DB.
+	* makedict/compile.c, makedict/index.c, makedict/main.c,
+	makedict/makedict.h, makedict/makedict.opt,
+	makedict/utils.c: Rewrite using Berkeley DB.
+	
+	* lib/xmalloc.c: New file.
+	* lib/Makefile.am: Add xmalloc.c
+	* lib/iputil.c: Include dico.h
+	
+2008-04-21  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* client/Gjdict.ad: Set kanjilarge height.
+	* client/search.c: Do not set width/height of the kanjilarge widget.
+
+2008-04-20  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Control verbosity level.
+	
+	* client/Gjdict.ad: Update.
+	* client/client.c (sendf, get_lines): use config.transcript
+	instead of config.verbose.
+	* client/client.h (Config): Remove `debug', change type of
+	`verbose' to int.
+	* client/cmdline.opt: New option `--transcript'.  Change the meaning
+	of the `--verbose' option.
+	* client/init.c: Add new resources.
+	(_gjdict_log_printer): New function.
+	(initsys): Set _gjdict_log_printer as the default diagnostics
+	printer.
+	(translate_options): Handle verbose field.
+	* client/options.h (OptionsRec) Remove `debug', change type of
+	`verbose' to String.
+	* include/dico.h (str_to_diag_level): New function.
+	* lib/diag.c: Likewise.
+
+	Fix building of the help file.
+	
+	* client/Makefile.am: Set GROFF_TMAC_PATH.
+	* client/dico.help: Minor changes.
+	* client/gjdict.chl: Remove generated file.
+	* client/.gitignore: Add gjdict.chl
+	* utils/helpcmp.pl (replace_upper_ascii): New function.
+	(convert): Remove.
+
+	Housekeeping work.
+	
+	* configure.ac: Provide placeholders for eventual i18n framework.
+	Place pidfile in /var/run on all systems.
+	* client/Gjdict.ad: Widen status bar to match recent changes.
+	* client/cmdline.opt, makedict/makedict.h,
+	server/cmdline.opt: Remove redefinitions of N_, _ and gettext.
+
+	Implement inetd-style connections.
+	
+	* server/cmdline.opt: New option --inetd (-i).
+	* server/main.c: Implement inetd-style connections.
+	* server/server.c (server): Change signature.
+	(set_fd_ctl_addr, set_lo_ctl_addr): New functions.
+	* server/server.h (inetd): New extern.
+	(server): Change function signature.
+
+	* client/Gjdict.ad: Widen pinyinText widget.
+	* client/client.c  (get_line): Bugfix: return actual code.
+	* client/help.c, client/search.c: Use myXawtextScrollWhenNeeded.
+	* client/util.c (format_string): Return empty output on empty
+	input.
+	* configure.ac (SCROLL_WHEN_NEEDED): New configuration variable.
+
+2008-04-19  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* client/client.c, client/helpfile.c, client/util.c, dbs/dopen.c,
+	dbs/dreadpriv.c, dbs/iblk.c, dbs/ibuild.c, dbs/icreate.c,
+	dbs/ilock.c, dbs/iopen.c, dbs/mem.c, makedict/check.c,
+	makedict/info.c, makedict/output.c, server/dict.c, server/main.c,
+	server/search.c, server/server.c: Fix wording of the diagnostic
+	messages (can't -> cannot).
+
+	Speed up input operations.
+	
+	* client/client.c (get_lines): Optimize
+	* client/client.h (get_lines): Change prototype.
+	* server/server.c (server): Do not ignore SIGINT.
+
+	Remove unneeded files.
+	
+	* client/options.c, client/util.h: Remove.
+	* client/Makefile.am: Remove unneded files.
+	* client/client.h, client/cmdline.opt, client/init.c,
+	client/util.c: Remove unneded includes.
+	* include/gjdictd.h (ip_hostname,get_ipaddr,str2port): Move to
+	dico.h
+	(good_ipaddr,ipaddr2str,ipstr2long): Remove.
+	* include/dico.h (ip_hostname,get_ipaddr,str2port): New protos.
+
+	Use autogenerated argument parsing in all programs.
+	
+	* client/.gitignore, makedict/.gitignore: Add generated files.
+	* client/Makefile.am, makedict/Makefile.am: Add rules for
+	generating command line parsers. 
+	* client/client.h, makedict/makedict.h, server/server.h: Add new
+	protos.  Explicitly mark void argument lists as such.
+	* client/cmdline.opt: New file.
+	* client/init.c, client/main.c: Rewrite command line handling.
+	* makedict/btree.c: Rename to...
+	* makedict/btree.opt: ... this and rewrite command line handling.
+	* makedict/check.c, makedict/info.c, makedict/output.c: Add
+	missing includes. 
+	* makedict/main.c: Rewrite command line handling.
+	* makedict/makedict.opt: New file.
+	* server/main.c: Remove unused variables.
+	* utils/getopt.m4 (print_help, print_usage): Remove static.
+
+	Automate generation of command-line argument parsing code.
+	
+	* server/.gitignore, server/Makefile.am, server/main.c,
+	server/server.h: Rewrite command line handling.
+	* server/cmdline.opt: New file
+	* utils/Makefile.am: Add getopt.m4
+	* utils/getopt.m4: New file
+	* client/init.c (options): Use GJDICT_PORT
+
+	Provide a general-purpose framework for diagnostic functions.
+	
+	* client/log.c, client/log.h, client/msg.c: Remove
+	* lib/diag.c: new file
+	* server/log.h, server/patchlevel.h: Remove
+	* client/Makefile.am, client/bushusearch.c, client/client.c,
+	client/client.h, client/convert.c, client/cornersearch.c,
+	client/help.c, client/helpfile.c, client/init.c,
+	client/kanasearch.c, client/main.c, client/search.c,
+	client/util.c, client/widgets.c, client/xref.c, dbs/dopen.c,
+	dbs/dreadpriv.c, dbs/dwritepriv.c, dbs/iblk.c, dbs/ibuild.c,
+	dbs/iclose.c, dbs/icreate.c, dbs/ilock.c, dbs/iopen.c, dbs/iseq.c,
+	dbs/mem.c, dbs/reorder.c, include/dbs.h, include/dico.h,
+	lib/Makefile.am, makedict/Makefile.am, makedict/btree.c,
+	makedict/check.c, makedict/index.c, makedict/info.c,
+	makedict/main.c, makedict/makedict.h, makedict/output.c,
+	server/Makefile.am, server/dict.c, server/gram.y, server/log.c,
+	server/main.c, server/search.c, server/server.c, server/server.h,
+	server/utils.c: Use new diagnostic functions.
+
+	Fix minor incosistencies: provide prototypes, remove unused
+	variables, etc.
+	
+	* client/bushusearch.c, client/client.c, client/client.h,
+	client/cornersearch.c, client/getfile.c, client/help.c,
+	client/init.c, client/kanasearch.c, client/license.c,
+	client/log.c, client/main.c, client/search.c, client/skipsearch.c,
+	client/util.c, client/widgets.c, client/xref.c, dbs/dwrite.c,
+	dbs/icmp.c, dbs/iseq.c, dbs/reorder.c, include/dbs.h,
+	lib/iputil.c, lib/jiscvt.c, makedict/btree.c, makedict/check.c,
+	makedict/index.c, makedict/info.c, makedict/main.c,
+	makedict/makedict.h, makedict/output.c, makedict/romaji.c,
+	server/bushu.code.c, server/dict.c, server/gram.y, server/log.c,
+	server/log.h, server/main.c, server/server.c, server/server.h,
+	server/utils.c, utils/bushu.awk, utils/revbits.c.
+
+2008-04-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* fonts/*.xbm: Add copyright header.
+
+	Relicense under GPLv3+
+	
+	* COPYING
+	* client/license.c
+	* fonts/Makefile.am
+	* lib/jiscvt.c
+	* makedict/main.c
+	* server/main.c
+	
+	Fix make distcheck.
+	
+	* Makefile.am (distcleancheck_listfiles): New var.
+	* client/license.c (helptext): Remove
+	* configure.ac (AM_INIT_AUTOMAKE): Remove std-options/
+	* fonts/Makefile.am: Fix build.
+	* utils/Makefile.am: Fix build.
+
+	Improve make in fonts.
+	
+	* fonts/3.xbm: Fix erroneous declarations.
+	* fonts/Makefile.am (bushu.bdf): Change rule
+	* fonts/header, fonts/footer: New files.
+	* fonts/bushu.pcf: Delete auto-generated file.
+	* utils/knr2ansi: Delete unneeded file.
+	* utils/mkbushufont: Replaced by ...
+	* utils/mkbushufont.awk: ... this.
+	* utils/revbits.c: Include config.h
+
+	Improve fallback resource generation.
+	
+	* client/Makefile.am (fallback.h): Use resource.sed
+	* client/resource.sed: New file.
+
+2008-04-13  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Provide fallback resources.
+	
+	* client/.gitignore: Add fallback.h
+	* client/Makefile.am: New rule for creating fallback.h
+	* client/init.c (fallback): Include fallback.h
+
+2008-04-12  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* client/Gjdict.ad (replaceMode): Remove. Not available in Xaw8.
+	* client/search.c (makesouth): make searchDropInput editable,
+	otherwise pastes don't work.
+
+	* All files: switch to ANSI C.
+
+2008-04-11  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Rewrite for Xaw v. >= 7. Use asciiTextWidgetClass instead of the
+	custom wcharTextWidgetClass.
+	
+	* client/Gjdict.ad: Rewrite for Xaw >= 7
+	* client/bushusearch.c: Force international: false on all bushu
+	widgets.
+	* client/kanasearch.c: Force international: false
+	* client/client.h (struct popup_info): remove LargeKanjiFont,
+	EnglishFont.
+	* client/options.h: Likewise.
+	* client/widgets.c: Likewise.
+	* client/init.c: Likewise. Force ja_JP.eucjp locale.
+	* client/cornersearch.c, client/help.c, client/search.c,
+	client/skipsearch.c, client/xref.c: Rewrite using
+	asciiTextWidgetClass and assuming international: true. Delegate as
+	much as possible to the resource file. 
+
+	* lib/Makefile.am: Remove Wchar* sources.
+	* lib/WcharCommon.h, lib/WcharCommonP.h, lib/WcharSink.h,
+	lib/WcharSinkP.h, lib/WcharSrc.h, lib/WcharSrcP.h,
+	lib/WcharText.h, lib/WcharTextP.h: Remove.
+	
+	* makedict/btree.c, makedict/main.c: Fix va_start calls.
+	* server/server.c: Move eofline several lines up.
+
+2008-04-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Set up Git `ident' replacement for all sources.
+
+	* configure.in: Rename to configure.ac. Update to newer
+	autoconf syntax.
+	* acconfig.h: Remove.
+	* .gitconfig: New file.
+
+2008-04-08  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* INSTALL: Remove auto-generated file.
+	* client/client.c, client/getfile.c, client/log.c,
+	client/log.h, client/msg.c, client/search.c, client/util.c,
+	include/dbs.h, makedict/btree.c, makedict/main.c,
+	makedict/makedict.h, server/gram.y, server/log.c, server/log.h,
+	server/main.c, server/search.c, server/server.c, server/server.h:
+	use stdarg
+	* client/search.c (makesouth): Give correct default of XtNencoding
+	for searchDropInput.
+	* lib/WcharSink.c, lib/WcharSrc.c: Cleanup
+	* client/client.h: Update
+	* client/main.c: Remove unneded globals.
+	* client/help.c: Use XawtextScrollAlways (temp kludge).
+	
+2002-05-23  Sergey Poznyakoff  
+
+	* include/Makefile.am: Added Xaw.h
+
+2002-04-18  Sergey Poznyakoff  
+
+	* acconfig.h: Placeholder for USE_XAW3D
+	* configure.in: Define USE_XAW3D if requested.
+
+	* include/Xaw.h: (new) libXaw dependent definitions.
+	
+	* client/bushusearch.c: Removed lots of X11/Xaw includes.
+	  Include single file Xaw.h instead.
+	* client/cornersearch.c: Likewise.
+	* client/getfile.c: Likewise.
+	* client/help.c: Likewise.
+	* client/init.c: Likewise.
+	* client/kanasearch.c: Likewise.
+	* client/license.c: Likewise.
+	* client/main.c: Likewise.
+	* client/options.c: Likewise.
+	* client/search.c: Likewise.
+	* client/skipsearch.c: Likewise.
+	* client/widgets.c: Likewise.
+	* client/xref.c: Likewise.
+	* client/msg.c: Include errno.h.	  
+	
+	* include/gjdictd.h: Include errno.h. Renamed global variable
+	  daemon to daemon_mode.
+	  
+	* lib/WcharSink.h: Discern between Xaw and Xaw3d
+	* lib/WcharSinkP.h: Likewise.
+	* lib/WcharSrc.h: Likewise.
+	* lib/WcharSrcP.h: Likewise.
+	* lib/WcharText.c: Likewise.
+	* lib/WcharText.h: Likewise.
+	
+	* server/log.c: Include errno.h.	
+	* server/main.c: Renamed global variable daemon to daemon_mode.
+
+2001-11-06 Sergey Poznyakoff
+
+	* server/main.c: -i (--ip-address) option.
+	* server/search.c: Issue OK reply before starting to transmit data.
+	In ascii mode, output results using udata().
+
+2001-11-04 Sergey Poznyakoff
+
+	* client/init.c: Send BIN to server at startup.
+	* dbs/iopen.c: Increase default number of index pages.
+	* include/dict.h: Declare Xref structure.
+	* makedict/index.c: Changed xref index strcture: it now has two
+	subkeys, a jis code of kanji and its position in the sentence.
+	This results in all cross-references being ordered by the position
+	of the kanji in sentence.
+	* makedict/output.c: Likewise.
+	* server/search.c: Likewise.
+	* server/gram.y: Special handling for binary mode.
+	* server/server.c: Rudimentary implementation of ASCII mode. NB: the
+	mode name itself seems to be a misnomer :^)
+
+	Housekeeping:
+
+	* .cvsignore: (new)
+	* dbs/.cvsignore: (new)
+	* fonts/.cvsignore: (new)
+	* include/.cvsignore: (new)
+	* lib/.cvsignore: (new)
+	* makedict/.cvsignore: (new)
+	* server/.cvsignore: (new)
+	* utils/.cvsignore: (new)
+
+2001-11-03 Sergey Poznyakoff
+
+	Excavated this beast from among my old projects. As far
+	as I can tell, this started on March, 1999. The RCS snapshots
+	of DBS subsystem date back to September, 1998.
+
+
+
+Local Variables:
+mode: change-log
+version-control: never
+End:

@@ -1,0 +1,42 @@
+{% load media %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>{{ page.title|striptags }}GNU Dico Web</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="gnu dico web search interface, dicoweb, dictionaries, dict protocol" />
+<meta name="description" content="GNU Dico WebSearch Interface" />
+<meta name="robots" content="{{ page.robots }}" />
+<link rel="stylesheet" type="text/css" href="{% media_prefix %}/dicoweb.css" />
+<link rel="search" type="application/opensearchdescription+xml" title="GNU Dico WebSearch" href="{% url opensearch %}" />
+<script type="text/javascript" src="{% media_prefix %}/dicoweb.js"></script>
+</head>
+
+<body>
+<div id="header"></div>
+<table id="top">
+  <tr>
+    <td>
+      <div id="logo">
+	<h1><a href="{% url views.index %}" accesskey="1">GNU Dico</a></h1>
+	<img src="{% media_prefix %}/gnu-head-sm.jpg" width="129" height="122" alt="GNU" />
+      </div>
+    </td>
+    <td>
+      <div id="main">
+	{% block search %}{% endblock %}
+      </div>
+    </td>
+  </tr>
+</table>
+
+{% block results %}{% endblock %}
+
+<div id="footer">
+  <a href="http://www.gnu.org/software/dico/">GNU Dico</a>
+  Web interface. Copyright &copy; 2008-{% now "Y" %} GNU Dico Team.
+</div>
+
+</body>
+</html>

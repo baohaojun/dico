@@ -1,0 +1,1 @@
+[[link|foo|bar|baz|text [[inny link|znów text]] słowo [[jeszcze link]]]]

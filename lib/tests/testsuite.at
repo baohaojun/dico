@@ -1,0 +1,52 @@
+# This file is part of GNU Dico. -*- Autotest -*-
+# Copyright (C) 2012 Sergey Poznyakoff
+#
+# GNU Dico is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# GNU Dico is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Dico.  If not, see <http://www.gnu.org/licenses/>.
+
+AT_INIT
+
+AT_BANNER(UTF-8)
+m4_include(strlen.at)
+m4_include(strcasecmp.at)
+m4_include(strncasecmp.at)
+m4_include(wcstrcmp.at)
+m4_include(wcstrncmp.at)
+m4_include(wcstrcasecmp.at)
+m4_include(wcstrncasecmp.at)
+m4_include(toupper.at)
+m4_include(tolower.at)
+m4_include(wcstrchr.at)
+m4_include(wcstrstr.at)
+
+AT_BANNER([Levenshtein distances])
+m4_include([lev00.at])
+m4_include([lev01.at])
+m4_include([dlev00.at])
+m4_include([dlev01.at])
+
+AT_BANNER([Line trimming])
+m4_include([lntrim00.at])
+m4_include([lntrim01.at])
+m4_include([lntrim02.at])
+m4_include([lntrim03.at])
+
+AT_BANNER([CR LF translation])
+m4_include([crlf00.at])
+m4_include([crlf01.at])
+m4_include([crlf02.at])
+m4_include([crlf03.at])
+m4_include([crlf04.at])
+m4_include([crlf05.at])
+
+m4_include([list.at])

@@ -1,0 +1,8 @@
+: A colon (:) indents a line or paragraph.
+A newline starts a new paragraph.
+Should only be used on talk pages.
+For articles, you probably want the blockquote tag.
+: We use 1 colon to indent once.
+:: We use 2 colons to indent twice.
+::: 3 colons to indent 3 times, and so on.
+

@@ -1,0 +1,106 @@
+divert(-1) dnl -*- m4 -*-
+# This file is part of grecs - Gray's Extensible Configuration System
+# Copyright (C) 2007, 2009-2012 Sergey Poznyakoff
+#
+# Grex is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# Grex is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Grex.  If not, see <http://www.gnu.org/licenses/>.
+
+changecom(/*,*/)
+
+/* ------------------------------
+ * Simulate --prefix-builtins.    
+ * Borrowed from Autoconf          
+ * ------------------------------- */
+
+define(`m4_define',   defn(`define'))
+define(`m4_defn',     defn(`defn'))
+define(`m4_undefine', defn(`undefine'))
+
+m4_undefine(`define')
+m4_undefine(`defn')
+m4_undefine(`undefine')
+
+/* m4_copy(SRC, DST)
+ * -----------------
+ * Define DST as the definition of SRC.
+ * What's the difference between:
+ * 1. m4_copy(`from', `to')
+ * 2. m4_define(`to', `from($@)')
+ * Well, obviously 1 is more expensive in space.  Maybe 2 is more expensive
+ * in time, but because of the space cost of 1, it's not that obvious.
+ * Nevertheless, one huge difference is the handling of `$0'.  If `from'
+ * uses `$0', then with 1, `to''s `$0' is `to', while it is `from' in 2.
+ * The user will certainly prefer to see `to'.
+ */
+m4_define(`m4_copy',
+`m4_define(`$2', m4_defn(`$1'))')
+
+/* m4_rename(SRC, DST)
+ * -------------------
+ * Rename the macro SRC as DST.
+ */
+m4_define(`m4_rename',
+`m4_copy(`$1', `$2')m4_undefine(`$1')')
+
+/* m4_rename_m4(MACRO-NAME)
+ * ------------------------
+ * Rename MACRO-NAME as m4_MACRO-NAME.
+ */
+m4_define(`m4_rename_m4',
+`m4_rename(`$1', `m4_$1')')
+
+/* Some m4 internals have names colliding with tokens we might use.
+ * Rename them a` la `m4 --prefix-builtins'.
+ */
+m4_rename_m4(`builtin')
+m4_rename_m4(`changecom')
+m4_rename_m4(`changequote')
+m4_rename_m4(`debugfile')
+m4_rename_m4(`debugmode')
+m4_rename_m4(`decr')
+m4_rename_m4(`divert')
+m4_rename_m4(`divnum')
+m4_rename_m4(`dumpdef')
+m4_rename_m4(`errprint')
+m4_rename_m4(`esyscmd')
+m4_rename_m4(`eval')
+m4_rename_m4(`format')
+m4_rename_m4(`ifdef')
+m4_rename_m4(`ifelse')
+m4_rename_m4(`include')
+m4_rename_m4(`incr')
+m4_rename_m4(`index')
+m4_rename_m4(`indir')
+m4_rename_m4(`len')
+m4_rename(`m4exit', `m4_exit')
+m4_rename(`m4wrap', `m4_wrap')
+m4_rename_m4(`maketemp')
+m4_rename_m4(`patsubst')
+m4_rename_m4(`popdef')
+m4_rename_m4(`pushdef')
+m4_rename_m4(`regexp')
+m4_rename_m4(`shift')
+m4_rename_m4(`sinclude')
+m4_rename_m4(`substr')
+m4_rename_m4(`symbols')
+m4_rename_m4(`syscmd')
+m4_rename_m4(`sysval')
+m4_rename_m4(`traceoff')
+m4_rename_m4(`traceon')
+m4_rename_m4(`translit')
+m4_rename_m4(`undivert')
+m4_rename_m4(`dnl')
+m4_rename_m4(`__line__')
+m4_rename_m4(`__file__')
+
+m4_divert(0)m4_dnl

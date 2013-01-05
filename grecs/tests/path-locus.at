@@ -1,0 +1,92 @@
+# This file is part of grecs  -*- Autotest -*-
+# Copyright (C) 2011-2012 Sergey Poznyakoff
+#
+# Grecs is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# Grecs is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Grecs.  If not, see <http://www.gnu.org/licenses/>.
+
+AT_SETUP(Locations: path)
+AT_KEYWORDS([locus path])
+
+AT_DATA([test.cf],[.scalar: "yes"
+.listvar: ("a", "2", "b", "c")
+.compound: "stmt" "2" "foo"
+.mailbox.mailbox-pattern: \
+  "maildir:/var/mail;type=index;param=2;user=${user}"
+.mailbox.mailbox-type: "maildir"
+.logging.syslog: "yes"
+.logging.facility: "mail"
+.program="foo".logging.syslog: "yes"
+.program="foo".logging.facility: "local1"
+.program="foo".scalar: "no"
+.program="bar".logging.syslog: "no"
+.program="bar".logging.facility: "local2"
+.program="bar".logging.tag: "baz"
+.program="bar".scalar: "25"
+])
+
+AT_CHECK([gcffmt -type=path -locus test.cf],
+[0],
+[test.cf:1.1-14: .scalar: "yes"
+test.cf:2.1-30: .listvar: ("a", "2", "b", "c")
+test.cf:3.1-27: .compound: "stmt" "2" "foo"
+test.cf:4.1-5.53: .mailbox.mailbox-pattern: "maildir:/var/mail;type=index;param=2;user=${user}"
+test.cf:6.1-32: .mailbox.mailbox-type: "maildir"
+test.cf:7.1-22: .logging.syslog: "yes"
+test.cf:8.1-25: .logging.facility: "mail"
+test.cf:9.1-36: .program="foo".logging.syslog: "yes"
+test.cf:10.1-41: .program="foo".logging.facility: "local1"
+test.cf:11.1-27: .program="foo".scalar: "no"
+test.cf:12.1-35: .program="bar".logging.syslog: "no"
+test.cf:13.1-41: .program="bar".logging.facility: "local2"
+test.cf:14.1-33: .program="bar".logging.tag: "baz"
+test.cf:15.1-27: .program="bar".scalar: "25"
+])
+
+AT_CHECK([gcffmt -type=path -locus -novalue test.cf],
+[0],
+[test.cf:1.1-7: .scalar
+test.cf:2.1-8: .listvar
+test.cf:3.1-9: .compound
+test.cf:4.1-24: .mailbox.mailbox-pattern
+test.cf:6.1-21: .mailbox.mailbox-type
+test.cf:7.1-15: .logging.syslog
+test.cf:8.1-17: .logging.facility
+test.cf:9.1-29: .program="foo".logging.syslog
+test.cf:10.1-31: .program="foo".logging.facility
+test.cf:11.1-21: .program="foo".scalar
+test.cf:12.1-29: .program="bar".logging.syslog
+test.cf:13.1-31: .program="bar".logging.facility
+test.cf:14.1-26: .program="bar".logging.tag
+test.cf:15.1-21: .program="bar".scalar
+])
+
+AT_CHECK([gcffmt -type=path -locus -nopath test.cf],
+[0],
+[test.cf:1.10-14: "yes"
+test.cf:2.11-30: ("a", "2", "b", "c")
+test.cf:3.12-27: "stmt" "2" "foo"
+test.cf:5.3-53: "maildir:/var/mail;type=index;param=2;user=${user}"
+test.cf:6.24-32: "maildir"
+test.cf:7.18-22: "yes"
+test.cf:8.20-25: "mail"
+test.cf:9.32-36: "yes"
+test.cf:10.34-41: "local1"
+test.cf:11.24-27: "no"
+test.cf:12.32-35: "no"
+test.cf:13.34-41: "local2"
+test.cf:14.29-33: "baz"
+test.cf:15.24-27: "25"
+])
+
+AT_CLEANUP
+

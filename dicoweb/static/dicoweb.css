@@ -1,0 +1,134 @@
+/*
+  This file is part of GNU Dico.
+  Copyright (C) 2008-2010, 2012 Wojciech Polak
+
+  GNU Dico is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 3, or (at your option)
+  any later version.
+
+  GNU Dico is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with GNU Dico.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: arial, sans-serif;
+  font-size: 95%;
+  background-color: white;
+  color: #585858;
+}
+
+h1, h2, h3 {
+  font-weight: normal;
+}
+h2, h3, h4 {
+  color: #185360;
+}
+h2 {
+  margin: 0;
+  padding-top: .5em;
+  padding-bottom: .17em;
+}
+
+img {
+  padding: 3px;
+  border: 0px;
+}
+
+a {
+  color: #ff5c2f;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+input {
+  padding: 1px;
+}
+
+ul {
+  margin-bottom: 1em;
+}
+li {
+  margin-left: 2em;
+  line-height: 1.5em;
+}
+p {
+  line-height: 1.8em;
+  margin-bottom: 0.2em;
+}
+pre {
+  font-size: 95%;
+  white-space: normal;
+  line-height: 140%;
+  padding: 1em;
+}
+table {
+  border-spacing: 2px;
+}
+tr, th, td {
+  padding: 2px;
+  vertical-align: top;
+}
+
+.hidden {
+  display: none
+}
+
+#top {
+  margin: 0 auto 0 auto;
+}
+#logo h1 {
+  padding-left: 15px;
+  padding-bottom: 3px;
+}
+#logo a {
+  text-decoration: none;
+}
+#logo img {
+  padding-left: 15px;
+}
+#searchform {
+  width: 600px;
+  margin: 60px auto 0 auto;
+}
+#searchform table {
+  margin-left: auto;
+  margin-right: auto;
+}
+.results, .derror {
+  border-top: dotted 1px #e1e1e1;
+  width: 700px;
+  margin: 1em auto 0 auto;
+  padding: 4px;
+  padding-top: 10px;
+  clear: both;
+}
+.dbname-short {
+  border-bottom: 1px dotted #aaaaaa;
+  cursor: help;
+}
+a.link-lmr {
+  float: right;
+  font-size: 8pt;
+}
+
+#footer {
+  font-size: 80%;
+  width: 700px;
+  text-align: center;
+  border-top: dotted 1px #e1e1e1;
+  margin: 1em auto 10px auto;
+  padding: 4px;
+  padding-top: 10px;
+}

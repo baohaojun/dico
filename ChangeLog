@@ -1,0 +1,4688 @@
+2012-03-04  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Implement info/descr for gcide.
+
+	* NEWS: Update.
+	* doc/dico.texi: Update.
+	* include/dico/util.h (dico_string_trim): Add missing proto.
+	* modules/gcide/gcide.c (gcide_info, gcide_descr): Implement
+	info and description methods.
+	* modules/gcide/tests/dict/INFO: New file.
+	* modules/gcide/tests/Makefile.am (TESTSUITE_AT): Add descr.at and
+	info.at.
+	* modules/gcide/tests/testsuite.at: Include descr.at and info.at
+	* modules/gcide/tests/dicod.cfin: Remove description.
+	* modules/gcide/tests/descr.at: New test case.
+	* modules/gcide/tests/info.at: New test case.
+	* modules/gcide/tests/def00.at: Update.
+	* modules/gcide/tests/def01.at: Update.
+	* modules/gcide/tests/def02.at: Update.
+	* modules/gcide/tests/def03.at: Update.
+	* modules/gcide/tests/def04.at: Update.
+	* modules/gcide/tests/def05.at: Update.
+
+	* scripts/Makefile.am: Exempt gcider from standard options check.
+
+2012-03-03  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Version 2.2
+
+	* NEWS: Update.
+	* configure.ac: Version 2.2
+	Remove DBM autodetection.
+	* doc/dico.texi: Update.
+	* doc/gendocs_template: Update.
+	* scripts/gcider: Update.
+	* grecs: Upgrade.
+	* lib/tests/Makefile.am (LDADD): Add $(LIBINTL).
+	* lib/utf8.c [!ENODATA]: Define ENODATA.
+	* modules/gcide/Makefile.am (gcide_la_LIBADD): Add @LTLIBINTL@.
+	(idxgcide_LDADD): Add @LIBINTL@
+	(INCLUDES): Add gnu
+	* modules/gcide/gcide.c" Include signal.h
+	* modules/gcide/tests/Makefile.am (degcide_LDADD)
+	(greek_LDADD): Add @LIBINTL@
+	* modules/nprefix/tests/dict.out: Use only lowercase headwords.
+
+	Improve SASL authentication.
+
+	* dico/saslauth.c: Make sure authentication is attempted
+	only if the server offers SASL.
+	(authctx): New struct.
+	(match_capa,getauthcontext)
+	(freeauthcontext): New functions.
+	(saslauth0): Change signature: take authctx as 3rd arg.
+	(saslauth): Return AUTH_CONT if SASL is not available or
+	none of its methods matches those implemented on the client
+	side.
+	* dicod/main.c (user_db_config): Fix the source location copy.
+	(init_user_db): Clear sasl_enable if no user database is configured.
+	(main): Call register_sasl after init_user_db so that the above
+	change takes effect.
+	* dicod/server.c (dicod_server): Don't try to remove pidfile
+	in foreground mode.
+	* doc/proto.texi: Minor fix.
+
+2012-03-02  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update docs.
+
+	Improve the documentation.
+
+2012-02-28  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor changes
+
+	* README: Update.
+	* examples/numerals-cz.txt: Change initial comment.
+	* examples/numerals-pl.ldb: Likewise.
+	* scripts/gcider: Handle broken pipe and partial reads graciously.
+
+	gcide: recreate index if any of the corpus files change.
+
+	* modules/gcide/gcide.c (gcide_db) <latest_change>: New member.
+	(gcide_check_files): Fill in db->latest_change.
+	(gcide_access_idx): New function. Check index file availability
+	and timestamp.
+	(gcide_open_idx): Use gcide_access_idx to determine whether to
+	create the index.
+
+2012-02-27  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update docs. Fix a bug in python.
+
+	* doc/dico.texi: Finish main part.
+	* modules/python/python.c (strat_select_method): Fix docstring.
+	(dico_register_strat): Bugfix: reversed sense of a conditional.
+	(mod_init_db): Declare DICO_SELECT_* constants.
+	(mod_match): Fix memory leaks. Remove useless call to strat->sel,
+	which is called by dico_key_deinit implicitly.
+
+	Minor bugfixes in gcide.
+
+	* modules/gcide/ent.c: Add missing entities (dagger, dag, para, etc.)
+	* modules/gcide/gcide.c (GCIDE_DBGLEX): New flag.
+	(gcide_init_db): New flag debug-lex.
+	(output_def): If GCIDE_DBGLEX is set, enable lexer debugging.
+	* modules/gcide/gcide.h (TAG_HAS_NAME): New macro.
+	(gcide_markup_debug): Remove extern.
+	(gcide_markup_parse): Takes three arguments.
+	* modules/gcide/idxgcide.l: Tags and entities can contain uppercase
+	letters.
+	* modules/gcide/markup.l: Likewise.
+	Define more yy* symbols.
+	(pop_tag): Fix coredump on encountering improperly nested tag.
+	(gcide_markup_debug): Remove.
+	(gcide_markup_parse): Take three arguments. All uses updated.
+
+	Improve docs.
+
+	* doc/strat.texi: New file. Describes available match strategies.
+	* doc/Makefile.am: Add strat.texi
+	* doc/dico.texi: New appendix "Available Strategies".
+
+2012-02-25  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfixes.
+
+	* dicod/accesslog.c (access_log_status): If "last" begins with a
+	dot, advance 2 characters (complements 61ed04af).
+	* scripts/gcider: Don't clear the tearOff option.
+	(setupvisual): Add hotkeys to menu. Fix column configuration
+	(saveconf): Save geometry. Don't save non-existing variables.
+	(main): Restore main window geometry.
+
+	Minor cleanup
+
+	* configure.ac: New option --with-tk. Do not "build" gcider
+	if Tcl/Tk is not available.
+	* scripts/Makefile.am: Likewise.
+	* scripts/gcider (setupvisual): Add necessary rowconfigures.
+
+2012-02-23  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Upgrade grecs
+
+	gcide: fix search in index page
+
+	* modules/gcide/idx.c (gcide_idx_locate): Revamp the backtracking
+	loop.
+
+	gcide: support --help and --version command line options.
+
+2012-02-20  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor changes
+
+	* NEWS: Document gcider.
+	* scripts/gcider (helpbox): Bind scrolling actions to kbd.
+	(about): Bind CR and ESC keys.
+	(gcide_configure): Add "help" button.
+
+2012-02-19  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	More changes in gcider.
+
+	* scripts/gcider: Create GCIDE.IDX in the configuration directory
+	by default, but provide an option to change this. Close current
+	connection before opening new one.
+
+	gcider: fix semantics of prev/next
+
+	Document gcider.
+
+	Improve gcider interface.
+
+	Provide buttons for moving within input history; clear selection
+	in entry parts of comboboxes when selecting a prior value into
+	them.
+
+2012-02-18  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	gcider: limit the history size; other minor changes.
+
+	Bugfix in the gcide module.
+
+	* modules/gcide/idx.c (gcide_idx_locate): Fix backtracking.
+
+	Improve gcider interface.
+
+	* scripts/gcider: Provide a documentation (manual) window.
+	Add status line.
+	Use short strategy names in the strategy combobox, except for the
+	".", which is rendered as "Default".  When hovering over the
+	strategy popdown, print full description of a higlighted strategy
+	in the status line.
+	* doc/dico.texi: Update.
+
+2012-02-13  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	gcider: add window titles.
+
+	Add gcider to distribution
+
+2012-02-12  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	gcider: configure appearance, save its settings to the config
+
+2012-02-11  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	gcider: implement input widget popup menu.
+
+2012-02-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	gcider: improve article presentation.
+
+	* scripts/gcider (readdefns): Remove curly braces surrounding
+	cross references.
+
+	Implement CR<=>CRLF translation stream.
+
+	* lib/stream.c (_stream_flush_buffer): Fix full buffering.
+	(dico_stream_read): Break from the loop if level remains zero
+	after filling the buffer.
+	(dico_stream_writeln): Write a single \n at end of line.
+
+	* TODO: Update.
+
+	* dicod/dicod.c: End lines with a single \n.  The \r is added
+	automatically by the transport stream.
+	(dicod_inetd): Use dicod_iostream to create transport stream.
+	(dicod_iostream): New function.
+	* dicod/dicod.h (dicod_iostream): New proto.
+	* dicod/ostream.c (print_headers): End lines with a single \n.
+	The \r is added automatically by the transport stream.
+	Install dico_linetrim_stream here.
+	* dicod/server.c (handle_connection): Use dicod_iostream to create
+	transport stream. End lines with a single \n.
+	* include/dico/stream.h (dico_crlf_stream): New proto.
+
+	* dicod/auth.c: End lines with a single \n.  The \r is added
+	automatically by the transport stream.
+	* dicod/commands.c: Likewise.
+	* dicod/gsasl.c: Likewise
+	* dicod/lang.c: Likewise
+	* dicod/lev.c: Likewise
+	* dicod/loader.c: Likewise
+	* dicod/markup.c: Likewise
+	* dicod/mime.c: Likewise
+	* dicod/xidle.c: Likewise
+	* dicod/xversion.c: Likewise
+	* lib/fltstream.c: Likewise
+
+	* lib/Makefile.am (libdico_la_SOURCES): Add crlfstr.c
+	* lib/crlfstr.c: New file.
+
+	* lib/tests/Makefile.am (noinst_PROGRAMS): Add crlftool
+	(TESTSUITE_AT): Add crlf tests.
+	* lib/tests/crlftool.c: New file.
+	* lib/tests/crlf00.at: New test case.
+	* lib/tests/crlf01.at: New test case.
+	* lib/tests/crlf02.at: New test case.
+	* lib/tests/crlf03.at: New test case.
+	* lib/tests/crlf04.at: New test case.
+	* lib/tests/crlf05.at: New test case.
+	* lib/tests/testsuite.at: Include crlf tests.
+
+	dicod: make sure output lines are no longer than 1024 UTF-8 characters.
+
+	* dicod/ostream.c (dicod_ostream_create): Use linetrim stream as
+	transport.
+	* include/dico/stream.h (DICO_IOCTL_SET_LINELEN)
+	(DICO_IOCTL_GET_LINELEN): New ioctls.
+	(dico_linetrim_stream): New function.
+	* lib/Makefile.am (libdico_la_SOURCES): Add linetrimstr.c
+	* lib/linetrimstr.c: New file. Implementation of "line triming" stream.
+	* lib/tests/Makefile.am:  Add new tests.
+	* lib/tests/linetrim.c: New file.
+	* lib/tests/lntrim00.at: New file.
+	* lib/tests/lntrim01.at: New file.
+	* lib/tests/lntrim02.at: New file.
+	* lib/tests/lntrim03.at: New file.
+	* lib/tests/testsuite.at: Include new tests.
+
+2012-02-07  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	gcider: add text tags
+
+	Minor changes in gcider.
+
+	Implement a standalone Tk-based viewer for GCIDE
+
+	* scripts/gcider: New file.
+
+2012-02-05  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Implement PAM authentication.
+
+	* configure.ac: Check for PAM libraries and headers.
+	Build modules/pam/Makefile.
+	* dicod/gsasl.c (cb_validate): Call dico_udb_check_password first,
+	and dico_udb_get_password if it is not implemented.
+	* include/dico/udb.h (dico_udb_def)<_db_check_password>: New
+	member.
+	(dico_udb_check_password): New function.
+	* lib/udb.c (dico_udb) <_db_check_password>: New member.
+	(dico_udb_check_password): New function.
+	(dico_udb_get_password): Initialize _db_check_password.
+	* modules/Makefile.am [PAM_COND]: Define PAM_DIR
+	(SUBDIRS): Add $PAM_DIR.
+	* modules/pam/Makefile.am: New file.
+	* modules/pam/pam.c: New file.
+
+	* NEWS: Update.
+	* README: Update.
+	* doc/dico.texi: Document PAM.
+
+	Bugfixes.
+
+	* dicod/main.c (user_db_config): Allocate copies of file name
+	for cfg->locus.beg.file and cfg->locus.end.file.
+	* modules/nprefix/nprefix.c: Include string.h
+
+	* dicod/server.c (dicod_server): Ignore user/group settings if not
+	running as root.
+
+2012-02-04  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update docs.
+
+2012-02-03  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	gcide: Minor changes.
+
+	* modules/gcide/idxgcide.l: Count initial double vertical bar as
+	start of entry.
+	Index <conf> and <conjf> entries.
+	* modules/gcide/tests/def02.at: Reflect the recent changes.
+
+	gcide: Fix some UTF-8 entities.
+
+2012-02-02  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	New dicod option -D (define symbol).
+
+	* dicod/cmdline.opt: Handle the -D (--define) option.
+	* doc/dico.texi: Document it.
+
+	gcide: further improvements.
+
+	* modules/gcide/ent.c: Add new entities.
+	* modules/gcide/idxgcide.l: Index <decf> entries.
+
+2012-01-31  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfix in word module.
+
+	* modules/word/word.c (first_sel,last_sel): Return 0 if the
+	dictionary word is empty.
+
+	Implement the nprefix strategy.
+
+	* configure.ac: Configure the nprefix module.
+	* NEWS: Document nprefix.
+	* doc/dico.texi: Likewise.
+	* modules/Makefile.am (SUBDIRS): Add nprefix.
+	* modules/nprefix/Makefile.am: New file.
+	* modules/nprefix/nprefix.c: New file.
+	* modules/nprefix/tests/Makefile.am: New file.
+	* modules/nprefix/tests/atlocal.in: New file.
+	* modules/nprefix/tests/dicod.cfin: New file.
+	* modules/nprefix/tests/dict.out: New file.
+	* modules/nprefix/tests/np00.at: New file.
+	* modules/nprefix/tests/np01.at: New file.
+	* modules/nprefix/tests/np02.at: New file.
+	* modules/nprefix/tests/np03.at: New file.
+	* modules/nprefix/tests/np04.at: New file.
+	* modules/nprefix/tests/testsuite.at: New file.
+	* modules/nprefix/tests/.gitignore: New file.
+
+	Implement "first" and "last" matching strategies.
+
+	* modules/word/word.c: Implement new strategies.
+	* NEWS: Document new strategies.
+	* doc/dico.texi: Likewise.
+	* modules/word/tests/dicod.cfin: Load dict.out
+	* modules/word/tests/dict.out: New file.
+	* modules/word/tests/first.at: New file.
+	* modules/word/tests/last.at: New file.
+	* modules/word/tests/word.at: New file.
+	* modules/word/tests/Makefile.am: Add new files. Change ~dictdir~.
+	* modules/word/tests/testsuite.at: Include new files.
+
+	Document the pcre module.
+
+	Accept CLIENT command without arguments.
+
+	Update the docs.
+
+	Bugfix
+
+	* dicod/commands.c (dicod_client): The CLIENT command takes any
+	number of arguments.
+
+2012-01-30  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update for gcide 0.51
+
+	* modules/gcide/ent.c: Handle <oacute/, <ldquo/ and <rdquo/.
+	* modules/gcide/idxgcide.l: <ent> tag triggers flush_headwords.
+
+2012-01-29  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Test the basic dicod functionality.
+
+	* configure.ac: Define LIBDICOSASL to absolute path.
+	Initialize tests in dicod.
+	* dicod/Makefile.am (SUBDIRS): Add tests.
+	* include/testsuite.inc (AT_SKIP_TEST,DICO_VERSION)
+	(DICOD_RUN): New defines.
+	* dicod/tests/Makefile.am: New file.
+	* dicod/tests/atlocal.in: New file.
+	* dicod/tests/group: New file.
+	* dicod/tests/passwd: New file.
+	* dicod/tests/startup.at: New file.
+	* dicod/tests/alias.at: New file.
+	* dicod/tests/apop.at: New file.
+	* dicod/tests/apopauth.c: New file.
+	* dicod/tests/def.at: New file.
+	* dicod/tests/descr.at: New file.
+	* dicod/tests/echo.c: New file.
+	* dicod/tests/help00.at: New file.
+	* dicod/tests/help01.at: New file.
+	* dicod/tests/help02.at: New file.
+	* dicod/tests/help03.at: New file.
+	* dicod/tests/info.at: New file.
+	* dicod/tests/match.at: New file.
+	* dicod/tests/nodef.at: New file.
+	* dicod/tests/nomatch.at: New file.
+	* dicod/tests/showdb.at: New file.
+	* dicod/tests/showstrat.at: New file.
+	* dicod/tests/testsuite.at: New file.
+	* dicod/tests/vis00.at: New file.
+	* dicod/tests/vis01.at: New file.
+	* dicod/tests/vis02.at: New file.
+
+	Upgrate grecs.
+
+	Minor fixes in dicod.
+
+	* dicod/acl.c (acl_entry) <dflt>: New member.
+	(_acl_check): Handle dflt specially.
+	(dicod_acl_create,parse_acl_line): allocate a copy of member
+	field in loci.
+	(_parse_from): Accept the traditional "from any" clause.
+	* dicod/commands.c (dicod_show_server): Dont print timing if
+	timing_option is not set.
+
+	Fix the docs.
+
+	* dico/cmdline.opt: Use the gnupackage option to include web
+	URL into the help output.
+	* dicod/cmdline.opt: Likewise.
+	* doc/dico.texi: Improve some wording.
+
+2012-01-28  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Document wordnet module.
+
+	Minor changes.
+
+	* modules/gcide/gcide.c (run_idxgcide): Fix error diagnostics.
+	(gcide_open_idx): don't try to open the index file if idxgcide
+	has failed.
+
+2012-01-27  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix handling of double vertical bar (\'d8) in GCIDE database.
+
+	* modules/gcide/idxgcide.l: Allow for \'d8 between <p> and <hw>.
+	Ignore it elsewhere.
+	* modules/gcide/tests/Makefile.am: Add new tests.
+	* modules/gcide/tests/def02.at: New file.
+	* modules/gcide/tests/def03.at: New file.
+	* modules/gcide/tests/def04.at: New file.
+	* modules/gcide/tests/def05.at: New file.
+	* modules/gcide/tests/dict/CIDE.A: Add double bar to a headword.
+	* modules/gcide/tests/testsuite.at: Include new tests.
+
+2012-01-26  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update .gitignore.
+
+	Remove a stray file.
+
+	Add Emacs mode markers and keywords to test cases.
+
+	Fixes in gcide indexing algorithm. Add module tests.
+
+	* modules/gcide/gcide.c (run_idxgcide): Fix idxgcide invocation.
+	* modules/gcide/idx.c (gcide_idx_file_close): Avoid coredump on
+	NULL argument.
+	* modules/gcide/idxgcide.l (i): Rename to letno. All uses updated.
+	(flush_headwords): Update headword_position even if headword is empty.
+	(yywrap): Call flush_headwords; reset headword_position to 0.
+	(main): Remove unnecessary call to flush_headwords, now that is handled
+	by yywrap.
+	* modules/gcide/tests/Makefile.am: Add new tests.
+	* modules/gcide/tests/atlocal.in (PATH): Update.
+	(DICTDIR,IDXDIR): New variables.
+	* modules/gcide/tests/all.at: New testcase.
+	* modules/gcide/tests/autoidx.at: New testcase.
+	* modules/gcide/tests/def00.at: New testcase.
+	* modules/gcide/tests/def01.at: New testcase.
+	* modules/gcide/tests/define.at: New testcase.
+	* modules/gcide/tests/exact.at: New testcase.
+	* modules/gcide/tests/idx.at: New testcase.
+	* modules/gcide/tests/prefix.at: New testcase.
+	* modules/gcide/tests/testsuite.at: Include new tests.
+	* modules/gcide/tests/dicod.cfin: New file.
+	* modules/gcide/tests/dict/CIDE.A: New file.
+	* modules/gcide/tests/dict/CIDE.B: New file.
+	* modules/gcide/tests/dict/CIDE.C: New file.
+	* modules/gcide/tests/dict/CIDE.D: New file.
+	* modules/gcide/tests/dict/CIDE.E: New file.
+	* modules/gcide/tests/dict/CIDE.F: New file.
+	* modules/gcide/tests/dict/CIDE.G: New file.
+	* modules/gcide/tests/dict/CIDE.H: New file.
+	* modules/gcide/tests/dict/CIDE.I: New file.
+	* modules/gcide/tests/dict/CIDE.J: New file.
+	* modules/gcide/tests/dict/CIDE.K: New file.
+	* modules/gcide/tests/dict/CIDE.L: New file.
+	* modules/gcide/tests/dict/CIDE.M: New file.
+	* modules/gcide/tests/dict/CIDE.N: New file.
+	* modules/gcide/tests/dict/CIDE.O: New file.
+	* modules/gcide/tests/dict/CIDE.P: New file.
+	* modules/gcide/tests/dict/CIDE.Q: New file.
+	* modules/gcide/tests/dict/CIDE.R: New file.
+	* modules/gcide/tests/dict/CIDE.S: New file.
+	* modules/gcide/tests/dict/CIDE.T: New file.
+	* modules/gcide/tests/dict/CIDE.U: New file.
+	* modules/gcide/tests/dict/CIDE.V: New file.
+	* modules/gcide/tests/dict/CIDE.W: New file.
+	* modules/gcide/tests/dict/CIDE.X: New file.
+	* modules/gcide/tests/dict/CIDE.Y: New file.
+	* modules/gcide/tests/dict/CIDE.Z: New file.
+
+	* dicod/gsasl.c (callback): Comment out spurious diagnostics.
+
+	Test gcide markup and Greek transliteration.
+
+	* configure.ac: Configure gcide tests.
+	* modules/gcide/tests/.gitignore: Update.
+	* modules/gcide/tests/Makefile.am: Add test cases.
+	* modules/gcide/tests/atlocal.in: New file.
+	* modules/gcide/tests/degcide.c: Change command line handling.
+	Use the same output algorithm as in gcide.c
+	* modules/gcide/tests/greek.at: New file.
+	* modules/gcide/tests/markup.at: New file.
+	* modules/gcide/tests/nopr.at: New file.
+	* modules/gcide/tests/testsuite.at: New file.
+	* dicod/cmdline.opt: Minor change.
+
+2012-01-25  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	gcide: add an option to suppress <pr> blocks.
+
+	* modules/gcide/ent.c: Recognize <and/ and <or/
+	* modules/gcide/gcide.c GCIDE_NOPR): New define.
+	(gcide_db)<flags>: New member.
+	(gcide_init_db): New option "suppress-pr"
+	(GOF_IGNORE): New flag.
+	(GOF_AS): Change constant.
+	(print_text): Suppress text output if GOF_IGNORE is set.
+	Set it if <pr> is encountered and GCIDE_NOPR flag is set.
+	(output_def): Initialize clos.flags with the value from db->flags.
+	* doc/dico.texi: Update.
+
+	Minor fix.
+
+	Update NEWS.
+
+	Update the docs.
+
+	Test built-in strategies.
+
+	* modules/outline/tests/Makefile.am (TESTSUITE_AT): Add new test files.
+	* modules/outline/tests/testsuite.at: Inlcude new tests.
+	* modules/outline/tests/dlev.at: New file.
+	* modules/outline/tests/dnlev.at: New file.
+	* modules/outline/tests/nlev.at: New file.
+	* modules/outline/tests/re.at: New file.
+	* modules/outline/tests/regexp.at: New file.
+	* modules/outline/tests/soundex.at: New file.
+
+	Add tests for the strategies "word", "substr" and "all".
+
+	Update auxiliary files.
+
+	Remove top-level tests dir.
+
+	* Makefile.am: Remove tests.
+	* configure.ac: Likewise.
+	* examples/Makefile.am: Add glossary.scm
+	* tests/glossary.scm: Move to examples
+	* tests/.gitignore: Remove.
+	* tests/Makefile.am: Remove.
+	* tests/dicod.cfin: Remove.
+
+	Add python module test.
+
+	* configure.ac: Configure python testdir.
+	* examples/Makefile.am: Add new files.
+	* tests/example.text: Move to examples/numerals-cz.txt
+	* tests/example.py: Move to examples/textdict.py
+	* modules/python/Makefile.am (SUBDIRS): Add tests.
+	* modules/python/tests/Makefile.am: New file.
+	* modules/python/tests/atlocal.in: New file.
+	* modules/python/tests/define.at: New file.
+	* modules/python/tests/dicod.cfin: New file.
+	* modules/python/tests/exact.at: New file.
+	* modules/python/tests/lev.at: New file.
+	* modules/python/tests/prefix.at: New file.
+	* modules/python/tests/showdb.at: New file.
+	* modules/python/tests/showinfo.at: New file.
+	* modules/python/tests/showlang.at: New file.
+	* modules/python/tests/testsuite.at: New file.
+
+	Add Levenshtein strategy tests.
+
+	* modules/guile/tests/Makefile.am: Add lev.at
+	* modules/guile/tests/lev.at: New file.
+	* modules/guile/tests/testsuite.at: Include lev.at
+	* modules/outline/tests/Makefile.am: Add lev.at
+	* modules/outline/tests/lev.at: New file.
+	* modules/outline/tests/testsuite.at: Add lev.at
+
+	Add guile tests.
+
+	* configure.ac: Configure guile tests.
+	* examples/listdict.scm: Minor change.
+	* modules/guile/Makefile.am (SUBDIR): Add tests.
+	* modules/guile/tests/.gitignore: New file.
+	* modules/guile/tests/Makefile.am: New file.
+	* modules/guile/tests/define.at: New file.
+	* modules/guile/tests/dicod.cfin: New file.
+	* modules/guile/tests/exact.at: New file.
+	* modules/guile/tests/prefix.at: New file.
+	* modules/guile/tests/showdb.at: New file.
+	* modules/guile/tests/showinfo.at: New file.
+	* modules/guile/tests/showlang.at: New file.
+	* modules/guile/tests/suffix.at: New file.
+	* modules/guile/tests/testsuite.at: New file.
+
+	Add outline tests.
+
+	* Makefile.am (SUBDIRS): Add examples.
+	* am/testdir.m4: New file.
+	* configure.ac: Configure examples/Makefile.am and outline test dir.
+	* tests/devils.out: Move to examples/devdict.out.
+	* tests/example.scm: Move to examples/listdict.scm.
+	* tests/example.db: Move to examples/numerals-pl.ldb
+	* examples/Makefile.am: New file.
+	* include/Makefile.am (noinst_HEADERS): Add testsuite.inc
+	* include/testsuite.inc: New file.
+	* lib/tests/Makefile.am: Minor change.
+	* lib/tests/atlocal.in: Likewise.
+	* modules/outline/Makefile.am (SUBDIRS): Add tests.
+	* modules/outline/tests/.gitignore: New file.
+	* modules/outline/tests/Makefile.am: New file.
+	* modules/outline/tests/atlocal.in: New file.
+	* modules/outline/tests/define.at: New file.
+	* modules/outline/tests/dicod.cfin: New file.
+	* modules/outline/tests/exact.at: New file.
+	* modules/outline/tests/prefix.at: New file.
+	* modules/outline/tests/showdb.at: New file.
+	* modules/outline/tests/showinfo.at: New file.
+	* modules/outline/tests/showlang.at: New file.
+	* modules/outline/tests/testsuite.at: New file.
+
+	Add tests for list operations.
+
+	* include/dico/list.h (dico_list_push): Push to the list tail.
+	* lib/list.c (dico_list_pop): Pop from the tail.
+	* lib/tests/.gitignore: Update.
+	* lib/tests/Makefile.am (noinst_PROGRAMS): Add listop.
+	(TESTSUITE_AT): Add list.at
+	* lib/tests/itrsh.c: New file.
+	* lib/tests/itrsh.h: New file.
+	* lib/tests/list.at: New file.
+	* lib/tests/listop.c: New file.
+	* lib/tests/testsuite.at: Inlcude list.at
+
+2012-01-24  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Improvements in gcide and wordnet modules.
+
+	* modules/gcide/gcide.c (print_text): Translate <er> tag to {...}.
+	* modules/wordnet/wordnet.c (WNDB_MERGE_DEFS): New define.
+	(wndb) <flags>: New member.
+	(wn_option) <printer>: Change signature.
+	(wn_init_db): New boolean option merge-defs instructs module to
+	merge all available definitions into one.
+	(wn_output_result,wn_result_count): Handle WNDB_MERGE_DEFS flag.
+
+	Bugfix
+
+	* lib/list.c (dico_list_pop): Fix return from uninitialized variable.
+
+	Cleanup in wordnet code.
+
+2012-01-23  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Start writing a testsuite.
+
+	* configure.ac: Add lib/tests.
+	* include/dico/utf8.h (utf8_toupper,utf8_tolower): Change signature.
+	* lib/Makefile.am (SUBDIRS): New variable.
+	* lib/utf8.c (utf8_strncasecmp): Fix boundary control.
+	(utf8_wc_strncmp,utf8_wc_strncasecmp): Likewise.
+	(utf8_toupper,utf8_tolower): Change signature.
+	* lib/tests/.gitignore: New file.
+	* lib/tests/Makefile.am: New file.
+	* lib/tests/atlocal.in: New file.
+	* lib/tests/strcasecmp.at: New file.
+	* lib/tests/strlen.at: New file.
+	* lib/tests/strncasecmp.at: New file.
+	* lib/tests/testsuite.at: New file.
+	* lib/tests/tolower.at: New file.
+	* lib/tests/toupper.at: New file.
+	* lib/tests/utf8.c: New file.
+	* lib/tests/wcstrcasecmp.at: New file.
+	* lib/tests/wcstrchr.at: New file.
+	* lib/tests/wcstrcmp.at: New file.
+	* lib/tests/wcstrncasecmp.at: New file.
+	* lib/tests/wcstrncmp.at: New file.
+	* lib/tests/wcstrstr.at: New file.
+
+	* tests/levtest.c: move to lib/tests/levtest.c
+
+	* lib/tests/dlev00.at: New file.
+	* lib/tests/dlev01.at: New file.
+	* lib/tests/lev00.at: New file.
+	* lib/tests/lev01.at: New file.
+
+	Add new utf8 functions.
+
+	* lib/utf8.c (utf8_wc_strncmp,utf8_wc_strncasecmp): New functions.
+	* include/dico/utf8.h: Update.
+
+	Provide default selectors for "exact", "prefix" and "suffix" strategies
+
+	* dicod/dicod.c: Provide default selectors for "exact","prefix"
+	and "suffix" strategies.
+	* modules/dict.org/dictorg.c (_match_simple): Take matcher as
+	argument.
+	(mod_match): Use default strategy mapper only if the module does not
+	provide such strategy.
+	* modules/outline/outline.c: Likewise.
+	* modules/wordnet/wordnet.c: Likewise.
+
+2012-01-22  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	wordnet: change processing of defines.
+
+	* modules/wordnet/wordnet.c (wndb) <search>: Remove.
+	<optc,optv>: New members.
+	(wn_free_db): Free wndb->optv.
+	(wn_option): New struct.
+	(wn_optlist): New variable.
+	(wn_init_db): Change option parsing.
+	(defn): New struct.
+	(result): Rewrite. All uses changed.
+	(wn_create_match_result): Take a pointer to struct wndb as argument.
+	(wn_is_defined): New function.
+	(wn_foreach_db): Rewrite. Change signature. All uses changed.
+	(wn_define): Rewrite.
+	(format_defn): New function.
+	(format_synset): Remove.
+	(wn_output_result): Rewrite result_define part.
+
+	Improve dico_list API.
+
+	* include/dico/list.h (dico_iterator_remove_current): void.
+	* lib/list.c (dico_iterator_remove_current): Change return type.
+	Call _dico_list_remove_item to do the job.
+	(_dico_list_remove_item): New static.
+	(_dico_list_remove): Call _dico_list_remove_item.
+
+2012-01-21  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Add wordnet module.
+
+	* configure.ac: New option --with-wordnet.
+	* modules/Makefile.am [WORDNET_COND] (WORDNET_DIR): New variable.
+	(SUBDIRS): Add WORDNET_DIR.
+	* modules/wordnet/Makefile.am: New file.
+	* modules/wordnet/wordnet.c: New file.
+
+	Fix dico_list_insert_sorted.
+
+	* lib/list.c (_dico_list_insert_sorted): Fix coredump.
+	If flags are set and the matching item is already in the list, return
+	EEXIST.
+
+2012-01-20  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	gcide: support <xtil> tags.
+
+2012-01-19  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update the docs.
+
+	Assorted fixes.
+
+	* dicod/main.c (main): Call dicod_log_setup after config_parse, so that
+	configuration settings take effect.
+	* modules/gcide/idxgcide-cli.opt: --dry-run implies --verbose.
+
+2012-01-18  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfixes.
+
+	* dicod/Makefile.am: Restore incdir.
+	* dicod/server.c (open_sockets): Fix default sockaddr initialization.
+
+	gcide: Fix umlauts, remove CRs.
+
+	* modules/gcide/ent.c: Fix umlauts ("xum", not "xuml")
+	* modules/gcide/markup.l: Remove CRs.
+
+	Bugfix
+
+	* modules/gcide/gcide.c (gcide_output_result): Fix match output.
+
+	Improve idxgcide command line interface.
+
+	* modules/gcide/.gitignore: Update.
+	* modules/gcide/Makefile.am (idxgcide_SOURCES): Add idxgcide-cli.h
+	Build it from idxgcide-cli.opt.
+	(idxgcide_LDADD): Add libgnu and libxdico.
+	* modules/gcide/idxgcide-cli.opt: New file.
+	* modules/gcide/idxgcide.l: Include idxgcide-cli.h, use
+	get_options for command line parsing.
+
+	* po/POTFILES.in: Add files from modules/gcide.
+
+	Improve greek transliterator.
+
+	* configure.ac: Build modules/gcide/tests/Makefile.
+	* modules/gcide/Makefile.am (SUBDIRS): Add tests.
+	* modules/gcide/ent.c: Add digamma.
+	* modules/gcide/gcide.c (print_text): Fix output of quotes.
+	* modules/gcide/grk.c: Add more sequences.
+	* modules/gcide/markup.l: Fix handling of comments.
+	* modules/gcide/degcide.c: Move to tests.
+	* modules/gcide/greek.c: Likewise.
+	* modules/gcide/tests/exgrk.c: New file.
+
+	Convert Greek transliteration back to Greek. Remove markup when printing definitions.
+
+	* modules/gcide/Makefile.am (libgcide_la_SOURCES): Add grk.c
+	(noinst_PROGRAMS): Add greek.
+	* modules/gcide/ent.c: Fix a typo.
+	* modules/gcide/gcide.c (output_def): Convert markup to plain text.
+	* modules/gcide/gcide.h (gcide_grk_to_utf8): New proto.
+	* modules/gcide/grk.c: New file.
+	* modules/gcide/greek.c: New file.
+	* modules/gcide/markup.l: Preserve ["*'] in <grk> tags.
+
+	Implement GCIDE markup parser.
+
+	* lib/list.c (dico_list_pop): Return NULL if the list is empty.
+	* modules/gcide/Makefile.am (libgcide_la_SOURCES): Add markup.l
+	* modules/gcide/degcide.c: New file.
+	* modules/gcide/markup.l: New file.
+	* modules/gcide/gcide.h: Include dico.h
+	(gcide_content_type): New enum.
+	(gcide_tag,gcide_parse_tree): New structs.
+	(gcide_markup_debug): New extern.
+	(gcide_markup_parse,gcide_parse_tree_free)
+	(gcide_parse_tree_inorder): New functions.
+
+2012-01-17  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Allow simple-statement form for load-module.
+
+	* dicod/main.c (load_module_cb): Accept simple statement form with
+	string or list as argument.
+	* NEWS: Document new usage.
+	* doc/dico.texi: Likewise.
+	* tests/dicod.cfin: Use new syntax.
+	* README: Update.
+
+	gcide: handle entities in headwords.
+
+	* modules/gcide/ent.c: Bugfixes.
+	* modules/gcide/idxgcide.l: Handle <../ entities in headwords.
+	Report unknown entities.
+
+	gcide: support alternative headwords.
+
+	* modules/gcide/idxgcide.l (endtag): New variable.
+	(headword): Remove global.
+	(flush_headwords): Initialize headword.
+	(BEGIN_HEADWORD): New macro.
+	<lex rules>: Handle asp and altname tags.
+	(main): Call flush_headwords unconditionally.
+
+2012-01-16  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Add GCIDE support.
+
+	* configure.ac (AC_CONFIG_FILES): Add modules/gcide/Makefile.
+	* modules/Makefile.am (SUBDIRS): Add gcide.
+	* modules/gcide/.gitignore: New file.
+	* modules/gcide/Makefile.am: New file.
+	* modules/gcide/gcide.c: New file.
+	* modules/gcide/gcide.h: New file.
+	* modules/gcide/idx.c: New file.
+	* modules/gcide/idxgcide.l: New file.
+	* modules/gcide/webchr.c: New file.
+	* modules/gcide/ent.c: New file.
+
+	* modules/template.c: Bugfixes.
+
+2012-01-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Updates.
+
+	* THANKS: Update.
+	* modules/template.c: Add result_headers method.
+	* modules/template.scm: Likewise.
+
+2012-01-13  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Assorted fixes.
+
+	* modules/ldap/ldap.c (_dico_ldap_expand_user): Use wordsplit.
+	* grecs: Upgrade.
+	* doc/dico.texi: Update.
+
+2012-01-10  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor change.
+
+	* dicod/main.c (config_parse): Exit if grecs_error_count is gt 0.
+
+	Minor change
+
+	Raise version number to 2.1.90; Other housekeeping.
+
+	* NEWS: Raise version number.
+	* configure.ac: Likewise.
+	* doc/Makefile.am (check-options): Fix second regexp.
+	* doc/dico.texi: Use @WRITEME to mark empty nodes.
+	* doc/rendition.texi: Delete (complements 50c7e46c).
+
+	Use wordsplit instead of dico_argcv.
+
+	* dico/autologin.c (parse_autologin): Rewrite using wordsplit.
+	* dico/dico-priv.h: Include wordsplit.h
+	* dicod/dicod.h: Likewise.
+	* dico/saslauth.c (get_implemented_mechs): Use wordsplit.
+	* dico/shell.c (_command_completion): Likewise.
+	* dicod/gsasl.c (register_sasl): Likewise.
+	* dicod/loader.c (dicod_load_module): Likewise.
+	* dicod/main.c (set_dict_handler): Likewise.
+	* modules/guile/guile.c (guile_load): Likewise.
+	* modules/ldap/ldap.c (db_open): Likewise.
+	* modules/guile/Makefile.am (INCLUDES): Add @GRECS_INCLUDES@
+	* modules/ldap/Makefile.am: Likewise.
+	* modules/outline/Makefile.am: Likewise.
+	* modules/outline/outline.c (outline_lang): Likewise.
+
+	Incorporate Grecs into libdico.
+
+	* grecs: Update.
+	* configure.ac (GRECS_SETUP): Use the "shared" option.
+	* lib/Makefile.am (libdico_la_LIBADD): Incorporate libgrecs
+	* dico/Makefile.am (LDADD): Remove @GRECS_LDADD@.
+	* dicod/Makefile.am: Likewise.
+
+	Minor changes.
+
+	* grecs: Update.
+	* po/POTFILES.in: Update.
+
+	Install pp-setup from Grecs.
+
+	* configure.ac (GRECS_SETUP): Use std-pp-setup option.
+	* dicod/Makefile.am: Remove pp-setup.
+	* dicod/pp-setup: Remove.
+
+2012-01-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Use Grecs instead of the built-in configuration parser.
+
+	Grecs is a convenience library for parsing sructured configuration files.
+	It derived from the dicod and wydawca parsers in 2009. It has already
+	reached stable status and is now used by quite a few other projects.
+
+	* .gitmodules: Add Grecs
+	* Makefile.am: Likewise.
+	* configure.ac: Likewise.
+	* dico/Makefile.am (LDADD,INCLUDES): Add Grecs.
+	* dico/cmdline.opt (OPTIONS_BEGIN): Rewrite.
+	* dicod/Makefile.am (dicod_SOURCES): Remove pp.c, config-format.c,
+	config-gram.y and config-lex.l. Add lint.c
+	* dicod/acl.c: Use Grecs.
+	* dicod/alias.c (alias)<kw>: Remove const.
+	<locus>: Change type.
+	(alias_install): Allocate kw.
+	* dicod/cmdline.opt (OPTIONS_BEGIN): Rewrite.
+	* dicod/config-format.c: Remove.
+	* dicod/config-gram.y: Remove.
+	* dicod/config-lex.l: Remove.
+	* dicod/lint.c: New file.
+	* dicod/dicod.h: Remove configuration parser types and definitions.
+	* dicod/gsasl.c (cmp_names): List contains now pointers to strings.
+	* dicod/loader.c (_add_load_dir): Likewise.
+	* dicod/main.c: Rewrite configuration parser using Grecs.
+	* dicod/server.c (open_sockets): Operate on grecs_sockaddr structs.
+	* gnulib.modules (gitlog-to-changelog): Remove.
+	* include/appi18n.h: Redefine _ and N_ only if necessary.
+	* utils/Makefile.am (EXTRA_DIST): Remove getopt.m4
+	* utils/getopt.m4: Remove.
+	* README-hacking: Update.
+
+	Implement "word" matching strategy.
+
+	* configure.ac: Build modules/word/Makefile.
+	* modules/Makefile.am (SUBDIRS): Add word.
+	* modules/word/Makefile.am: New file.
+	* modules/word/word.c: New file.
+	* doc/dico.texi: Document new module.
+
+	Move UTF-8 tokenizer to libdico.
+
+	* lib/tokenize.c: Rewrite.
+	* lib/xtkn.c: New file.
+	* lib/Makefile.am (libdico_la_SOURCES): Add tokenize.c
+	(libxdico_a_SOURCES): Remove tokenize.c, add xtkn.c.
+
+	* include/dico.h: Include dico/tokenize.h
+	* include/dico/tokenize.h: New file.
+	* include/dico/Makefile.am (pkginclude_HEADERS): Add tokenize.h
+	* include/xdico.h: Remove xdico tokenizer interface.
+	(xdico_tokenize_string): New proto.
+
+	* dico/connect.c (_result_parse_def): Use new tokenizer.
+	* dico/shell.c (parse_script_file): Likewise.
+	* dicod/dicod.c (dicod_loop): Likewise.
+	* dicod/config-lex.l (unescape_to_obstack): Use dico_unquote_char.
+
+	Happy GNU Year
+
+2011-10-08  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Use Imprimatur to check the docs.
+
+	* .gitmodules: Add imprimatur.
+	* Makefile.am (ACLOCAL_AMFLAGS,SUBDIRS): Add imprimatur.
+	* configure.ac: Call IMPRIMATUR_INIT.
+	* doc/Makefile.am: Use imprimatur. Drop files that are
+	no longer necessary.
+	* doc/check-docs.sh: Delete.
+	* doc/mastermenu.el: Delete.
+	* doc/untabify.el: Delete
+
+	* doc/dico.texi: Fix sentence spacing, use @: where appropriate.
+	* doc/strftime.texi: Likewise.
+
+2011-02-15  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfixes.
+
+	* configure.ac (AC_CHECK_HEADERS): Check for sys/socket.h and socket.h.
+	* dicod/Makefile.am: Add $(AM_V_GEN) where needed.
+	* tests/Makefile.am: Likewise.
+	* dicod/main.c (main): Flush capabilities after loading all modules and
+	configuring authentication database.  Take care not to switch to syslog
+	if --lint was given.
+
+2010-11-13  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor changes.
+
+	New strategy: pcre (perl-compatible regex).
+
+	* am/lib.m4: New file
+	* configure.ac: Check for libpcre.
+	* modules/pcre/Makefile.am: New file.
+	* modules/pcre/pcre.c: New file.
+	* modules/Makefile.am [PCRE_COND] (PCRE_DIR): Initialize to pcre.
+	(SUBDIRS): Add $(PCRE_DIR).
+
+2010-11-13  Wojciech Polak  <polak@gnu.org>
+
+	Switch to Django's cache framework (from direct Memcached).
+
+	* dicoweb/dicoclient/dicoclient.py: Minor code changes.
+	* dicoweb/dicoclient/dicoshell.py: Likewise.
+	* dicoweb/settings-sample.py: Add sample CACHE_BACKEND.
+	* dicoweb/views.py: Use Django's cache framework.
+
+2010-11-13  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix.
+
+	* dicod/regex.c (basic_flags): Remove REG_EXTENDED.
+
+2010-08-19  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Partially revert commit c4db582a8c.
+
+	As reported by Ahmed, it actually broke the previous solution.
+	See http://mail.gnu.org.ua/mailman/listarchive/bug-dico/last/msg00000.html,
+	for details.
+
+2010-08-01  Wojciech Polak  <polak@gnu.org>
+
+	Add "robots" meta value depending on the context.
+
+	* dicoweb/templates/base.html: Add page.robots.
+	* dicoweb/views.py: Set "robots" value.
+
+2010-07-10  Wojciech Polak  <polak@gnu.org>
+
+	Minor changes in mediawiki.py.
+
+2010-07-10  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix.
+
+	* app/python/mediawiki.py: Enforce utf-8 encoding.
+
+2010-07-07  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Version 2.1
+
+	* NEWS, README, THANKS: Update.
+	* configure.ac: Raise version number.
+	* lib/Makefile.am (libdico_la_LDFLAGS): Update.
+
+	Minor change
+
+	* modules/python/python.c: Fix indentation.
+
+	Improve mediawiki matching.
+
+	* app/python/mediawiki.py (match_word): Use strat selector,
+	if it is available. Return sorted results. Make sure the
+	[0] of the result is 'match' (to avoid misinterpreting
+	eventual match results for the word 'define').
+
+	Minor changes
+
+	* NEWS: Update.
+	* modules/template.scm (match-word): Fix definition.
+	* po/POTFILES.in: Add new files.
+	* tests/Makefile.am (EXTRA_DIST): Add example.py
+
+2010-07-02  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Version 2.0.92
+
+	* configure.ac, NEWS: Version 2.0.92
+	* doc/dico.texi: Document LDAP.
+	* dicod/main.c: Minor fix.
+
+	Fix typos in debugging messages.
+
+	Use encrypted passwords for authentication, if the underlying GSASL mechanism allows that.
+
+	* configure.ac: Cjeck for crypt.h and -lcrypt.
+	* dicod/ckpass.c: New file.
+	* dicod/Makefile.am (dicod_SOURCES): Add ckpass.c
+	* dicod/dicod.h (dicod_check_password): New proto.
+	* dicod/gsasl.c (cb_validate): Use dicod_check_password
+	instead of comparing plaintext passwords.
+
+	* dicod/ident.c (decode64_buf): Remove.
+	(ident_decrypt): Use dico_base64_decode.
+	* dicod/main.c (user_db_config): Don't attempt to
+	open uninitialized database.
+
+	* gnulib.modules: Add crypto/sha1
+
+	* include/dico/filter.h (dico_base64_decode)
+	(dico_base64_encode, dico_base64_input): Change signature.
+	(dico_qp_decode, dico_qp_encode): Remove.
+	* lib/base64.c (dico_base64_input): Rewrite.
+	(dico_base64_decode): Rename to static _flt_base64_decode.
+	(dico_base64_encode): Rename to static _flt_base64_encode.
+	(dico_base64_decode,dico_base64_encode): New functions.
+	* lib/qp.c (dico_qp_decode, dico_qp_encode): Static.
+
+2010-07-01  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfix
+
+	* modules/ldap/ldap.c (db_get_groups): Fix typo.
+
+	Implement LDAP user database.
+
+	* configure.ac: Check for openldap.
+	* dicod/Makefile.am (dicod_SOURCES): Remove udb.c
+	* dicod/udb.c: Move to lib (with changes).
+	* dicod/auth.c: Update calls to dico_udb_ * functions.
+	* dicod/gsasl.c: Likewise.
+	* dicod/dbtext.c (dbtext_open): Add 3rd parameter.
+	(text_udb_def): Change type.
+	* dicod/dicod.h (udb_def): Remove struct.
+	(dicod_user_db_t)
+	(user_db, udb_init, udb_create, udb_open)
+	(udb_close, udb_get_password, udb_get_groups)
+	(udp_define): Remove. See dico/udb.h
+
+	* dicod/loader.c (dicod_load_module): Minor fix.
+	* dicod/main.c (user_db): Change data type.
+	(kwd_user_db): New keyword "options".
+	(user_db_config): Do not create user database at
+	once, wait untill the modules have been loaded.
+	(init_user_db): New function.
+	(main): Call init_user_db.
+	* dicod/ostream.c (ostream_write): Remove unused
+	variable.
+
+	* include/dico.h: Include udb.h
+	* include/dico/Makefile.am (pkginclude_HEADERS): Add udb.h
+	* lib/Makefile.am (libdico_la_SOURCES): Add udb.c.
+
+	* modules/Makefile.am [LDAP_COND] (LDAP_DIR): New variable.
+	(SUBDIRS): Add LDAP_DIR
+
+	* modules/ldap/ldap.c: New file.
+	* modules/ldap/Makefile.am: New file.
+
+2010-06-30  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Allow the use of an external strategy as the default one.
+
+	* dicod/main.c (default_strategy_name): New variable.
+	(set_defstrat): Remove.
+	(keywords): Change handling of the default-strategy statement.
+	(main): Set default strategy after all modules have been loaded,
+	to allow for using external strategies.
+
+2010-06-29  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update docs.
+
+2010-06-28  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix.
+
+	* am/gsasl.m4: Use AC_CACHE_VAL instead of AC_CACHE_CHECK.
+
+2010-06-27  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* configure.ac: Distribute bz2 and xz tarballs.
+
+	Improve the previous commit.
+
+	* include/dico/strat.h (dico_key): New struct.
+	(dico_key_deinit, dico_key_init)
+	(dico_key_match): New proto.
+	* include/dico/types.h (dico_select_key): Moved to
+	strat.h as dico_key, with edits.
+	(dico_select_t): Change signature.
+
+	* lib/key.c: New file.
+	* lib/Makefile.am (libdico_la_SOURCES): Add key.c
+
+	* modules/dict.org/dictorg.c: Reflect recent changes.
+	Use dico_key_* functions.
+	* modules/guile/guile.c: Likewise.
+	(dico-key?, dico-key->word, dico-make-key): New functions.
+	* modules/outline/outline.c: Reflect recent changes.
+	Use dico_key_* functions.
+	* modules/python/python.c: Reflect recent changes.
+	Use dico_key_* functions.
+
+	* dicod/dicod.c (soundex_sel): Reflect recent changes.
+	* dicod/lev.c (lev_sel): Likewise.
+	* dicod/regex.c (regex_sel): Likewise.
+	* modules/stratall/stratall.c: Likewise.
+	* modules/substr/substr.c: Likewise.
+	* app/python/mediawiki.py (match_word): Likewise.
+	* tests/example.scm: Likewise.
+
+	* tests/dicod.cfin: Load stratall and substr.
+
+	Change strategy selector calling convention.
+
+	Strategy selectors often need to keep selection specific data, i.e.
+	such data that remain in effect (although not necessarily invariant)
+	between DICO_SELECT_BEGIN and DICO_SELECT_END calls. These data do
+	not belong to the strategy itself, therefore it is necessary to introduce
+	a specific data type for them.
+
+	An example of a strategy that uses this approach is regexp, which needs to
+	store the compiled expression somewhere.
+
+	* dicod/dicod.c (soundex_sel): Change signature. Use
+	key->call_data to keep call-specific data.
+	* dicod/lev.c (lev_sel): Likewise.
+	* dicod/regex.c (regex_sel): Likewise.
+	* include/dico/types.h (dico_select_key): New struct.
+	(dico_select_t): Change signature. Take struct dico_select_key *
+	as 2nd arg.
+	* modules/dict.org/dictorg.c (_match_all): Rewrite to use new
+	calling sequence.
+	* modules/guile/guile.c (_guile_select_key_tag): New tag.
+	(dico_scm_from_select_key): New function.
+	(_guile_select_key_free, _guile_select_key_print): New methods.
+	(_guile_init_select_key): New function.
+	(dico-select-key?, dico-select-key-word): New functions.
+	(dico-strat-select?): Key is either a string or a selection key.
+	(_guile_selector): Rewrite to use new calling sequence.
+	(mod_match): Likewise.
+	* modules/outline/outline.c (outline_match_all): Rewrite to use new
+	calling sequence.
+	* modules/python/python.c (PySelectionKey): New object.
+	(strat_select_method): Rewrite to use new
+	calling sequence.
+	(_python_selector): Likewise.
+	(mod_match): Likewise.
+	* modules/stratall/stratall.c (all_sel): Rewrite to use new
+	calling sequence.
+	* modules/substr/substr.c (substr_sel): Likewise.
+
+	* tests/example.py (match_word): 3rd arg is a selection key.
+	* tests/example.scm (match-selector): 3rd arg is a selection key.
+	(match-word): Update.
+
+	Move Guile support to gint.
+
+	* am/guile.m4: Remove
+	* gint: New module.
+	* bootstrap.conf: Unconditionally call git submodules.
+	* Makefile.am: Use gint.
+	* configure.ac: Likewise.
+	* modules/guile/Makefile.am: Likewise.
+	* modules/guile/guile.c: Use SCM_DEFINE_PUBLIC everywhere.
+	(_guile_init_funcs): Include guile.x instead of declaring the
+	stuff manually.
+	(all functions): Use lowercase parameter names. Refer to them
+	in docstrings using @var.
+	* modules/guile/.gitignore: New file.
+
+	Bugfixes.
+
+	* include/dico/utf8.h (utf8_wc_strchr)
+	(utf8_wc_strchr_ci, utf8_wc_strstr): Fix return types.
+	* lib/utf8.c: Likewise.
+
+	Improve conditional module builds.
+
+	* configure.ac (GUILE_COND,PYTHON_COND): New conditionals.
+	(BUILD_DICO_GUILE_MODULES)
+	(BUILD_DICO_PYTHON_MODULES): Remove.
+	* modules/Makefile.am [GUILE_COND]: Define GUILE_DIR.
+	[PYTHON_COND]: Define PYTHON_DIR.
+	(SUBDIRS): add $(GUILE_DIR) and $(PYTHON_DIR) instead
+	of the literal dirs.
+	* modules/guile/Makefile.am: Define mod_LTLIBRARIES unconditionally.
+	* modules/python/Makefile.am: Likewise.
+
+	Implement `substr' strategy. Re-implement the `all' strategy as a module.
+
+	* configure.ac: Version 2.0.91
+	(AC_CONFIG_FILES): Add Makefiles in modules/stratall/
+	and modules/substr.
+	* NEWS: Version 2.0.91
+	* dicod/dicod.c: Remove the built-in `all' strategy.
+	* dicod/loader.c (dicod_load_module0): If DICO_CAPA_NODB
+	capability is set, the module must have only the dico_init
+	method.
+	(dicod_init_database): Prohibit the use of DICO_CAPA_NODB
+	modules.
+	* include/dico/types.h (DICO_CAPA_NODB): New capability.
+	* include/dico/utf8.h (utf8_wc_strchr, utf8_wc_strchr_ci)
+	(utf8_wc_strstr, utf8_wc_strupper)
+	(utf8_wc_strlower): New prototypes.
+	* lib/utf8.c (utf8_wc_strchr, utf8_wc_strchr_ci)
+	(utf8_wc_strstr, utf8_wc_strupper)
+	(utf8_wc_strlower): New functions.
+	* modules/Makefile.am (SUBDIRS): Add stratall and substr.
+
+	* modules/stratall/Makefile.am: New file.
+	* modules/stratall/stratall.c: New file.
+	* modules/substr/Makefile.am: New file.
+	* modules/substr/substr.c: New file.
+
+	* tests/dicod.cfin: Use prepend-load-path.
+
+	Bugfixes.
+
+	* modules/guile/guile.c (scm_dico_strat_select_p): Swap
+	key and word arguments in a call to sel.
+	* modules/python/python.c (strat_select_method): Likewise.
+	* tests/example.scm: Use srfi-1.
+	Use filter-map instead of mapcan.
+	(match-selector): : Swap key and word arguments in a call to
+	dico-strat-select?
+
+2010-06-26  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	New configuration statement "prepend-load-path".
+
+	* dicod/dicod.h (prepend_load_path): New extern.
+	* dicod/loader.c (dicod_loader_init): Add prepend_load_path
+	before DICO_MODDIR.
+	* dicod/main.c (prepend_load_path): New variable.
+	(keywords)<prepend-load-path>: New keyword.
+	* NEWS, doc/dico.texi: Update.
+
+	Fix counting output octets in dicod.
+
+	* include/dico/stream.h (DICO_IOCTL_BYTES_IN)
+	(DICO_IOCTL_BYTES_OUT): New ioctls.
+	* lib/stream.c (dico_stream_bytes_in)
+	(dico_stream_bytes_out): First try ioctl. If it
+	fails, return bytes_in (bytes_out).
+
+	* lib/fltstream.c (filter_flush): Reset level to 0.
+	(filter_ioctl): New function.
+	(filter_stream_create): Set ioctl method.
+	* lib/gsaslstr.c (_gsasl_ioctl): New function.
+	(dico_gsasl_stream): Set ioctl method.
+	* lib/xscript.c (transcript_ioctl): Handle
+	DICO_IOCTL_BYTES_IN and DICO_IOCTL_BYTES_OUT.
+
+	* dicod/loader.c (dicod_match_word_db)
+	(dicod_match_word_all, print_definitions): Update total_bytes_out.
+	* dicod/ostream.c (ostream)<nout>: New member.
+	(ostream_write): Don't modify total_bytes_out.
+	(ostream_ioctl): New function.
+	(dicod_ostream_create): Initialize nout to the number of octets
+	output so far by the transport stream.
+	Set ioctl method.
+
+2010-06-25  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfixes.
+
+	* dicod/loader.c (dicod_load_module0): Save handle.
+	* lib/stream.c (dico_stream_seek, dico_stream_read)
+	(dico_stream_write): Return immediately if the stream
+	is in permanent error state.
+	* lib/xscript.c (transcript_close): Close both underlying
+	streams.
+
+2010-05-24  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Speed up output procedure in dictorg.
+
+	Provide a general-purpose mechanism to address iterators by item
+	number in O(|n-pos|) time.
+
+	* include/dico/list.h (dico_iterator_prev)
+	(dico_iterator_item, dico_iterator_position): New prototypes.
+	* lib/list.c (list_entry) <prev>: New member.
+	(iterator) <pos>: New member.
+	(dico_iterator_position): New function.
+	(_iterator_increase_pos): New static.
+	(dico_iterator_first): Initialize pos to 0.
+	(dico_iterator_next): Increase pos.
+	(dico_iterator_prev,dico_iterator_item): New function.
+	(_dico_list_append): Initialize ep->prev.
+	(_dico_list_prepend): Initialize ep->prev. Call
+	_iterator_increase_pos to tell iterators to update their recorded positions.
+	(_dico_list_remove): Rewrite removal code using next & prev pointers.
+	(_dico_list_insert_sorted): Update next & prev pointers.
+	Call _iterator_increase_pos.
+	* modules/dict.org/dictorg.h (result) <itr>: New member.
+	* modules/dict.org/dictorg.c (common_match)
+	(suffix_match, _match_all): Initialize itr.
+	(mod_output_result): Use iterator to avoid rescanning the list
+	on each call.
+	(mod_free_result): Destroy the iterator.
+
+	* lib/utf8.c (utf8_strcasecmp, utf8_strncasecmp): Break the loop if
+	alen or blen is zero. This means that one of the operands is not
+	utf8, but try to return meaningful value anyway.
+
+2010-05-23  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Housekeeping work.
+
+	* NEWS: Document new features and bugfixes.
+	* dico/.gitignore, tests/.gitignore: Update.
+
+2010-05-23  Wojciech Polak  <polak@gnu.org>
+
+	Improve Dicoweb.
+
+	* dicoweb/dicoclient/dicoclient.py (define): Allow for empty
+	descriptions in response.
+	* dicoweb/static/opensearch.xml: Move to templates and make it dynamic.
+	* dicoweb/views.py (opensearch): Add view.
+
+2010-05-23  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Filter out duplicate matches.
+
+	* include/dico/list.h (DICO_LIST_COMPARE_HEAD)
+	(DICO_LIST_COMPARE_TAIL): New define.
+	(dico_list_set_flags)
+	(dico_list_get_flags): New proto.
+	* lib/list.c (dico_list)<flags>: New member.
+	(dico_list_create): Initialize flags.
+	(dico_list_set_flags)
+	(dico_list_get_flags): New functions.
+	(_dico_list_append,_dico_list_prepend): New auxiliary
+	functions.
+	(dico_list_append,dico_list_prepend): Rewrite. Use
+	flags to define whether to compare the data with
+	the tail (head). Set errno to EEXIST and return 1
+	if attempting to add a duplicate entry.
+	(_dico_list_insert_sorted): Use _dico_list_append and
+	_dico_list_prepend instead of their public counterparts.
+	* modules/dict.org/dictorg.c (common_match): Take additional
+	argument that defines whether duplicate entries should be
+	filtered out. All callers updated.
+	(suffix_match,_match_all): Filter out duplicates.
+	(mod_define): Call common with unique=0.
+
+2010-05-23  Wojciech Polak  <polak@gnu.org>
+
+	Minor Dicoweb changes.
+
+	* dicoweb/settings.py: Rename to settings-sample.py
+	* dicoweb/static/dicoweb.js: Bugfix.
+	* dicoweb/static/dicoweb.css: Minor changes.
+	* dicoweb/templates/base.html: Likewise.
+	* dicoweb/templates/index.html: Likewise.
+
+2010-05-23  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fixes.
+
+	* configure.ac: Version 2.0.90
+	Call gl_INIT before checking for data types.
+	Check for socklen_t.
+	* NEWS: Version 2.0.90
+	* dico/connect.c (dict_auth): Return 1 if everything else
+	fails.
+	* dico/dico-priv.h (print_version, print_version_only): New protos.
+	* dicod/dicod.h (server_addrlen, client_addrlen): Change type to
+	socklen_t.
+	* dicod/server.c (dicod_server): Change type of addrlen to
+	socklen_t.
+	* include/dico/utf8.h (utf8_char_width, utf8_iter_first)
+	(utf8_wctomb, utf8_symcmp, utf8_symcasecmp, utf8_strcasecmp)
+	(utf8_strncasecmp): Use (unqualified) char in argument lists.
+	All uses updated.
+	* lib/utf8.c: Likewise.
+
+	* dico/lookup.c: Silence gcc warnings about diff in signedness.
+	* dicod/ident.c: Likewise.
+	* lib/tokenize.c: Likewise.
+	* lib/xstream.c: Likewise.
+	* modules/dict.org/dictorg.c: Likewise.
+	* modules/dict.org/dictstr.c: Likewise.
+	* modules/outline/outline.c: Likewise.
+
+	* modules/guile/guile.c: Remove unused functions and variables.
+
+	* utils/getopt.m4 (print_help): Avoid gcc warning about condition
+	always true.
+
+	Fix indentation in lib/utf8.c
+
+	Avoid using fixed-size buffer in dictorg.c.
+
+	Fixes bug reported by Marc Dequènes (debian #582708).
+
+	* modules/dict.org/dictorg.c (read_index): Use dico stream instead
+	of FILE to avoid using fixed-size buffer.
+
+	Fix improper handling of conversion errors in levenshtein.c (debian #582692)
+
+	* include/dico/utf8.h (utf8_mbstr_to_wc)
+	(utf8_mbstr_to_norm_wc): Change signature.
+	* lib/utf8.c (utf8_mbstr_to_wc)
+	(utf8_mbstr_to_norm_wc): Take additional return argument.
+	Return error code. All callers updated.
+	* lib/levenshtein.c (dico_levenshtein_distance): conv
+	returns non-zero (not necessarily negative) value on errors.
+
+	Minor fixes.
+
+	* include/dico/strat.h (dico_get_default_strategy): Remove const
+	from return type.
+	* lib/strat.c (dico_get_default_strategy): Likewise.
+
+	* lib/fdstream.c (fd_seek): Fix error condition.
+	* lib/fltstream.c (filter_write): Return error code.
+	* lib/stream.c (dico_stream_read_unbuffered): Initialize rc.
+
+2010-05-01  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfixes.
+
+	* dicod/main.c: Fix recursive invocation.
+	* dicod/pp.c (preprocess_config): Terminate debugging message with a \n.
+
+2010-04-07  Wojciech Polak  <polak@gnu.org>
+
+	Minor fix.
+
+	* dicoweb/views.py: Fix the list of accepted languages.
+
+2010-03-29  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix.
+
+	* doc/dico.texi: Fix typos and improper uses of @pxref.
+
+2010-03-26  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Normalize exit codes.
+
+	* gnulib.modules: Add sysexits
+	* lib/xalloc-die.c: Exit with code EX_OSERR.
+	* utils/getopt.m4 (GETOPT): Provide optional `opterr' argument.
+
+	* dicod/cmdline.opt (get_options): Exit with EX_USAGE in
+	case of unhandled option.
+	* dicod/config-lex.l: Move includes to the '%top' block.
+	Define YY_EXIT_FAILURE.
+	* dicod/dicod.c (sig_alarm): Exit with EXIT_TIMEOUT.
+	* dicod/dicod.h: Include sysexits.h.
+	* dicod/main.c (main): Normalize exit codes.
+	* dicod/pp.c: Likewise.
+	* dicod/server.c: Normalize exit codes.
+	(print_status): Handle 'time out' exit code separately.
+	Print informational message.
+	* doc/dico.texi (Exit Codes): New section.
+	* NEWS: Update.
+
+2010-03-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Do not use deprecated/internal Guile features.
+
+	* am/guile.m4 (MU_CHECK_GUILE): Remove leftovers
+	from pre-1.8 times.
+	Check for SCM_DEVAL_P, SCM_BACKTRACE_P,
+	SCM_RECORD_POSITIONS_P and SCM_RESET_DEBUG_MODE,
+	define GUILE_DEBUG_MACROS if all these are available.
+	Check for scm_t_off (Guile 1.9)
+	* modules/guile/guile.c (apply_data): New struct.
+	(apply_catch_body): New function.
+	(eval_catch_body): Remove.
+	(guile_call_proc): Use apply_catch_body as body.
+	![HAVE_SCM_T_OFF]: Define scm_t_off.
+	(_make_dico_port): Rewrite using scm_new_port_table_entry.
+	(_dico_port_seek): Change prototype. Second arg is scm_t_off.
+	(mod_init)[GUILE_DEBUG_MACROS]: Protect the use of
+	SCM_DEVAL_P and friends.
+	(all functions): Use scm_from_locale_string instead
+	of the deprecated scm_makfrom0str.
+
+2010-03-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Keep namespace clean.
+
+	* modules/dict.org/crc.h: Prefix all function
+	names with `dicod_' to avoid name clashes.
+
+2010-01-02  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update copyright years.
+
+	Happy GNU Year!
+
+2009-11-05  Wojciech Polak  <polak@gnu.org>
+
+	Improve mediawiki.py
+
+	* app/python/mediawiki.py: Drop ns_mediawiki usage.
+
+2009-10-29  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix doc/Commit
+
+	* doc/Commit (gray_print_section): Output anchors before
+	chapter/section/etc. titles, so that the heading menu in
+	monolithic document works properly.
+
+2009-10-23  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Documentation fixes.
+
+	* Config: New file.
+	* doc/Makefile.am: Make manual a phony target.
+	Add man-tar rule.
+	* doc/dico.texi: Minor changes to improve html
+	output.
+	* doc/gendocs_template: Rewrite for the new site
+	design.
+
+2009-10-18  Wojciech Polak  <polak@gnu.org>
+
+	Simplify dicoweb.wsgi.
+
+2009-10-16  Wojciech Polak  <polak@gnu.org>
+
+	Simplify dicoweb settings.
+
+	* dicoweb/settings.py: Automatically determine paths.
+
+2009-10-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix ACL code.
+
+	* dicod/acl.c (_parse_sockaddr): Fix netmask calculation.
+	(_check_sockaddr): Fix comparison for AF_INET.
+
+2009-09-27  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor changes
+
+	* Makefile.am: Update ChangeLog rule
+	* configure.ac: Require autoconf 2.63, automake 1.11.
+	Enable silent rules.
+	* dico/connect.c (dict_match): Properly handle successful return
+	from XLEV command.
+
+2009-03-29  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Version 2.0
+
+	* configure.ac: Version 2.0
+	* Makefile.am (make-ChangeLog): Remove rule
+	* NEWS, README: Update.
+	* doc/dico.texi: Update.
+
+2009-03-28  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix
+
+2009-03-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fixes
+
+2009-03-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Use git:// url for wit
+
+	Various organizational changes
+
+	* bootstrap.conf: Init and update wit submodule.
+
+	* configure.ac: Version 1.99.97
+	(AC_INIT): Spell full name as 'GNU dico' (lowercase), in order to help
+	the `po' machinery recognize the project as official GNU one
+	(po/Makefile.in.in uses a primitive `grep 'GNU @PROJECT@' ../*', so
+	actually any file containing this string would do).
+	* NEWS: Update.
+
+	* Makefile.am (SUBDIRS): Remove makedict. It is not yet needed.
+	(EXTRA_DIST): Add app and dicoweb.
+	* po/POTFILES.in: Remove makedict.
+	* dicod/acl.c: Provide a translators comment.
+	* modules/dict.org/dictorg.c: Fix typo.
+
+2009-03-08  Wojciech Polak  <polak@gnu.org>
+
+	Add mediawiki.py -- a Python module for a remote access to Wikipedia.
+
+	Add Dicoweb -- a web search interface.
+
+2009-01-13  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Change documentation license to GFDLv1.3+
+
+2008-12-20  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix.
+
+	* dico/cmdline.opt: Fix --sasl and --nosasl definitions.
+	Remove --strats alias. Use --strat(egies) instead.
+
+2008-12-19  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix qp
+
+	Base64 fix.
+
+	* lib/base64.c (dico_base64_encode): Fix calculation of the number of
+	consumed bytes.
+
+	Fix filter encoding.
+
+	* include/dico/filter.h (filter_xcode_t): Remove last two parameters.
+	Filter stream is now responsible for keeping track of line widths.
+	(dico_base64_decode,dico_base64_encode)
+	(dico_qp_decode,dico_qp_encode): Update.
+	* lib/base64.c (dico_base64_decode): Remove line_max and pline_len.
+	(dico_base64_encode): Likewise.
+	(dico_base64_stream_create): Set minimal input length to 3.
+	It is valid for encoding. Decoding remains a fixme.
+	* lib/qp.c (dico_qp_decode, dico_qp_encode): Remove last two parameters.
+	* lib/fltstream.c (struct filter_stream): New members inbuf and inlevel.
+	(filter_flush): New function. Keep track of line lengths.
+	(filter_write0): New function.
+	(filter_write,filter_wr_flush): Rewrite using filter_flush.
+	(filter_stream_destroy): New method.
+	(filter_stream_create): Initialize inbuf and inlevel.
+	* dicod/ident.c: Update call to dico_base64_decode.
+
+2008-12-18  Wojciech Polak  <polak@gnu.org>
+
+	Implement dico_result_headers in Python module.
+
+	* modules/python/python.c (_assoc_to_dict, _dict_to_assoc,
+	mod_result_headers): New functions.
+	* modules/template.py (result_headers): New optional method.
+
+2008-12-17  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Allow modules to return or modify MIME headers for definition results.
+
+	* dicod/loader.c (print_definitions): Use mp->dico_result_headers
+	to get headers from the module.
+	(mime_headers_cb): Allow 8bit encoding.
+	* dicod/ostream.c: Handle 8bit encoding.
+	* include/dico/assoc.h (dico_assoc_clear, dico_assoc_dup): New prototypes.
+	* include/dico/list.h (dico_list_clear): New prototype.
+	* include/dico/types.h (struct dico_database_module): New method
+	dico_result_headers.
+	* lib/assoc.c (dico_assoc_clear, dico_assoc_dup): New functions.
+	(_dico_assoc_find_n): Allow for assoc==NULL.
+	(dico_assoc_destroy): Likewise.
+	* lib/header.c (dico_header_parse): Allow for text==NULL.
+	* lib/list.c (dico_list_clear): New function.
+	(dico_list_destroy): Use dico_list_clear.
+	(dico_iterator_remove_current): Bugfix: use default comparator.
+
+	* modules/guile/guile.c: Implement dico_result_headers.
+	* tests/example.scm: Likewise.
+
+2008-12-16  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Rewamp list and assoc support. Keep MIME headers in an assoc list.
+
+	* include/dico/assoc.h  (struct dico_assoc): Key is const
+	(DICO_ASSOC_CI, DICO_ASSOC_MULT): New defines.
+	(dico_assoc_append,dico_assoc_find_n): New functions.
+	(dico_assoc_iterator, dico_assoc_remove_n): New functions.
+	(dico_header_parse): New function.
+	* include/dico/list.h (dico_list_destroy): Change signature.
+	(dico_list_set_free_item)
+	(dico_list_set_comparator,dico_list_get_comparator): New functions.
+	(dico_list_insert_sorted): Change signature.
+	(dico_list_locate,dico_list_remove): Change signature.
+	(_dico_list_locate): New function.
+	(dico_iterator_create): Rename to dico_list_iterator
+	(dico_iterator_remove_current): Change signature and return type.
+	* dico/strat.h (dico_strat_name_cmp): Change signature.
+	(dico_strat_free): New proto.
+	* dico/types.h (dico_assoc_list_t): New type.
+	* include/xdico.h (xdico_assoc_append, xdico_assoc_add): New protos.
+
+	* lib/header.c: New file.
+	* lib/Makefile.am (libdico_la_SOURCES): Add header.c
+	* lib/assoc.c: Major rewrite.
+	* lib/list.c: Associate free_item and compare_item functions with the list.
+
+	* dicod/dicod.h (dicod_database_t): Remove content_type and
+	content_transfer_encoding. Change type of mime_headers to
+	dico_assoc_list_t.
+	(CONTENT_TRANSFER_ENCODING_HEADER): New define.
+	(dicod_ostream_create): Takes two arguments.
+
+	* dicod/ostream.c: Rewrite using dico_assoc_list_t for headers.
+
+	* dicod/main.c: Update calls to list/assoc functions.
+	(kwd_load_module): Remove content-type and content-transfer-encoding.
+	Load mime-headers through a callback, with checking.
+
+	* dicod/commands.c: Update calls to dicod_ostream_create.
+	* dicod/lang.c: Likewise.
+	* dicod/loader.c: Likewise.
+
+	* dico/autologin.c: Update calls to list/assoc functions.
+	* dico/connect.c: Likewise.
+	* dico/saslauth.c: Likewise.
+	* dicod/accesslog.c: Likewise.
+	* dicod/acl.c: Likewise.
+	* dicod/alias.c: Likewise.
+	* dicod/auth.c: Likewise.
+	* dicod/capa.c: Likewise.
+	* dicod/config-gram.y: Likewise.
+	* dicod/dbtext.c: Likewise.
+	* dicod/dicod.c: Likewise.
+	* dicod/gsasl.c: Likewise.
+	* dicod/markup.c: Likewise.
+	* dicod/pp.c: Likewise.
+	* dicod/udb.c: Likewise.
+	* lib/markup.c: Likewise.
+	* lib/strat.c: Likewise.
+	* lib/url.c: Likewise.
+	* lib/userprivs.c: Likewise.
+	* lib/utf8.c: Likewise.
+	* modules/dict.org/dictorg.c: Likewise.
+	* modules/outline/outline.c: Likewise.
+
+2008-11-30  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix output in mime mode.
+
+	* dicod/config-lex.l: Ignore m4 line statemens appearing within
+	a here-doc.
+	* dicod/loader.c (outproc_t): New argument "data"
+	(dicod_word_first, dicod_word_all): Likewise
+	(dicod_match_word_db, dicod_match_word_first): Update calls to lower-level
+	functions.
+	(dicod_match_word_all): Create a separate output stream.
+	(print_matches): Do not create ostream for each
+	database.
+
+2008-11-29  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Allow to pass additional headers for MIME output
+
+	* dicod/dicod.h (struct dicod_database): New member mime_headers
+	(dicod_ostream_create): Change signature
+	* dicod/main.c (kwd_database): New keyword "mime-headers"
+	* dicod/ostream.c (struct ostream): New member "headers".
+	(print_headers): Print ostream->headers, if given.
+	(dicod_ostream_create): Initialize ostream->headers.
+	* dicod/commands.c, dicod/lang.c, dicod/loader.c: Update calls to
+	dicod_ostream_create.
+
+	* doc/dico.texi: Minor changes.
+
+2008-11-28  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfix
+
+	* dicod/commands.c (dicod_show_server): Avoid passing NULL server_info
+	to stream_write_multiline
+	(dicod_status): Add a space before 'No timing data available'
+
+2008-10-31  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix precedence of '*' in language statements (both config and module)
+
+	Improvements in Python module
+
+	* modules/python/python.c (dico_methods): Typecast to shut up a
+	gcc warning.
+	(_tuple_to_langlist, mod_lang): Handle lists. Be more strict at
+	checking. Add more diagnostics.
+	* tests/example.py (class DicoModule): New member langlist.
+	New method lang.
+	* tests/example.text: Add language definitions.
+
+	Allow to use * as a synonym to empty list (meaning "all languages")
+
+	* dicod/config-lex.l: Add * to symbols allowed in non-quoted strings.
+	* dicod/dicod.h (dicod_any_lang_list_p): New prototype.
+	* dicod/loader.c (dicod_any_lang_list_p): New function.
+	(dicod_get_database_languages): "*" is equvalent to empty list.
+	* dicod/main.c (fix_lang_list): Likewise.
+
+2008-10-25  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Merge branch 'master' of ssh://git.gnu.org.ua/gitroot/dico
+
+	* modules/guile/guile.c (mod_lang): Fix return value
+
+2008-10-24  Wojciech Polak  <polak@gnu.org>
+
+	Implement dico_db_lang in Python module.
+
+	* modules/python/python.c (_tuple_to_langlist, mod_lang): New functions.
+	* modules/template.py (lang): New optional method.
+
+2008-10-24  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfixes.
+
+	* dicod/main.c (fix_lang_list): Disable dico_db_lang if
+	at least one of language lists is given in the config.
+	* modules/guile/guile.c (mod_lang): Fix return value.
+
+2008-10-19  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* dicod/config-gram.y: Allow for empty lists.
+
+2008-10-18  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Further improvement of language extensions.
+
+	* dicod/dicod.h (DICOD_DBF_LANG): New define.
+	(struct dicod_database): Replace lang with langlist[2] (languages from -> to).
+	(dicod_lang_check, dicod_get_database_languages): Change proto.
+	(dicod_langlist_copy): New proto.
+	* dicod/lang.c (dicod_lang_preferences): Remove.
+	(dicod_lang_lazy_prefs, dicod_lang_prefs): New variables.
+	(dicod_lang_check): Change arguments.
+	(dicod_lang, dicod_show_lang_pref, dicod_show_lang_info): Implement using
+	new preference system.
+	* dicod/loader.c (dicod_langlist_copy): New function.
+	(dicod_get_database_languages): Change signature.
+	* dicod/main.c (fix_lang_list): Change signature.
+	(main): Call fix_lang_list for both langlist parts.
+	(kwd_database): Replace languages with languages-from/languages-to.
+	(dicod_database_free): Reflect changes to struct dicod_database.
+	* include/dico/types.h (struct dico_database_module):
+	Change arguments and return type of dico_db_lang.
+
+	* modules/guile/guile.c: Update
+	* modules/outline/outline.c: Update
+	* modules/template.c: Update.
+	* modules/template.scm: Update.
+
+	* tests/example.db: Update.
+
+	Implement language extensions.
+
+	* dicod/lang.c: New file.
+	* dicod/Makefile.am: Add lang.c
+	* dicod/dicod.h (struct dicod_database): New member lang.
+	(DICOD_MAXPARAM_INF): New define.
+	(register_lang, dicod_lang_check): New prototypes.
+	(dicod_get_database_languages): New prototype.
+	* dicod/loader.c (dicod_get_database_languages): New function.
+	* dicod/main.c (set_database): Create and fixup language list.
+	(kwd_database): New keyword 'languages'.
+	(check_db_visibility): Use dicod_lang_check to determine if the
+	database is visible.
+	(dicod_database_free): Free lang list.
+	(main): Call register_lang.
+
+	* dicod/commands.c (dicod_handle_command): Allow maxparam to be
+	DICOD_MAXPARAM_INF, in which case any number of parameters, greater than
+	minparam, is allowed.
+	* dicod/capa.c (dicod_capa_flush): Take a NULL terminated
+	array of commands to declare.
+
+	* dicod/auth.c, dicod/lev.c, dicod/markup.c, dicod/mime.c,
+	dicod/xidle.c, dicod/xversion.c: Update definitions of cmd to match
+	changes in dicod/capa.c.
+
+	* include/dico/list.h (dico_list_t, dico_iterator_t): Move to types.
+	* include/dico/types.h (struct dico_database_module): New member dico_db_lang.
+	* include/xdico.h (dicod_free_item): New prototype.
+	* lib/xutil.c (dicod_free_item): New function.
+
+	* modules/dict.org/dictorg.c (dictorg module): Reserve a slot for dico_db_lang.
+	* modules/python/python.c (dictorg module): Reserve a slot for dico_db_lang.
+	* modules/guile/guile.c: Implement dico_db_lang.
+	Use scm_to_locale_string instead of deprecated scm_i_string_chars.
+
+	* outline/outline.c: Implement dico_db_lang.
+	* modules/template.c: Implement dico_db_lang.
+	* modules/template.scm: Implement dico_db_lang.
+	* tests/devils.out: Add Languages section.
+	* tests/example.db: Add language definition.
+	* tests/example.scm (db:get): New rule 'lang'
+	(lang): New function.
+	(example-init): Init "lang"
+
+2008-10-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Allow to override some settings from the command line.
+
+	* dicod/cmdline.opt: New options --transcript and --no-transcript.
+	(get_options): Take three arguments.
+	* dicod/dicod.h (get_options): Take three arguments.
+	* dicod/main.c (init_conf_override, apply_conf_override): New functions.
+	(main): Use conf_override to override some configuration
+	statements from the command line.
+
+2008-09-30  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix UTF-8 handling in SHOW DB output.
+
+	* dicod/commands.c (_show_database): Use utf8_quote, not quotearg.
+	* include/dico/utf8.h (utf8_wc_to_mbstr): Change prototype.
+	(utf8_quote, utf8_wc_quote): New functions.
+	* lib/utf8.c (utf8_quote, utf8_wc_quote): New functions.
+	(utf8_wc_to_mbstr): Change signature.
+	(utf8_mbstr_to_wc): fix indentation.
+
+	* modules/dict.org/dictstr.c (stream_get16, stream_get32): Static.
+
+	Reflect available markup types in capability string.
+
+	* dicod/dicod.h (markup_flush_capa): New function.
+	* dicod/main.c (main): Call markup_flush_capa.
+	* dicod/markup.c (markup_flush_capa): New function.
+	* lib/markup.c (dico_markup_valid_name_p): New function.
+	(dico_markup_register): Enforce valid markup names.
+
+	* modules/guile/guile.c (dico-register-markup): Reflect changes to
+	the return value of dico_markup_register.
+
+	Minor fixes.
+
+	* dicod/config-lex.l: Improve "stray character" diagnostics.
+	* include/dico/strat.h (struct dico_strategy): Add comments.
+
+2008-09-28  Wojciech Polak  <polak@gnu.org>
+
+	Changes to Python module.
+
+	* modules/python/python.c (dico_register_markup,
+	dico_current_markup): New functions.
+
+2008-09-28  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Implement html output in examples.
+
+	* lib/markup.c (dico_markup_register): Store a copy of the string.
+	* modules/guile/guile.c (_guile_strategy_create): Remove.
+	(dico-register-markup, dico-current-markup): New functions.
+	* tests/example.scm (output): Implement rudimentary html output.
+
+	Implement experimental OPTION MARKUP command.
+
+	* dicod/markup.c: New file
+	* dicod/Makefile.am (dicod_SOURCES): Add markup.c
+	* dicod/dicod.h (register_markup): New function.
+	* dicod/main.c (main): Call register_markup.
+	* include/dico/markup.h: New file
+	* include/dico/Makefile.am (pkginclude_HEADERS): Add markup.h
+	* include/dico/types.h: Minor formatting changes.
+	* include/dico.h: Include dico/markup.h
+	* lib/markup.c: New file
+	* lib/Makefile.am (libdico_la_SOURCES): Add markup.c
+
+2008-09-24  Wojciech Polak  <polak@gnu.org>
+
+	Improve stdout capture in Python module.
+
+	* modules/python/python.c (_capture_stdout_info): New function.
+
+2008-09-24  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfix
+
+	* modules/guile/guile.c (mod_init): Move call to dico_parseopt to after
+	Guile initialization.
+
+2008-09-23  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix
+
+	Changes to Guile module.
+
+	* modules/guile/guile.c (mod_init_db): Accept init-script,
+	init-args and init-fun options.
+	* tests/dicod.cfin (numerals): Rename to plnum.
+	(cznum): New database.
+	* tests/example.scm (open-module): Reflect changes to guile.c
+	* tests/example.text: Use Czech numerals, to discern from example.db
+	* doc/dico.texi: Update.
+
+	Various changes.
+
+	* NEWS: Update version number.
+	* README: Mention Python.
+	* configure.ac: Raise version number to 1.99.96.
+	Check for python-config.
+	Define BUILD_DICO_GUILE_MODULES and BUILD_DICO_PYTHON_MODULES,
+	instead of the corresponding _DIRs.
+	* doc/dico.texi: Mention Python. Provide a placeholder for a new section.
+	* doc/libdico.texi (utf8_mbstr_to_norm_wc): New deftypefn
+
+	* modules/Makefile.am (SUBDIRS): Unconditionally list guile and python
+	* modules/guile/Makefile.am: Build if BUILD_DICO_GUILE_MODULES is defined.
+	(AM_LDFLAGS): Add -rpath to force libtool build a shared library.
+	* modules/python/Makefile.am: Build if BUILD_DICO_PYTHON_MODULES is defined.
+	(AM_LDFLAGS): Add -rpath to force libtool build a shared library.
+
+	* modules/dict.org/dictorg.c, modules/guile/guile.c,
+	modules/python/python.c: Mark all functions as static.
+
+	* lib/levenshtein.c (dico_levenshtein_distance): Fix Damerau part (again).
+	* tests/levtest.c: New file.
+	* tests/Makefile.am (noinst_PROGRAMS): Add levtest.
+
+	* tests/example.py: New file. * tests/example.text: New file. * AUTHORS: Add Wojciech.
+
+2008-09-22  Wojciech Polak  <polak@gnu.org>
+
+	Add Python support.
+
+	* configure.ac: Check for Python.
+	* modules/Makefile.am (SUBDIRS): Add python.
+	* modules/python/Makefile.am: New file.
+	* modules/python/python.c: New file. Python module.
+	* modules/template.py: New file. A Python module template.
+
+2008-09-21  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update
+
+	Minor fix
+
+2008-09-20  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix.
+
+	* dicod/loader.c (dicod_load_module0): Use lt_dlopenadvise and set `global'
+	advise.
+
+2008-09-19  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Improve dico_parseopt.
+
+	* include/dico/parseopt.h (DICO_PARSEOPT_PARSE_ARGV0)
+	(DICO_PARSEOPT_PERMUTE): New macros.
+	* lib/parseopt.c (dico_parseopt): Take two additional arguments: flags and
+	pindex.  Return index of the first non-optional argument in *pindex.
+	Use flags to modify the operation.
+	* modules/dict.org/dictorg.c: Update calls to dico_parseopt.
+	* modules/guile/guile.c: Likewise.
+
+	* doc/libdico.texi: Update.
+
+2008-09-12  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfix
+
+	* dicod/config-lex.l: Make sure stray characters are displayed correctly
+	in diagnostic messages.
+
+2008-09-10  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update devdict.out
+
+	Update.
+
+	* doc/dico.texi: Document the strategy statement.
+	* tests/devils.out: Minor fix.
+
+2008-09-08  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfix.
+
+	* lib/argcv.c (argcv_quoted_length): Set *quote if input string
+	has zero length.
+
+	Bugfix.
+
+	* .gitignore: Remove po
+	* modules/dict.org/dictorg.c (compare_prefix): Do not match strings shorter
+	than the requested prefix.
+	(common_match, suffix_match, _match_all): Ignore reserved words, if requested.
+
+2008-09-07  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix Damerau-Levenshtein strategy, implement new strategies.
+
+	* dicod/lev.c: Implement "normalized" Levenshtein and Damerau-Levenshtein
+	strategies, i.e. such that assume equality between runs of whitespace
+	characters, no matter what their length.
+	* include/dico/utf8.h (DICO_LEV_NORM, DICO_LEV_DAMERAU): New defines.
+	(utf8_mbstr_to_norm_wc) New function.
+	* lib/levenshtein.c (dico_levenshtein_distance): Fix Damerau-Levenshtein
+	algorithm. Change semantics of the 3rd argument.
+	* lib/utf8.c (utf8_mbstr_to_norm_wc): New function.
+
+2008-09-06  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfix
+
+	* lib/strat.c (dico_strategy_create): Fill allocated memory with zeros.
+
+2008-08-31  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Allow to restrict the use of default matches that may cause considerable strain on the server (e.g. MATCH * prefix "").
+
+	* NEWS, configure.ac: Version 1.99.95
+	* dico/func.c (check_disconnect): Remove duplicate condition.
+	* dicod/Makefile.am (dicod_SOURCES): Add stratcl.c
+	* dicod/stratcl.c: New file.
+	* dicod/config-gram.y (string_to_unsigned): Additional argument `locus'.
+	All callers updated.
+	* dicod/dicod.c: New exterimental strategy `all'.
+	* dicod/dicod.h (string_to_unsigned): New proto.
+	(enum cmp_op): New data type.
+	(stratcl_add_word, stratcl_add_cmp)
+	(stratcl_add_disable, stratcl_check_word): New functions.
+	* dicod/loader.c (dicod_word_first, dicod_word_all): Check if this word is
+	allowed for searches using this strategy.
+	* dicod/main.c (flush_strat_forward_fn, destroy_strat_forward_fn)
+	(flush_strat_forward, strategy_cb, strategy_deny_all_cb)
+	(strategy_deny_word_cb, strategy_deny_length)
+	(strategy_deny_length_lt_cb, strategy_deny_length_le_cb)
+	(strategy_deny_length_gt_cb, strategy_deny_length_ge_cb)
+	(strategy_deny_length_eq_cb, strategy_deny_length_ne_cb): New functions.
+	(kwd_strategy): New configuration keywords: deny-all, deny-worddeny-word,
+	deny-length-lt, deny-length-le, deny-length-gt, deny-length-ge,
+	deny-length-eq, deny-length-ne.
+	(keywords): New block statement: strategy
+	(main): Call flush_strat_forward
+	* dico/strat.h (struct dico_strategy): New member: stratcl
+	(dico_strat_name_cmp): New function.
+	(dico_strategy_create): New function.
+	* lib/strat.c (strat_name_cmp): Rename to dico_strat_name_cmp. Make global.
+	(dico_strategy_create): New function.
+	(dico_strategy_dup): Use dico_strategy_create.
+
+2008-08-11  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Improve security when using anonymous authentication.
+
+	* dicod/dicod.h (sasl_anon_groups): New declaration.
+	* dicod/gsasl.c (sasl_anon_groups): New variable.
+	(struct sasl_data): New data type.
+	(sasl_auth): Pass a pointer to struct sasl_data to gsasl callback as a hook.
+	Make sure group info for anonymous users is not searched in the user database.
+	Use sasl_anon_groups instead.
+	(cb_validate, callback): Adopt the change of hook data type.
+	* dicod/main.c (kwd_sasl): sasl-disable-mechanism and sasl-enable-mechanism
+	renamed to disable-mechanism and enable-mechanism, respectively.
+	(anon-group): New statement.
+
+2008-08-10  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfix.
+
+	* configure.ac: Call AM_ICONV before AM_GNU_GETTEXT.
+
+2008-08-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Version 1.99.94
+
+	Bugfix.
+
+	* dico/saslauth.c (callback): Handle GSASL_ANONYMOUS_TOKEN.
+
+	Bugfixes.
+
+	* dicod/dicod.h (sasl_realm): New declaration.
+	* dico/saslauth.c (callback): Add missing callbacks.
+	* dicod/gsasl.c (sasl_realm): New variable.
+	(callback): Add missing callbacks.
+	* dicod/main.c (kwd_sasl): New keyword `realm'.
+
+	Improve SASL configurability.
+
+	* dicod/config-gram.y (string_to_bool): Make extern.
+	* dicod/dicod.h (string_to_bool): New prototype.
+	(sasl_enable, sasl_enabled_mech, sasl_service): New declarations.
+	* dicod/gsasl.c (sasl_enable, sasl_enabled_mech, sasl_service): New variables.
+	(disabled_mechanism_p): A mechanism state is controlled by two lists:
+	sasl_enabled_mech and sasl_disabled_mech.
+	(callback): sasl_service keeps service name.
+	(init_sasl_1): Initialize sasl_service.
+	(register_sasl): sasl_enable controls whether SASL is enabled.
+	* dicod/main.c: New configuration file block statement `sasl'.
+
+	Remove debugging hooks
+
+	Bugfixes in SASL-related code.
+
+	* dico/saslauth.c (selectmech): Do not use _free_el to deallocate
+	elements of impl. This avoids duplicate calls to free.
+	(sasl_free_data): Do nothing if *pdata is NULL.
+	* dicod/gsasl.c (callback): Fix coredump.
+	* lib/xutil.c (xdico_sasl_capa_match_p): Use c_strcasecmp.
+
+	Finish implementing GSASL streams.
+
+	* include/gsaslstr.h: New file.
+	* include/Makefile.am: Add gsaslstr.h.
+	* configure.ac: Require gettext 0.17
+	Define BUILD_LIBDICOSASL and LIBDICOSASL if SASL is required.
+	* dico/Makefile.am, dicod/Makefile.am: Link with LIBDICOSASL.
+
+	* dico/connect.c, lib/xscript.c: Use new IOCTL codes.
+	* dico/saslauth.c: Include gsaslstr.h
+	(do_gsasl_auth): Insert GSASL stream on success.
+	* dicod/commands.c (dicod_remove_command): New function.
+	* dicod/dicod.c (replace_io_stream): New function.
+	(dicod_loop): I/O stream is static variable instead of the automatic, so
+	that authentication functions can reset it.
+	* dicod/dicod.h (replace_io_stream, dicod_remove_command): New variables.
+	* dicod/gsasl.c: Include gsaslstr.h
+	(sasl_auth): Call gsasl_finish on failure.
+	(dicod_saslauth): Insert GSASL stream on success.
+
+	* include/dico/diag.h (DICO_DBG_CTL_SET_FILE)
+	(DICO_DBG_CTL_SET_LINE, DICO_DBG_CTL_SET_TS): Remove.
+	* include/dico/stream.h (DICO_IOCTL_GET_TRANSPORT)
+	(DICO_IOCTL_SET_TRANSPORT)
+	(DICO_DBG_CTL_SET_FILE, DICO_DBG_CTL_SET_LINE)
+	(DICO_DBG_CTL_SET_TS): New defines.
+	* include/xdico.h (XSCRIPT_CTL_GET_TRANSPORT)
+	(XSCRIPT_CTL_SET_TRANSPORT): Remove.
+
+	* lib/Makefile.am (noinst_LIBRARIES): Add @BUILD_LIBDICOSASL@
+	* lib/gsaslstr.c (struct g_buf): New member pos.
+	(g_buf_ptr, g_buf_level, g_buf_drop): Take into account pos.
+	(g_buf_advance): New macro.
+	(_gsasl_read): Fix buffering.
+	(dico_gsasl_stream): Set line buffering.
+	(insert_gsasl_stream): New function.
+
+	* lib/stream.c (dico_stream_read): If the stream is line buffered,
+	break the reading loop after receiving a newline character.
+
+2008-08-06  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Implement GSASL stream.
+
+	* lib/gsaslstr.c: New file.
+	* lib/Makefile.am (libdico_la_SOURCES): Add gsaslstr.c.
+
+	Remove obsolete linebuf code.
+
+	* include/dico/lbuf.h, lib/linebuf.c: Remove.
+	* include/dico/Makefile.am, include/dico.h: Remove lbuf.h
+	* lib/Makefile.am: Remove linebuf.c
+	* dicod/dicod.c, dicod/server.c: Remove duplicate calls to dico_stream_set_buffer.
+	* lib/dbgstream.c: Include sys/time.h
+
+2008-08-04  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update docs
+
+	Improve server debugging.
+
+	* dicod/dicod.c (dicod_loop): Log session start and end if debug level is set.
+	* dicod/dicod.h (debug_level): Remove.  Declared in xdico.h.
+	* dicod/main.c (debug_source_info, debug_stream): New variables.
+	(main): Initialize debug_stream.
+	* dicod/pp.c: Use debugging macros.
+	* dicod/server.c (handle_connection): Remove an outdated fixme comment.
+	* dicod/cmdline.opt (source-info): New option.
+
+	Minor fix.
+
+	* dicod/server.c (handle_connection): Move call to query ident_name to ...
+	* dicod/dicod.c (dicod_loop): ... here
+
+	Fix AUTH I/O in dicod.
+
+	* dicod/accesslog.c: New directive %d.
+	* dicod/dicod.h (ident_timeout): New declaration.
+	* dicod/ident.c: Use non-blocking I/O.
+	* dicod/main.c (ident_timeout): New global variable.
+	(keywords): New keyword ident-timeout.
+	* dicod/udb.c (udb_open): Do not coredump on NULL argument.
+	* doc/dico.texi: Reflect recent changes.
+	* THANKS: Reformat for GNU standards.
+
+2008-08-02  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Improve debugging.
+
+	* dico/connect.c (dict_read_reply): Remove superfluous call to XDICO_DEBUG.
+	* dico/dico-priv.h (ds_verbose): New prototype.
+	* dico/func.c (ds_verbose): New function.
+	* dico/shell.c (verbose): New command.
+	(filename): const.
+	(script_diag, parse_script_file): Minor fix.
+
+	Improve debugging.
+
+	* lib/dbgstream.c: Include microseconds in timing output.
+
+	Merge branch 'master' of ssh://git.gnu.org.ua/gitroot/dico
+
+	Improve debugging.
+
+	* dico/cmdline.opt: New option --time-stamp.
+	* include/dico/diag.h (DICO_DBG_CTL_SET_TS): New define.
+	* lib/dbgstream.c: Optionally print timestamp information.
+
+	Add more debugging to the client.
+
+	* configure.ac, NEWS: Version 1.99.93
+	* lib/dbgstream.c: New file.
+	* lib/Makefile.am (libdico_la_SOURCES): Add dbgstream.c.
+	* dico/autologin.c, dico/connect.c, dico/dico.c, dico/lookup.c,
+	dico/saslauth.c,
+	* include/dico/diag.h (dico_dbg_stream_create): New prototype.
+	(DICO_DBG_CTL_SET_FILE, DICO_DBG_CTL_SET_LINE): New defines.
+	(DICO_DEBUG_SINFO): New macro.
+	* lib/xscript.c (transcript_ioctl): Fix typo.
+	* include/xdico.h (XSCRIPT_CLT_GET_TRANSPORT)
+	(XSCRIPT_CLT_SET_TRANSPORT):
+	(debug_level, debug_source_info, debug_stream): New declarations.
+	(XDICO_DEBUG)
+	(XDICO_DEBUG_F1 through XDICO_DEBUG_F4): New macros.
+
+	* dico/cmdline.opt: New options --verbose (-v) and --source-info.
+
+2008-07-31  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Add po
+
+	* po/.gitignore: New file.
+	* po/POTFILES.in: New file.
+
+2008-07-30  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfix
+
+	* dicod/ident.c (query_ident_name): Return NULL if bind failed.
+	* dicod/server.c (handle_connection): Move the call to query_ident_name
+	to a proper place.
+
+2008-07-28  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Dico is dubbed GNU package
+
+2008-07-24  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Version 1.99.92
+
+	Update docs.
+
+	* README: Update.
+	* doc/dico.texi: Update.
+
+	Finish SASL support.
+
+	* dico/autologin.c (parse_autologin): Support for new
+	keywords: realm, service and host.
+	* dico/cmdline.opt: New options --sasl, --nosasl.
+	* dico/connect.c (dict_auth): Rewrite authention to avoid dependency from
+	"auth" capability.
+	(auth_cred_free): Free new auth_cred members.
+	(get_credentials): Rename to auth_cred_get, make global.
+	* dico/dico-priv.h (struct auth_cred): New fields service, realm and
+	hostname.
+	(GETCRED_OK, GETCRED_FAIL, GETCRED_NOAUTH): New defines.
+	(auth_cred_get, auth_cred_free): New prototypes.
+	(set_bool): Change return type to int.
+	(ds_sasl): New prototype.
+	(saslauth): Change signature.
+	* dico/func.c (set_bool): Change return type to int.
+	(ds_sasl): New function.
+	* dico/saslauth.c (callback): Use new auth_cred members.
+	(saslauth): Rename to saslauth0.
+	(saslauth, sasl_enable, sasl_enabled_p): New functions.
+	* dico/shell.c: Add `sasl' command.
+	* dicod/main.c (get_full_hostname): Moved to libxdico.
+
+	* include/xdico.h (xdico_local_hostname): New prototype.
+	* lib/Makefile.am (libxdico_a_SOURCES): Add xhostname.c.
+
+	Minor fix.
+
+	Implement SASL in client.
+
+	* dico/saslauth.c: New file.
+	* dico/Makefile.am (dico_SOURCES): Add saslauth.c
+	* dico/autologin.c (parse_autologin): Bugfix.
+	* dico/connect.c (dict_auth): Rename to apop_auth.
+	(dict_auth): New function.
+	(get_credentials): Fill cred with zeros.
+	(dict_connect): Initialize obstack before eventual authentication.
+	* dico/dico-priv.h (AUTH_OK, AUTH_FAIL, AUTH_CONT): New defines.
+	(saslauth): New proto.
+	* dico/func.c (ds_show_info): Remove unused variable.
+	* dicod/dicod.h (struct dicod_command): Rename nparam to minparam. Add new
+	member maxparam.
+	* dicod/auth.c, dicod/commands.c, dicod/lev.c, dicod/mime.c,
+	dicod/xidle.c, dicod/xversion.c: Reflect changes to struct
+	dicod_command.
+	* dicod/gsasl.c (send_challenge): Do not send zero-length data (don't know
+	if I'm right here).
+	(get_sasl_response): Bugfixes.
+	(sasl_auth): Prevent coredump.
+	(callback): Fix.
+	(xlate_mech_to_capa): Move to libxdico.
+	* include/xdico.h (xdico_sasl_mech_to_capa)
+	(xdico_sasl_capa_match_p): New protos.
+
+	* lib/stream.c (dico_stream_read_unbuffered): Return EIO if stream has hit
+	EOF and user does not check for the number of bytes read.
+	* lib/utf8.c (strlen): Remove.  How did it get there???
+	* lib/xutil.c (xdico_sasl_mech_to_capa)
+	(xdico_sasl_capa_match_p): New functions.
+
+2008-07-23  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Implement SASL framework (unfinished).
+
+	* am/gsasl.m4: Enable GSASL by default, if available.
+	Export GSASL_LIBS.
+	* configure.ac: Check for gsasl.
+	Display a configuration summary before exiting.
+
+	* dicod/gsasl.c: New file.
+	* dicod/Makefile.am (dicod_SOURCES): Add gsasl.c
+	(LDADD): Add GSASL_LIBS.
+	* dicod/dicod.h (get_input_line, register_sasl): New functions.
+	(sasl_disabled_mech): New extern.
+	* dicod/main.c (keywords): New keyword sasl-disable-mechanism.
+	(main): Call register_sasl.
+
+	* dico/Makefile.am (LDADD): Add GSASL_LIBS
+	* dico/dico-priv.h (struct auth_cred): New fields sasl and mech.
+	(AUTOLOGIN_MECH): New define.
+	* dico/autologin.c (parse_autologin): Rewrite to allow for multi-line
+	statements.  Handle new auth_cred fields.
+
+2008-07-22  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor changes.
+
+	* dico/dico-priv.h, dico/func.c (ds_show_info): New function.
+	* dico/pager.c: Setting pager to "-" disables it.
+	* dico/shell.c (funtab): Add info command.
+	* dico.texi: Update.
+	* doc/libdico.texi (utf8_strbytelen): Remove.
+	* lib/tokenize.c, lib/utf8.c, lib/xstream.c: Use strlen instead of
+	the removed utf8_strbytelen.
+
+	Minor fix
+
+	Check the spelling
+
+	Improve autologin mode.
+
+	* configure.ac (--with-netrc-file): Rename to --with-autologin-file.
+	(DEFAULT_NETRC_NAME): Rename to DEFAULT_AUTOLOGIN_FILE.
+	* dico/connect.c (get_credentials): Consult session-specific autologin first,
+	the default one afterwards.
+	Return a three-state value.
+	All callers updated.
+	* dico/dico-priv.h (AUTOLOGIN_USERNAME, AUTOLOGIN_PASSWORD)
+	(AUTOLOGIN_NOAUTH): New defines.
+	(parse_netrc): Rename to parse_autologin.
+	* dico/netrc.c: Rename to dico/autologin.c
+	(parse_netrc): Rename to parse_autologin. Return additional information
+	in *pflags.
+	Support `noauth' keyword.
+	* doc/dico.texi: Finish documenting dico.
+
+2008-07-21  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor change.
+
+	* dico/connect.c, dico/dico-priv.h (ds_tilde_expand): New function.
+	* dico/func.c (ds_autologin): Perform tilde expansion.
+	* doc/dico.texi, doc/libdico.texi: Update.
+
+	Fix history handling in Dico and provide a couple of new commands.
+
+	* dico/connect.c (dict_connect): Initialize conn->fd.
+	* dico/dico-priv.h (struct dict_connection): Add fd member to be
+	able to select on it.
+	(ds_pager): New prototype.
+	* dico/func.c (check_disconnect): New function.
+	(ensure_connection): Call check_disconnect first.
+	* dico/pager.c (ds_pager): New function.
+	(create_pager_stream): Prefer internal pager setting over the environment
+	variable.
+	* dico/shell.c: Fix history handling.
+	(prompt, pager): New commands.
+	* doc/dico.texi: Document interactive mode.
+
+	Implement command history.
+
+	* dico/shell.c: Implement history commands.
+
+2008-07-19  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update
+
+	I18n.
+
+	* include/.gitignore: New file.
+	* include/Xaw.h: Remove.
+	* include/appi18n.h, include/libi18n.h,
+	lib/appi18n.c, lib/libi18n.c: New files.
+	* .gitignore: Add po
+	* Makefile.am (SUBDIRS): Add po
+	* NEWS: Update.
+	* bootstrap.conf: I18n
+	* configure.ac: Check for gettext.
+	(AC_CONFIG_FILES): Add po/Makefile.in
+	Link gnu/gettext.h to include.
+	* dico/dico-priv.h: Include appi18n.h
+	* dico/dico.c (main): Call appi18n_init
+	* dicod/Makefile.am (LDADD): Add LIBINTL
+	(INCLUDES): Add -I../gnu
+	* dicod/dicod.h: Include appi18n.h
+	dicod/main.c (main): Call appi18n_init
+	* include/Makefile.am (noinst_HEADERS): Add appi18n.h and libi18n.h
+	* include/dico/diag.h, lib/diag.c (dico_die): format argument is const.
+	* include/xdico.h (appi18n_init): New prototype.
+	* lib/Makefile.am (INCLUDES): Add -I../gnu
+	(libdico_la_SOURCES): Add libi18n.c
+	(libxdico_a_SOURCES): Add appi18n.c
+	* lib/iostr.c, lib/parseopt.c, lib/userprivs.c: Include libi18n.h.
+	Call _dico_libi18n_init.
+	* lib/xstream.c: Include libi18n.h.
+	* makedict/makedict.h: Include appi18n.h
+	(main): Call appi18n_init
+	* modules/dict.org/Makefile.am (INCLUDES): Add -I$(top_builddir)/include
+	* modules/guile/Makefile.am: Likewise.
+	* modules/outline/Makefile.am: Likewise.
+	* modules/dict.org/dictorg.h: Include appi18n.h
+	* modules/guile/guile.c: Likewise.
+	* modules/outline/outline: Likewise.
+
+	Bugfix.
+
+	* dico/connect.c (get_credentials): Avoid freeing the result from getpass.
+
+2008-07-18  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfix.
+
+	* doc/dico.c (fixup_url): Use xdico_assign_string to initialize host.
+
+2008-07-17  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fixes.
+
+	* dico/cmdline.opt: Reword the docstring for --levdist and --quiet.
+	* dico/connect.c (get_credentials): Ask for password if it is not given.
+	* doc/dico.texi: Begin documenting dico client.
+	* doc/libdico.texi (url): Update.
+	* gnulib.modules: Require getpass-gnu
+	* lib/url.c (url_get_user): Allow `;' to delimit username and password, as
+	requested by RFC2229.
+	(url_parse_dico_request): /d-type urls do not have :strat part.
+
+	Minor change.
+
+	* dico-priv.h, func.c, shell.c (script_error)
+	(script_warning): Remove unused first argument.
+
+	Add `--quite' option and `quiet' initialization command.
+
+	* dico/cmdline.opt: New option --quiet.
+	* dico/dico-priv.h (quiet_option): New declaration.
+	(set_bool): New prototype.
+	* dico/dico.c (quiet_option): New variable.
+	* dico/shell.c (helptext): New variable.
+	(funtab): New command `quiet'.
+	(ds_prefix): Exclude # from allowed characters for command prefix.
+	(ds_help): Improve output.
+	(_command_generator): Skip commands without documentation strings.
+
+	Improve matching.
+
+	* dico/connect.c (dict_result_free): Allow for null argument.
+	* dico/dico-priv.h (struct dict_connection): New member match_result.
+	(dict_run_single_command): Change type to void.
+	(ensure_connection, ds_define_nth): New prototypes.
+	* dico/func.c (ds_match): Store match result in conn->match_result.
+	If no argument, or an empty argument is given, re-display previous
+	result.  Prefix a list of matches from the same database with the
+	database name.  Prefix each match with its ordinal number, so it
+	can be picked up using it later.
+	(ds_define_nth): New function.
+	* dico/lookup.c (print_reply): Make extern.  Discern 'no match' from other
+	replies.
+	(print_match_result): New function.
+	* dico/shell.c
+	(parse_script_file): A single number means define the Nth element from the
+	previous match.
+
+	Improve readline completion in the client.
+
+	* dico/connect.c (dict_transcript): New function.
+	(dict_connect): Use dict_transcript.
+	(dict_define, dict_match): Fix second argument in call to dict_result_create.
+	* dico/dico-priv.h (struct dict_connection): New members `transcript',
+	`db_result', and `strat_result'.
+	(struct funtab): New type (from shell.c).
+	(dict_transcript, print_result)
+	(find_funtab, dict_completion_matches)
+	(ds_compl_database, ds_compl_strategy): New prototypes.
+	* dico/func.c (get_list): New function.
+	(ensure_connection): Get and cache database and strategy information.
+	(ds_compl_strategy, ds_compl_database): New functions.
+	(ds_transcript): Actually toggle transcript.
+	(ds_show_db, ds_show_strat): Show cached results.
+	* dico/lookup.c (print_result): Make extern.
+	* dico/shell.c (struct funtab): Move definition to dico-priv.h
+	(funtab): Imitialize completion functions.
+	(ds_help): Minor fix.
+	(parse_script_file): Pass the complete input line to default
+	define and match.
+	(_command_completion): Rewrite.
+	(dict_completion_matches): New function.
+	* include/dico/stream.h (dico_stream_set_ioctl)
+	(dico_stream_ioctl): New prototypes.
+	* include/xdico.h (XSCRIPT_CLT_GET_TRANSPORT)
+	(XSCRIPT_CLT_SET_TRANSPORT): New define.
+	* lib/stream.c (struct dico_stream): New field `ctl'.
+	(dico_stream_set_ioctl): New function.
+	(dico_stream_flush): Don't coredump if stream is NULL.
+	(dico_stream_ioctl): New function.
+	* lib/xscript.c (transcript_flush): Return immediately if transport is NULL.
+	(xdico_transcript_stream_create): Install ioctl handler.
+
+	Minor change.
+
+	* dico/func.c: Ensure the connection is opened before
+	sending commands to the server.
+
+2008-07-16  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor changes.
+
+	* dico/dico-priv.h (dict_define, dict_match)
+	(dict_run_single_command): New prototypes.
+	(ds_show_db, ds_show_strat): New prototypes.
+	* dico/func.c (ds_show_db, ds_show_strat): New functions.
+	* dico/lookup.c (dict_lookup_url): Call dict_conn_close.
+	(dict_run_single_command): New function.
+	(dict_single_command): Read final response code.
+	* dico/shell.c: New commands ls and ld.
+
+	Update .gitignores
+
+	Implement general-purpose result structure.
+
+	* dico/connect.c (dict_connect): Always initialize stk.
+	(dict_define, dict_match): New functions.
+	(dict_multiline_reply): Remove second arg.  Do not push current
+	buf on stack.
+	(dict_result_create, dict_result_free): New functions.
+	(dict_conn_close): Reflect changes to the connection structure.
+	* dico/dico-priv.h (struct match_result)
+	(struct define_result, dict_result): New data types.
+	(struct dict_connection): New fields levdist, last_result.  Remove
+	stk_init.  Document all fields.
+	(dict_result_create, dict_result_free): New prototypes.
+	(dict_conn_last_result): New macro.
+	* dico/lookup.c (print_definitions): Remove.
+	(print_multiline): Remove.
+	(print_result): New function.
+	(dict_lookup): Rewrite using new result functions.
+
+	Add informational functions.
+
+	* dico/dico-priv.h, dico/func.c, dico/shell.c: Implement
+	version and warranty commands.
+	* utils/getopt.m4 (print_version_only): New function.
+
+	Minor change.
+
+	* dico/dico-priv.h, dico/func.c, dico/shell.c (ds_distance): New function.
+	* dico/lookup.c (dict_lookup): Bugfix.
+
+	Implement match and defines in shell mode.
+
+	* dico/dico-priv.h, dico/lookup.c (dict_lookup): Rename to dict_word.
+	(dict_lookup): New function.
+	(ds_define, ds_match): New functions.
+	* dico/dico.c: Update uses of dict_lookup
+	* dico/func.c (ds_define, ds_match): New functions.
+	* dico/shell.c : Improve help output.
+	(cmdprefix): Do not initialize.  This lets init scripts use
+	commands without leading prefix.
+	(parse_script_file): Use shortcuts for define and match.
+
+	Provide an interactive dico shell.
+
+	* configure.ac: Check for readline.
+
+	* dico/func.c, dico/shell.c: New files.
+	* dico/Makefile.am (dico_SOURCES): Add them.
+	(LDADD): Add $READLINE_LIBS.
+	* dico/cmdline.opt: Use xdico_assign_string to initialize string values.
+	* dico/connect.c (get_homedir): Change to extern.
+	* dico/dico-priv.h: Add new prototypes.
+	* dico/dico.c (fixup_url): Use xdico_assign_string to initialize string values.
+	(main): Call parse_init_scripts.
+	Switch to shell mode if no arguments given.
+	* dico/netrc.c (skipws): Change to extern.
+	* dicod/config-lex.l (unquote_char, quote_char): Move to the library.
+	All uses changed.
+	* dicod/dicod.c (tokenize_input): Move to the library.  All uses changed.
+	* include/dico/utf8.h: Include ctype.h.
+	* include/xdico.h (xdico_unquote_char, xdico_quote_char):
+	(xdico_tokenize_begin, xdico_tokenize_end, xdico_tokenize_input): New protos.
+
+	* lib/tokenize.c: New file.
+	* lib/Makefile.am (libxdico_a_SOURCES): Add tokenize.c
+	* utils/getopt.m4 (print_version): Change to extern.
+	Remove superfluous 'Written by' clause.
+
+	Minor change.
+
+	* lib/assoc.c, lib/util.c, lib/xlat.c, lib/xutil.c: Fix copyright headers.
+
+2008-07-15  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Handle .netrc file in dico.  Some minor improvements.
+
+	* configure.ac: New option --with-netrc-file
+	* dico/Makefile.am (dico_SOURCES): Add netrc.c.
+	* dico/netrc.c: New file.
+	* dico/cmdline.opt: The --strategy option implies --match.
+	New option --autologin.
+	* dico/connect.c (dict_auth): Take struct auth_cred * as its second argument.
+	(dict_connect): If an autologin file is given, consult it for user credentials.
+	* dico/dico-priv.h (struct auth_cred): New data type.
+	(user, key): Replace with default_cred.  All uses updated.
+	(autologin_file): New declaration.
+	* dico/dico.c (main): Report a warning if incorrect number of arguments is
+	given.
+
+	* dicod/commands.c (_show_database, _show_strategy): Quote descriptions.
+	* dicod/dicod.h: Include quotearg.h.
+	* dicod/main.c (main): Set default quoting style.
+
+	Provide a default dict server address.
+
+	* configure.ac (DEFAULT_DICT_SERVER): New variable.
+	* dico/Makefile.am (AM_CPPFLAGS): Define DEFAULT_DICT_SERVER
+	* dico/dico.c (fixup_url): Use DEFAULT_DICT_SERVER, if no server was specified.
+
+	Implement --levdist option.
+
+	* dico/cmdline.opt: New option --levdist.
+	* dico/dico-priv.h (levenshtein_threshold): New declaration.
+	* dico/dico.c (levenshtein_threshold): New variable.
+	* dico/lookup.c (dict_lookup_url): Set Levenshtein distance, if supported.
+
+	Bugfix.
+
+	* utils/getopt.m4 (OPTION): Quote invocation of `prep'.
+
+	Bugfix.
+
+	* dico/lookup.c (dict_lookup_url): Fix slot allocation for MATCH command.
+
+2008-07-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Implement authentication.
+
+	* README, TODO: Update.
+	* dico/cmdline.opt: Handle --noauth option.
+	* dico/connect.c (parse_initial_reply): Fix storing of the msgid.
+	* dict_connect: Authenticate if necessary.
+	* dico/dico-priv.h (noauth_option): New declaration.
+	* dico/dico.c (noauth_option): New variable.
+
+	Bugfix
+
+	* util/getopt.m4 (OPTION): Apply prep to DOCSTRING here, instead of in BEGIN.
+
+	Bugfix
+
+	Forgottent to add.
+
+	* lib/xstream.c: New file.
+
+	Implement command-line version of dico.
+
+	* dicod/fdio.c: Move ...
+	* lib/fdiostr.c: ... there.
+	* dicod/xscript.c: Move ...
+	* lib/xscript.c: ... there.
+	* dicod/Makefile.am, lib/Makefile.am: Reflect the move.
+
+	* dico/connect.c: New file.
+	* dico/lookup.c: New file.
+	* dico/pager.c: New file.
+	* lib/xstream.c: New file.
+
+	* dico/Makefile.am (dico_SOURCES): Add connect.c, lookup.c, pager.c
+	* dico/cmdline.opt: New options --source and --transcript.
+	(get_options): Do not intialize *index.
+	* dico/dico-priv.h: Add new prototypes.
+	(host, port, database, strategy): Replace by dico_url.
+	* dico/dico.c (host, port, database, strategy): Replace by dico_url.
+	(transcript, source_addr): New globals.
+	(main): Add missing implementations.
+
+	* dicod/config-gram.y, dicod/server.c: Use DICO_DICT_PORT instead of DICT_PORT.
+	* dicod/dicod.c (stream_writez, stream_printf)
+	(stream_write_multiline): Move to lib/xstream.c
+	* icod/dicod.h (DICT_PORT): Remove.
+	(fd_stream_create, stream_writez, stream_printf)
+	(stream_write_multiline): Remove.
+
+	* dicod/loader.c (dicod_word_first): Bugfix: break on the first non-empty result.
+
+	* gnulib.modules: Add quote and quotearg.
+	* include/dico/stream.h (dico_fd_stream_create): Change signature.
+	(dico_fd_io_stream_create): New proto.
+	* include/dico/types.h (DICO_DICT_PORT): New define.
+
+	* include/xdico.h (xdico_transcript_stream_create, stream_writez)
+	(stream_printf, stream_write_multiline): New protos.
+
+	* lib/url.c: Fix copyright header.
+
+	* utils/getopt.m4  (GETOPT): Fix handling of 3rd argument.
+
+	Rename dico/main.c
+
+	* dico/main.c: Rename to ...
+	* dico/dico.c: ... this.
+	* dico/Makefile.am: Reflect the rename.
+
+	Minor additions to the client.
+
+	* dico/cmdline.opt: Initialize dico globals.
+	* dico/dico-priv.h (enum dico_client_mode): New type.
+	(DICO_CLIENT_ID): New define.
+	(host, port, database, strategy, user)
+	(key, client, req, mode): New declarations.
+	* dico/main.c (host, port, database, strategy, user)
+	(key, client, req, mode): New variables.
+	(dico_lookup): New function placeholder.
+	(main): Call dico_lookup.
+
+	Improve URL parsing.
+
+	* include/dico/url.h (DICO_REQUEST_DEFINE, DICO_REQUEST_MATCH): New defines.
+	(struct dico_request): New data type.
+	(struct dico_url): Add port and request.
+
+	* lib/url.c: Parse `dict://' urls.
+	(url_get_host,url_get_user): Bug fix.
+	(url_get_passwd): Remove.
+	(dico_url_destroy): Free the request.
+
+	Bugfix.
+
+	* lib/logstream.c (dico_log_stream_create): Remove unused variable.
+	* utils/getopt.m4: Remove debugging comments.
+
+2008-07-13  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Start writing dico client.
+
+	* dico/Makefile.am, dico/cmdline.opt, dico/dico-priv.h,
+	dico/main.c: New files.
+	* Makefile.am, configure.ac: Add dico subdirectory.
+	* lib/logstream.c (dico_log_stream_create): Bugfix.
+	* utils/getopt.m4: Allow to define aliases for the options.
+	* dicod/cmdline.opt: Add c-mode marker for Emacs.
+
+2008-07-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Cleanup
+
+	* configure.ac: Remove unnecessary variables.
+	* makedict/Makefile.am, makedict/main.c: Remove INPUTDICTPATH and DICTPATH defines.
+	* modules/guile/guile.c (silent_close_port): Remove unused function.
+
+	Remove unnecessary directories and files.
+
+	* client, fonts: Removed
+	* utils/bdfextract.pl, utils/mkbushufont.awk
+	* utils/Makefile.am: Remove bdfextract.pl and mkbushufont.awk.
+
+	Fix documentation.
+
+	* doc/libdico.texi: Fix erroneous deftypefns.
+
+2008-07-08  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix.
+
+	* doc/libdico.texi: Fix incorrect deftypefn usage.
+
+	Minor improvement.
+
+	* dicod/Makefile.am (dicod_SOURCES): Add xidle.c and xversion.c
+	* dicod/cmdline.opt (OPTIONS_BEGIN): Fix canonical program name.
+	* dicod/dicod.h (register_xidle, register_xversion): New prototypes.
+	* dicod/main.c (dicod_xversion, register_xversion): Move to a separate file.
+	(main): Call register_xidle.
+	* dicod/xidle.c: New file. Implementation of XIDLE command.
+	* dicod/xversion.c: New file. Implementation of XVERSION command.
+	* doc/dico.texi (inactivity-timeout): Add an anchor.
+	* doc/proto.texi: Document XIDLE command.
+
+2008-07-06  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Move dico log streams to the library.  Redirect guile errors to logs.
+
+	* dicod/logstr.c: Rename to ...
+	* lib/logstream.c: ... this.
+	(log_stream_create): Rename to dico_log_stream_create.
+	* dicod/Makefile.am (dicod_SOURCES): Remove logstr.c.
+	* dicod/dicod.c (dicod_loop): Use dico_log_stream_create.
+	* dicod/dicod.h (log_stream_create): Remove proto.
+	* doc/libdico.texi (diag): Add a template for dico_log_stream_create.
+	* include/dico/diag.h (dico_log_stream_create): New prototype.
+	* lib/Makefile.am (libdico_la_SOURCES): add logstream.c.
+	* modules/guile/guile.c: Implement `log ports'.
+	(guile_exit_script, guile_outfile): Remove.
+	(init_option): Remove unused option `exit-script'.
+	Remove `outfile' option.
+	(mod_init): Call _guile_init_dico_log_port; Redirect current output and
+	error ports to log.
+
+	 * bootstrap.conf: Mention make ChangeLog in the template.
+
+2008-07-04  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Add .bootstrap to .gitignore
+
+	Reorganize docs.
+
+	* doc/Makefile.am (dico_TEXINFOS): Add libdico.texi
+	* doc/libdico.texi: New file.
+	* doc/dico.texi: Minor changes.
+
+	Use dico_free_db method.
+
+	* dicod/dicod.c, dicod/dicod.h (dicod_server_cleanup): New function.
+	* dicod/loader.c (dicod_free_database): Fix return value.
+	* dicod/main.c (main): Call dicod_server_cleanup when dicod_inetd finishes.
+	* dicod/server.c (dicod_server): Call dicod_server_cleanup before terminating.
+	* doc/dico.texi: Update.
+
+	Minor changes.
+
+	* doc/Makefile.am: Remove leftover references to dictd.
+
+	Remove leftovers of dictd.h
+
+2008-07-03  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor changes.
+
+	* README: Minor changes.
+
+	Minor changes.
+
+	* doc/dico.texi: Minor changes.
+
+	Rename dictd to dicod.
+
+	Documentation.
+
+	* doc/dico.texi, doc/proto.texi: Start documenting C API.  Resolve several
+	pending xrefs.
+
+	Namespace cleanup.
+
+	* dictd/dictd.h, dictd/loader.c, include/dico/types.h,
+	modules/dict.org/dictorg.c, modules/guile/guile.c,
+	modules/outline/outline.c, modules/template.c: Rename `dico_handler_module'
+	to `dico_database_module'.  Prefix its members with `dico_', instead
+	of `module_'.
+	* dictd/loader.c (dictd_close_database): Initialize return value to 0.
+
+	Work on documentation.
+
+	* dictd/main.c (kwd_user_db): Rename `get-password' to `password-resource',
+	and `get-groups' to `group-resource'.
+	* doc/dico.texi: Document authentication.
+
+	Housekeeping.
+
+	* configure.ac, NEWS, README: Change bug-reporting email.
+	* dictd/dictd.c (dictd_close_databases): Remove duplicated function.
+	(close_databases): issue a log notice if dictd_close_database returns failure.
+	* doc/dico.texi: Update.
+
+	Housekeeping.
+
+	* doc/Makefile.am (check-options): Improve rule.
+	* doc/check-docs.sh: Squeeze repeated newlines in sed output.
+
+	Untabify docs.
+
+2008-07-02  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Work on documentation and examples.
+
+	* dictd/commands.c: Bugfix.
+	* doc/dico.texi: Describe an example Guile module.
+	* modules/Makefile.am: Rename `sample' to `template'.
+	* modules/sample.scm, modules/sample.c: Rename to ...
+	* modules/template.scm, modules/template.c: ... this.
+	* tests/dictd.cfin: Add database definitions for an example Guile module.
+	* tests/glossary.scm (mapcan): Do not export.
+
+2008-06-28  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor change.
+
+	* dictd/server.c (handle_connection): Return textual replies to the client
+	if its IP is not allowed to connect and if the server is not able to fork.
+
+	Improve docs.
+
+	* doc/dico.texi: Create master menu.
+	* doc/proto.texi: Minor changes.
+
+	Improve docs.
+
+	* doc/dico.texi: Spell-check.  Resolve hanging xrefs.
+	* doc/proto.texi: Completed.
+
+	Improve docs.
+
+	* doc/Makefile.am (dico_TEXINFOS): Add proto.texi.
+	(check-unrevised rule): Scan all texinfo sources.
+	* doc/dico.texi (Dictionary Server Protocol): New appendix.
+	* doc/proto.texi: New file.
+
+	Bugfixes.
+
+	* lib/mapstream.c (_mapfile_open): Fix computing open flags.
+	* lib/stream.c (dico_stream_close, dico_stream_destroy): Be robust in
+	case of NULL arguments.
+
+	Improve --config-help output.
+
+	* dictd/config-format.c (format_simple_statement): Do not output superfluous <>
+	delimiters.
+
+2008-06-27  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfix.
+
+	* modules/dict.org/dictstr.c (_dict_read_dzip): Fix length calculation.
+
+	Add a sample Guile module.
+
+	* tests/glossary.scm: New file
+
+	Pass command line arguments to the Guile init script.
+
+	* doc/dico.texi (Guile API): Document init-args.
+	* modules/guile/guile.c (init-args): New initialization parameter.
+	(load_path_handler, guile_load): Pass command line to the init script.
+	(dico-strat-select?): Bugfix: swap 2nd and 3rd arguments to the selector.
+	(guile_init_args): New variable.
+
+	Improve docs.
+
+	* doc/dico.texi: Document Guile API and Dico Scheme Primitives.
+
+2008-06-25  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minimize number of comparisons in suffix strategy.
+
+	* modules/dict.org/dictorg.c (compare_entry_ptr): New function.
+	(suffix_match): Quicksort the result entries.  Remove duplicates.
+
+	Minor changes.
+
+	* Makefile.am (ChangeLog rules): Remove eventual '<unknown>' markers.
+	* modules/dict.org/dictorg.c (init_suffix_index): Run qsort only once.
+
+	Minor fixes
+
+2008-06-23  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Implement command aliasing.
+
+	* dictd/Makefile.am (dictd_SOURCES): Add alias.c
+	* dictd/alias.c: New file.
+	* dictd/commands.c (dictd_handle_command): Expand aliases.
+	* dictd/dictd.h (alias_install, alias_expand): New prototypes.
+	* dictd/main.c (allow_cb, deny_cb, apply_acl_cb, set_user)
+	(set_supp_group, set_mode, set_log_facility, set_dict_handler)
+	(enable_capability, set_defstrat): Improve error handling.
+	(alias_cb): New function.
+	(keywords): New keyword `alias'.
+	* tests/dictd.cfin: Define some aliases and document them.
+	* doc/dico.texi: Document aliasing support.
+
+	Documentation.
+
+	* doc/dico.texi: Update docs for Guile module.
+
+2008-06-22  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfix.
+
+	* dictd/server.c (dictd_server): Remove pidfile before terminating.
+
+	Documentation.
+
+	* TODO: Update.
+	* doc/dico.texi: Document guile module.
+	* modules/Makefile.am (EXTRA_DIST): Add sample.scm
+	* modules/sample.scm: New file.
+	* modules/sample.c: Update.
+	* modules/guile/guile.c: Minor fix in a docstring.
+
+2008-06-21  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix keeping track of input line numbers.
+
+	* dictd/config-lex.l: Fixup line numbers obtained from m4 #line directives.
+	* dictd/pp.c: Output information used for the above fixup.
+	* dictd/dictd.h (parse_line_cpp, parse_line): Remove prototypes.
+	(install_text): New prototype.
+
+	Allow to create Scheme matching strategies.
+
+	* modules/guile/guile.c (dico-register-strat): New function.
+
+2008-06-17  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfixes.
+
+	* guile/guile.c (dico-strat-default?): Fix a typo.
+	(init_vtab): Check for SCM_EOL
+	(mod_init): Move constistency checking to mod_init_db.
+	(mod_init_db): Fix the call to init_vtab.
+	Add consistency checking.  Attempt to diagnose all missing virtual functions.
+
+	Provide a way for modules to tell if a default strategy is being used.  Fix visibilty of symbols in guile.c
+
+	* include/dico/strat.h (struct dico_strategy): New field is_default.
+	(dico_strategy_is_default_p): New macro.
+	* include/dico/types.h (dico_strategy_t): Change into a typedef.
+	* lib/strat.c (default_strategy): Remove const qualifier.e
+	(dico_strategy_find): Remove const qualifier from the return type.
+	(dico_set_default_strategy): Clear/set strat->is_default as appropriate.
+	* modules/guile/guile.c (struct _guile_strategy): Remove const qualifier.
+	(dico-strat-description): Fix mistyped Scheme name.
+	(dico-strat-default?): New function.
+	(_guile_init_funcs): Explicitly export all Scheme interfaces.
+	(mod_init_db): Fix inconsistent return type.
+
+2008-06-16  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fixes.
+
+	* modules/guile/guile.c: Minor fixes.
+
+	Use virtual function tables. A database is allowed to have its own interface functions.
+
+	* modules/guile/guile.c (guile_call_proc): Change type of the second argument.
+	All callers updated.
+	(guile_init_fun): New variable.
+	(guile_proc_name): Change all underscores to dashes.
+	(guile_proc): Remove.
+	(guile_vtab): New type, instead of it.
+	(global_vtab): New variable.
+	(init_vtab): New function.
+	(init_option): Remove function name options. Add `init-fun' option.
+	(mod_init): Initialize global_vtab.
+	(mod_init_db): Initialize database vtab.
+	(mod_match, mod_define, mod_output_result, mod_result_count)
+	(mod_compare_count, mod_free_result): Store pointer to the db in the result.
+
+2008-06-15  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Revert c665e5de094d4.  Was not worth the candles.
+
+	* dictd/dictd.h (dictd_module_t): Remove.
+	(dictd_module_instance_t): Move there significant fields from dictd_module_t.
+	* dictd/loader.c: Update all uses of the above.
+	* include/dico/types.h (dico_instance_t): Remove.
+	(DICO_CAPA_MULTI_INSTANCE): Remove.
+	(module_init,module_init_db): Revert changes.
+	* modules/dict.org/dictorg.c: Revert changes.
+	* modules/guile/guile.c: Likewise.
+	* modules/outline/outline.c: Likewise.
+
+2008-06-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix.
+
+	* modules/guile/guile.c (mod_close, mod_get_text)
+	(mod_match, mod_define): Remove superfluous dbname argument.
+
+	Allow several module instances to be used simultaneously.
+
+	* include/dico/types.h (DICO_CAPA_NONE, DICO_CAPA_DEFAULT)
+	(DICO_CAPA_MULTI_INSTANCE): New macros.
+	(dico_handler_module.capabilities): New field.
+	(dico_handler_module.module_init): Change prototype.
+	(dico_handler_module.module_init_db): Change prototype.
+	(dico_instance_t): New typedef.
+	* dict.org/dictorg.c: Reflect changes to include/dico/types.h.
+	* modules/guile/guile.c: Likewise.
+	* modules/outline/outline.c: Likewise.
+
+	* dictd/config-gram.y (process_ident): Fix error message.
+	* dictd/dictd.c: Rename dictd_handler_t to dictd_module_instance_t.
+	* dictd/dictd.h (handler_list): Rename to modinst_list.
+	(dictd_handler_type): Remove.
+	(dictd_module_t): New data type.
+	(dictd_module_instance_t): New data type.
+	(dictd_handler_t): Remove.
+	(dictd_database): Rename `mod' to `mod_handle'.
+	Remove `handler'. Add `instance'.
+	(database_remove_dependent, dictd_load_module): Change prototypes.
+	* dictd/loader.c (dictd_load_module0): Use table of modules.
+	Pass a pointer to instance handle to module_init.
+	(dictd_load_module): Change argument type.
+	(dictd_init_database): Pass instance handle to module_init_db.
+	(dictd_open_database, dictd_close_database)
+	(dictd_free_database, dictd_get_database_descr)
+	(dictd_get_database_info, dictd_word_first)
+	(dictd_word_all, print_matches, dictd_match_word_db)
+	(print_definitions, dictd_define_word_db): Reflect changes to the internal structure.
+	* dictd/main.c (handler_list): Rename to modinst_list.
+	Remove `handler' keyword.  Use `load-module' instead.
+	* tests/dictd.cfin (handler): Rename to `load-module'.
+
+	* doc/dico.texi: Update.
+
+2008-06-13  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Documentation improvements.
+
+	* doc/dico.texi: Document Outline and Dictorg modules.
+	* README, TODO: Minor changes.
+
+2008-06-12  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Documentation improvements.
+
+	* dictd/cmdline.opt: Fix docstrings.
+	* doc/macros.texi (opsummary): Generate a comment.
+	* doc/Makefile.am (check-options): Use generated comment as a sed anchor to retrieve the list of documented options.
+	* doc/dico.texi: Resolve some FIXMEs, document operation modes, etc.
+
+	Various improvements.
+
+	* dictd/dictd.h (DICTD_LOGGING_ENVAR): New macro.
+	(dictd_log_pre_setup, dictd_log_encode_envar, run_lint): New prototypes.
+	* dictd/main.c (kwd_database, keywords): Rename apply-acl to visibility-acl.
+	(dictd_log_pre_setup, dictd_log_encode_envar): New functions.
+	(main): Call dictd_log_pre_setup.
+	* dictd/pp.c (run_lint): New function.
+	* dictd/server.c (pre_restart_lint, pre_restart_lint_internal): New functions.
+	(server_loop): Restart only if configuration passes lint.
+	* doc/dico.texi: Document security settings and database visibility.
+
+	Use ACLs to control incoming connections.
+
+	* dictd/config-lex.l (isemptystr): Allow only ; after the delimiter.
+	* dictd/dictd.h (connect_acl): New extern.
+	* dictd/main.c (connect_acl): New global.
+	* dictd/server.c (handle_connection): Use connect_acl to determine wheter to allow connection.
+	* doc/dico.texi: Document ACLs
+
+	Finish ACLs.
+
+	* dictd/acl.c (struct acl_entry): New member acl.
+	(_parse_sub_acl): New function.
+	(_parse_group, _parse_acl, _acl_check): Allow sub-acls.
+	(dictd_acl_check): Second argument gives default result.
+	* dictd/auth.c (dictd_auth): Call check_db_visibility.
+	(init_auth_data): Call reset_db_visibility.
+	* dictd/dictd.c (dictd_loop): Call reset_db_visibility.
+	* dictd/dictd.h (dictd_acl_check): Change signature.
+	(struct dictd_database): Remove require_auth and groups.
+	Add new members acl and visible.
+	(show_sys_info, ssi_group_list): Remove declarations.
+	(check_db_visibility, reset_db_visibility): New functions.
+	(database_visible_p): New macro.
+	* dictd/main.c (ssi_group_list): Remove.
+	(require_auth): Remove.
+	(global_acl): New global.
+	(apply_acl_cb): New function.
+	(kwd_database): Remove require-auth and groups. Add apply-acl.
+	(set_show_sys_info): Remove.
+	(keywords): Remove sys-info-groups and require-auth. Add apply-acl.
+	(reset_db_visibility, check_db_visibility): New functions.
+	(database_visible_p): Remove.
+	* tests/dictd.cfin: Fix here-document syntax.
+
+	Begin implementing ACLs.
+
+	* dictd/acl.c: New file.
+	* dictd/Makefile.am (dictd_SOURCES): Add acl.c
+	* dictd/config-gram.y: Allow multiple values after ident.
+	Alsways require a semicolon after MSTRING.
+	* dictd/config-lex.l (isemptystr): Change signature.  Allow semicolon or comma after the EOT delimiter.
+	(multiline_begin): Fix calculation of the delimiter length.
+	* dictd/dictd.h (TYPE_ARRAY): New define.
+	(config_value_t): New member arg.
+	(dictd_acl_t): New data type.
+	(dictd_acl_create, dictd_acl_check, dictd_acl_install)
+	(dictd_acl_lookup): New functions.
+	(ssi_mode): Remove.
+	(show_sys_info): Fix declaration.
+
+	* dictd/main.c (show_sys_info): Change type.
+	(kwd_acl): New keywords.
+	(set_show_sys_info): Argument to show-sys-info is an ACL name.
+	(keywords): New statement `acl'.
+	(show_sys_info_p): Rewrite using dictd_acl_check.
+
+	* dictd/ident.c (query_ident_name): Remove unused variable.
+
+2008-06-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Improve docs.
+
+	* dictd/main.c: Add check for valid transfer encoding.
+	* doc/dico.texi: Add summary contents, document `database' statement,
+	finish `Preprocessing' section.
+
+	Improve docs.
+
+	* doc/dico.texi: Document pragmatic comments, database modules, tuning and preporcessing.
+
+2008-06-08  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Improve docs.
+
+	* dictd/lev.c (register_lev): Rename command to XLEV to match the capability name.
+	* doc/dico.texi: Document logging, access logs, global configuration and capability.
+	* doc/strftime.texi: Resolve @FIXME-pxref.
+
+	Improve the docs.
+
+	* dictd/accesslog.c: Fix a typo.
+	* doc/dico.texi: Update.
+
+2008-06-07  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Improve the docs.
+
+	* doc/dico.texi: Update.
+
+	More fixes.
+
+	* dictd/Makefile.am (AM_CFLAGS): Define LOCALSTATEDIR.
+	* dictd/main.c (pidfile_name): Change the default.
+	(max_children): Provide the default value.
+	(keywords): Fix typo in docstring.
+
+	Minor improvement.
+
+	* dictd/config-gram.y (string_to_sockaddr): Allow to use a hostname
+	without port or a port without hostname.
+
+	Improve configuration parser.
+
+	* dictd/config-gram.y (string rule): Add IDENT.
+	(config_diag, config_warning): New functions.
+	(config_error): Rewrite using config_diag.
+	* dictd/config-lex.l: Do not require identifier to appear on a new line.
+	Fix '\newline' escapes.
+	Issue error message if stray characters appear in input.
+	Issue warnings if undefined escape sequence is used.
+	* dictd/dictd.h (config_warning): New prototype.
+
+	Minor changes.
+
+	* README: Improve.
+	* doc/dico.texi: Improve structure.
+	* configure.ac (LOG_FACILITY): Allow argument in lowercase. Default to LOG_DAEMON.
+	* dictd/main.c (keywords): Fix typo.
+
+2008-06-06  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Work on documentation structure.
+
+	* dictd/main.c (config_help): Change docstring.
+	* doc/dico.texi: Documentation framework.
+
+2008-06-05  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor changes.
+
+	* dictd/accesslog.c (alog_conf_hostname): Print actual server IP address.
+	* dictd/commands.c (dictd_status): Print `dictd' timer.
+	* doc/Makefile.am (dico_TEXINFOS): Add strftime.texi
+	* doc/strftime.texi: New file.
+	* doc/dico.texi: Use makeinfo auto-sectioning capability.
+
+2008-06-03  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Improve access log output.
+
+	* dictd/accesslog.c (print_str): Output a dash if fmt is NULL.
+	All callers updated.
+	* dictd/main.c (main): Set dico_argcv_quoting_style to hex. This helps keep access log compatible with Apache and existing log analyzer software.
+	* include/dico/argcv.h (dico_argcv_quoting_style): New enum and global variable.
+	* lib/argcv.c (argcv_quoting_style): New global variable.
+	(argcv_quoted_length, argcv_quote_copy): Take into account argcv_quoting_style.
+
+	Inplement identity check (RFC 1413).
+
+	* dictd/Makefile.am (dictd_SOURCES): Add ident.c
+	* dictd/ident.c: New file.
+	* dictd/accesslog.c: Implement %l
+	* dictd/auth.c (init_auth_data): Reset identity_name.
+	* dictd/dictd.h (identity_check, identity_name, ident_keyfile): New externs.
+	(query_ident_name): New proto.
+	* dictd/main.c (identity_check, identity_name, ident_keyfile): New variables.
+	(keywords): New keywords `identity-check' and `ident-keyfile'.
+	* dictd/server.c (handle_connection): Run identity check if required.
+	* gnulib.modules: Add crypto/des.
+
+	Implement more format specs in access log.
+
+	* dictd/accesslog.c (sockaddr_to_hostname, sockaddr_to_portname): New functions.
+	(alog_remote_ip): Use sockaddr_to_hostname.
+	(alog_local_ip): Print actual IP of the server that handled the request.
+	(alog_remote_host): Use sockaddr_to_hostname.
+	(alog_server_port): Implement.
+	* dictd/dictd.c (dictd_inetd): Initialize server_addr and server_addrlen.
+	* dictd/dictd.h (UINTMAX_STRSIZE_BOUND): New define.
+	(server_addr, server_addrlen): New externs.
+	* dictd/server.c (struct dictd_server): New data type.
+	(fdtab): Replace with srvtab.
+	(fdcount): Rename to srvcount.
+	(server_addr, server_addrlen): New variables.
+	(handle_connection): Change argument semantics.
+	Initialize server_addr and server_addrlen.
+
+	Minor fix.
+
+	* include/xdico.h (timer_get_temp): Remove.
+	* lib/timer.c: Likewise.
+	* dictd/commands.c: Use timer_stop instead of timer_get_temp
+
+	Implement more access log specifiers.
+
+	* dictd/accesslog.c (add_instr): Fill allocated memory with 0s.
+	(alog_response_size,alog_response_size_clf,alog_time_ms)
+	(alog_process_time): Implement.
+	(free_cache): Bugfix. P was used uninitialized.
+	* dictd/commands.c (dictd_status): Free the temporary timer.
+	(dictd_match, dictd_define): Initialize total_bytes_out.
+	* dictd/dictd.h: Include inttostr.h
+	(total_bytes_out): New extern.
+	* dictd/loader.c (dictd_match_word_db, dictd_define_word_db): Add missing calls
+	to access_log_status.
+	* dictd/ostream.c (total_bytes_out): New variable.
+	(ostream_write): Update total_bytes_out. Return a meaningful error code.
+	* include/dico/stream.h (dico_stream_bytes_in, dico_stream_bytes_out): New prototypes.
+	* lib/stream.c (struct dico_stream): Remove `offset'. Add new fields `bytes_in' and `bytes_out'.
+	(dico_stream_open, dico_stream_read_unbuffered)
+	(dico_stream_write_unbuffered): Update bytes_in and bytes_out.
+	(dico_stream_bytes_in, dico_stream_bytes_out): New functions.
+	* lib/timer.c (timer_hasher, timer_compare): Use case-insensitive comparison.
+	(DIFFTIME): Make sure the result is double.
+
+2008-06-02  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Implement access log file.
+
+	* dictd/Makefile.am (dictd_SOURCES): Add accesslog.c
+	* dictd/accesslog.c: New file.
+	* dictd/auth.c (init_auth_data): Free client_id.
+	* dictd/commands.c (dictd_status): Assign client_id.
+	(dictd_match, dictd_define): Call access_log.
+	* dictd/dictd.c (dictd_inetd): Initialize client_addr and client_addrlen.
+	(dictd_loop): Call access_log_free_cache when finished.
+	* dictd/dictd.h (client_id, access_log_format, access_log_file)
+	(client_addr, client_addrlen): New externs.
+	(get_full_hostname): New proto.
+	(access_log_status, access_log, compile_access_log)
+	(access_log_free_cache): New protos.
+	* dictd/loader.c (dictd_word_first, dictd_word_first, dictd_word_all)
+	(dictd_match_word_db): Call access_log functions.
+	* dictd/main.c (client_id): New global variable.
+	(keywords): New statements access-log-format and access-log-file.
+	(get_full_hostname): Change return variable, remove static qualifier.
+	(main): Update call to get_full_hostname, call compile_access_log.
+	* dictd/server.c (client_addr, client_addrlen): New variables.
+	(handle_connection): Initialize client_addr and client_addrlen.
+	* dictd/xscript.c (transcript_flush): New function.
+	* gnulib.modules: Add fprintftime.
+	* include/xdico.h (xdico_assign_string): New proto.
+	* lib/xutil.c (xdico_assign_string): New function.
+	* tests/dictd.cfin: Configure timing output and access log.
+
+2008-05-31  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix.
+
+	* dictd/pp.c: Fix indentation.
+	(try_file): Bugfix.
+
+	Preprocess the configuration file.
+
+	* configure.ac (--without-preprocessor): New option.
+	(DEFAULT_PREPROCESSOR): New variable.
+	* dictd/pp-setup: New file.
+	* dictd/pp.c: New file.
+	* dictd/Makefile.am (dictd_SOURCES): Add pp.c
+	(AM_CFLAGS): Add -DDEFAULT_VERSION_INCLUDE_DIR, -DDEFAULT_INCLUDE_DIR,
+	-DDEFAULT_PREPROCESSOR
+	(EXTRA_DIST): Add pp-setup.
+	(inc_DATA): New var. Add $(PP_SETUP_FILE)
+	* dictd/cmdline.opt: New options --syslog, -E, --preprocessor,
+	--no-preprocessor, --include-dir.
+	* dictd/config-lex.l (fillbuf, ctx_lookup, push_source, pop_source)
+	(get_file_name, config_include): Remove.
+	(YY_INPUT): Change definition.
+	(config_lex_begin): Rewrite using preprocessor interface.
+	(config_lex_end): Empty placeholder.
+	* dictd/dictd.h (getmaxfd): New macro (from server.c).
+	(preprocessor, debug_level, debug_level_str): New externs.
+	(MODE_PREPROC): New constant.
+	(dictd_log_setup, include_path_setup, add_include_dir, parse_line_cpp)
+	(parse_line, pp_init, pp_done, preprocess_config, pp_make_argcv)
+	(pp_extrn_start, pp_extrn_shutdown, pp_fill_buffer): New protos.
+	* dictd/server.c (getmaxfd): Move to dictd.h.
+	* dictd/main.c (debug_level, debug_level_str): New variables.
+	(dictd_log_setup): New function.
+	(main): Call include_path_setup. Handle mode == MODE_PREPROC.
+	* include/dico/argcv.h (dico_argcv_string): 2nd arg is const.
+	* lib/argcv.c: Likewise.
+	* include/dico/diag.h (dico_invocation_name): New extern.
+	* lib/diag.c (dico_invocation_name): New variable.
+	(dico_set_program_name): Set dico_invocation_name.
+
+	Minor fix.
+
+	* config-lex.l: \f is a white-space char.
+
+	Namespace cleanup.
+
+	* dictd/dictd.h (gd_locus_t): Rename to dictd_locus_t.
+	* dictd/config-gram.y: Likewise.
+	* dictd/config-lex.l: Likewise.
+	* dictd/main.c: Likewise.
+	* dictd/udb.c: Likewise.
+
+	Minor fix.
+
+	* dictd/main.c (main): Use log_facility in openlog.
+
+	Implement STATUS command.
+
+	* dictd/commands.c (dictd_quit): Use report_current_timing.
+	(dictd_status): New function.
+	(command_tab): Bind dictd_status to STATUS command.
+	* dictd/dictd.h (num_defines, num_matches, num_compares): Remove.
+	(struct dico_stat): New data type.
+	(current_stat, total_stat): New externs.
+	(report_timing): Change signature.
+	(report_current_timing): New function, to be used instead of report_timing.
+	* dictd/loader.c: Use report_current_timing.
+	* dictd/stat.c (num_defines, num_matches, num_compares): Remove.
+	(current_stat, total_stat): New variables.
+	report_timing): Rewrite for general purpose usage.
+	(report_current_timing): New function.
+
+	Minor fix in guile module.
+
+	* modules/guile/guile.c (argv_to_scm): Quote each element.
+	(mod_open): Open function takes variable number of arguments.
+
+2008-05-30  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Improve module interface.
+
+	* dictd/dictd.c (init_databases): Call dictd_init_database.
+	(dictd_close_databases, open_databases, close_databases): New functions.
+	(dictd_loop): Begin with open_databases and end with close_databases.
+	* dictd/dictd.h (ictd_open_database_handler)
+	(dictd_close_database_handler): Removed.
+	(dictd_init_database, dictd_open_database)
+	(dictd_close_database, dictd_free_database): New protos.
+	* dictd/loader.c (MODULE_ASSERT): New macro.
+	(dictd_load_module0): Improve error diagnostic and cosistency
+	checks.
+	(dictd_open_database_handler): Remove.
+	(dictd_init_database): New function.
+	(dictd_close_database_handler): Remove.
+	(dictd_close_database): New function.
+	(dictd_free_database): New function.
+	* include/dico/types.h (dico_handler_module.version): Change type to unsigned.
+	(module_open): Change signature
+	(module_init_db, module_free_db): New functions.
+	* lib/stream.c (stream_flush_buffer): Fix typo.
+
+	* modules/dict.org/dictorg.c: Rewrite for new interface.
+	* modules/guile/guile.c: Rewrite for new interface.
+	* modules/outline/outline.c: Rewrite for new interface.
+
+	Bugfix.
+
+	* lib/stream.c (_stream_buffer_full_p, _stream_flush_buffer): Fix handling of
+	line buffers.
+
+2008-05-29  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor improvements.
+
+	* modules/guile/guile.c (_dico_port_close): Call scm_gc_free.
+	(_dico_port_free): Return 0.
+	(mod_open): Return value of #f or '() means failure.
+
+2008-05-28  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Improve docs.
+
+	* THANKS, TODO: Update.
+	* dictd/config-format.c: Place a newline before each statement, except
+	ones appearing immediately after an opening curly brace.
+	(format_statement_array): Take an extra argument, specifying whether to
+	begin the output with a newline.
+	* dictd/dictd.h (format_statement_array): Change prototype.
+	(format_docstring): New prototype.
+	* dictd/main.c (config_help): Output an initial heading.
+
+	Introduce interface version numbering.
+
+	* include/dico/types.h (DICO_MODULE_VERSION): New define
+	(struct dico_handler_module): New field `version'.
+	* modules/dict.org/dictorg.c: Set interface version number.
+	* modules/guile/guile.c: Likewise.
+	* modules/outline/outline.c: Likewise.
+	* modules/sample.c: Likewise.
+
+	* lib/Makefile.am (libdico_la_LDFLAGS): Define version-info.
+
+	Finished guile.c
+
+	* lib/stream.c (_stream_flush_buffer): Second argument instructs whether to
+	flush all buffer contents in case of line buffers. All callers updated.
+	* modules/guile/guile.c (dico-strat-selector?, dico-strat-select?)
+	(dico-strat-name, dico-strat-descriprion): New Scheme functions.
+	(_guile_init_funcs): New function.
+	(guile_proc_name): New variable.
+	(mod_init): Call _guile_init_funcs. Improve error diagnostics.
+	(mod_match): Call strategy selector if supplied.
+
+	Minor change.
+
+	* README: Update.
+
+	Guile module almost finished.
+
+	* modules/guile/guile.c: Implement mod_define, mod_match, and the rest of
+	mod_ interfaces.
+
+2008-05-27  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Develope guile.c
+
+	* am/guile.m4: Require Guile 1.8
+	(_stream_fill_buffer): Return a meaningful error code.
+	* modules/guile/guile.c: Implement mod_init, mod_open, mod_close, mod_info
+	and mod_descr.
+
+	Bugfixes.
+
+	* bootstrap: Obtain aclocal arguments from Makefile.am
+	* gnulib.modules (xgetdomainname): New module.
+	* lib/stream.c (dico_stream_read_unbuffered): Return EIO if less than
+	size bytes were read and pread is NULL.
+
+	Add a placeholder for Guile module.
+
+	* Makefile.am (ACLOCAL_AMFLAGS): Add am.
+	* configure.ac: Check for guile.
+	* am/gsasl.m4, am/guile.m4: New files.
+	* modules/guile/Makefile.am, modules/guile/guile.c: New files.
+
+2008-05-26  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor change.
+
+	* README-hacking (Debugging): New section.
+	* utils/gud-wrapper: New function.
+
+	Speed up connection startup in daemon mode.
+
+	* dictd/dictd.c (dictd_loop): Remove call to dictd_server_init.
+	(dictd_inetd): Fix arguments to dico_stream_set_buffer.
+	* dictd/dictd.h (dictd_server_init.): New proto.
+	* dictd/main.c (main): Call dictd_server_init here.
+	* dictd/server.c (handle_connectiond): Fix arguments to dico_stream_set_buffer.
+	* include/dico/types.h (DICO_MAX_BUFFER): New define.
+
+	Improve stat info.
+
+	* dictd/commands.c (dictd_show_server): Show additional statistics about
+	the server.
+	* dictd/dictd.c (dictd_loop): Do not close and destroy the stream, leave
+	it for the caller.
+	* dictd/dictd.h (total_forks): New extern.
+	(ssi_mode): New enum.
+	(show_sys_info, ssi_group_list): New externs.
+	* dictd/main.c (show_sys_info, ssi_group_list): New globals.
+	(show-sys-info, sys-info-groups): New config file statements.
+	(show_sys_info_p, get_full_hostname): New function.
+	(main): Init "server" timer.
+	* dictd/server.c (total_forks): New global.
+	(register_child): Increase total_forks.
+	(stop_all, stop_children): Do nothing if childtab is NULL.
+	(handle_connection): Destroy the stream after dictd_loop terminates.
+	* include/xdico.h (timer_get_temp): New proto.
+	* lib/timer.c (timer_get_temp): New function.
+	* modules/dict.org/dictorg.c (printdef): Improve error checking.
+
+	Bugfix.
+
+	* modules/dict.org/dictstr.c (_dict_read_dzip): Update str->offset.
+
+	Do not show 00-database entries, unless a special option is given.
+
+	* modules/dict.org/dictorg.c (show_dictorg_entries): New global.
+	(show-dictorg-entries): New command line option.
+	(mod_open): Set show_dictorg_entries.
+	(RESERVED_WORD): New macro.
+	(mod_match, mod_define): Use the value of db->show_dictorg_entries
+	to decide whether to show dict.org service entries.
+	* modules/dict.org/dictorg.h (struct dictdb): New field `show_dictorg_entries'.
+
+	Compile dictorg even if zlib is not found.
+
+	* configure.ac: Bugfix.
+	* modules/dict.org/dictorg.h: Include zlib.h conditionally.
+	* modules/dict.org/dictstr.c: Conditionally compile libz-related code.
+
+	Implement DZIP format.
+
+	* README: Update.
+	* modules/dict.org/dictstr.c (struct _dict_chunk_cache): New field `size'.
+	All references updated.
+	(struct _dict_stream): New field `buffer'. All references updated.
+	(cache_get): Implement.
+	(get_chunk_num): Remove.
+	(_dict_destroy): Free buffer and deinitialize inflation engine.
+	(_dict_open): Compute chunk offsets after header_length has been fixed up.
+	(_dict_read_dzip): Implement.
+
+	Bugfix
+
+	* lib/stream.c (dico_stream_write): Initialize bufp.
+
+	Minor fix.
+
+	* modules/dict.org/dictorg.c (_dict_seek_text,  _dict_seek_gzip): Fix
+	erroneous return type.
+
+	Preparatory work for DZIP support.
+
+	* modules/dict.org/dictorg.c (free_db): Close and destroy stream.
+	* modules/dict.org/dictorg.h: Include stdint.h
+	(GZ_OS_): New defines.
+	(dict_stream_create): Change signature. All callers changed.
+	* modules/dict.org/dictstr.c (DE_UNSUPPORTED_VERSION, DE_BAD_HEADER)
+	(DE_GZIP_SEEK): New defines.
+	(struct _dict_chunk, struct _dict_chunk_cache): New data types.
+	(struct _dict_stream): Add dzip-related fields.
+	(cache_create_chunk, cache_alloc, cache_destroy, cache_promote)
+	(cache_get, get_chunk_num): New functions.
+	(_dict_open, _dict_read, _dict_seek): Handle dzip format.
+	(_dict_strerror): Handle new error code.s
+	(_dict_read_dzip): New placeholder.
+	(_dict_seek_dzip): New function.
+	(dict_stream_create): Take two arguments.
+
+	Change signatures of stream I/O functions.
+
+	* include/dico/stream.h (dico_stream_read_unbuffered)
+	(dico_stream_write_unbuffered)
+	(dico_stream_read, dico_stream_write): buf argument is void*, not char*.
+	(dico_stream_getdelim): New function.
+	* lib/stream.c: Likewise.
+	(dico_stream_seek): Clear eof marker.
+
+	Bugfix in dictorg module.
+
+	* modules/dict.org/dictorg.c (suffix_match): Fix lost entry.
+
+	Bugfix in outline module.
+
+	* modules/outline/outline.c (outline_match0): Fix coredump.
+
+	Minor improvement in dictorg module.
+
+	* modules/dict.org/dictorg.c: Implement trim-ws option.
+
+	Silent compiler warnings.
+
+	* dictd/config-gram.y, dictd/dictd.h, dictd/main.c, lib/jiscvt.c, lib/utf8.c,
+	makedict/index.c, makedict/makedict.h, modules/outline/outline.c: Avoid
+	compiler warnings.
+	* dictd/logstr.c, dictd/ostream.c, dictd/xscript.c, include/dico/stream.h,
+	lib/fdstream.c, lib/fltstream.c, lib/iostr.c,
+	lib/stream.c: dico_stream_write takes const char * buffer.
+
+	Delay setting capabilities until the end of config parsing.
+
+	* dictd/capa.c (dictd_capa_register): Move actual initialization to dictd_capa_flush.
+	(dictd_capa_flush): New function.
+	* dictd/cmdline.opt: New option --lint (-t).
+	* dictd/dictd.h (config_lint_option): New extern.
+	* dictd/main.c (config_lint_option): New global.
+	(main): Call dictd_capa_flush. Exit immediately if config_lint_option is set.
+
+	Provide library functions for parsing module command lines.
+
+	* include/dico.h: Include dico/parseopt.h.
+	* include/dico/Makefile.am (pkginclude_HEADERS): Add parseopt.h
+	* include/dico/parseopt.h: New file.
+	* lib/Makefile.am (libdico_la_SOURCES): Add parseopt.c.
+	* lib/parseopt.c: New file. Ported from pam-modules.
+	* modules/dict.org/dictorg.c (mod_init, mod_open): Use dico_parseopt to
+	parse command line.
+	(free_db): Free suf_index.
+
+	Minor improvement.
+
+	* modules/dict.org/dictorg.c (mod_open): Additional option "sort" forces sortin of the index.
+
+	Bugfixes.
+
+	* dictd/commands.c (_show_database): Print "" if the database description is NULL.
+	* dictd/loader.c (print_definitions): Likewise.
+	* modules/dict.org/dictorg.c (parse_index_entry): Use \t as a field separator.
+	(_match_simple): Fix coredump.
+
+2008-05-25  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Another minor update.
+
+	* utils/bdfextract.pl: Fix bitmasks.
+
+	Minor update for completeness sake.
+
+	* utils/Makefile.am: Remove revbits.
+	* utils/revbits.c: Remove.
+	* utils/bdfextract.pl: Compute reversed bit string in place.
+	* utils/mkbushufont.awk: Compute reversed bit string in place.
+
+	Keep namespace clean.
+
+	* include/dico/types.h (ARRAY_SIZE): Rename to DICO_ARRAY_SIZE.
+	* dictd/config-gram.y: Likewise.
+	* dictd/dictd.c: Likewise.
+	* modules/dict.org/dictorg.c: Likewise.
+	* modules/outline/outline.c: Likewise.
+
+	Implement `size' method in streams.
+
+	* include/dico/stream.h (dico_stream_set_size, dico_stream_size): New functions.
+	* lib/fdstream.c (fd_size, dico_fd_stream_create): Implement size method.
+	* lib/mapstream.c (_mapfile_size, dico_mapfile_stream_create): Implement size method.
+	* lib/stream.c (struct dico_stream): New member size.
+	(dico_stream_set_size, dico_stream_size): New functions.
+
+	Avoid building programs whose requisite libraries are missing.
+
+	* configure.ac: Remove leftover --with-log-facility option.
+	Detect presence of libz.
+	Do not abort if no Berkeley DB is found.
+	Set BUILD_JDICT_PROGS substitution variable if libdb is found.
+	(check_bdb): Make sure -ldb does not make it into LIBS.
+	* dictd/Makefile.am (INCLUDES): Remove DB_INCLUDES
+	(LDADD): Remove DB_LIBS.
+	* makedict/Makefile.am (bin_PROGRAMS): Set to @BUILD_JDICT_PROGS@
+	* modules/dict.org/Makefile.am (dictorg_la_LIBADD): Replace -lz with @LIBZ@
+
+	Initial implementation of dict.org format.
+
+	* README: Update.
+	* include/dico/stream.h (dico_stream_seek): New prototype.
+	(dico_mapfile_stream_create): New prototype.
+	* lib/Makefile.am (libdico_la_SOURCES): Add mapstream.c.
+	* lib/mapstream.c: New file.
+	* lib/list.c (dico_list_insert_sorted): Bugfix: increase count when
+	adding a new entry.
+	* lib/stream.c (all functions): Return a meaningful error code.
+	(dico_stream_strerror): Bugfix.
+	(dico_stream_seek): Implement.
+	* modules/dict.org/Makefile.am (dictorg_la_SOURCES): Add dictstr.c.
+	* modules/dict.org/dictstr.c: New file.
+	* modules/dict.org/dictorg.c: Implement full functionality.
+	* modules/dict.org/dictorg.h: Include zlib.h. Add dict.org format definitions.
+
+2008-05-23  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	MInor fix.
+
+	* lib/fltstream.c (filter_wr_flush): Make sure the output is terminated with
+	CRLF.
+
+	Merge branch 'master' of ssh://gray@git.gnu.org.ua/gitroot/dico
+
+	./F
+
+2008-05-20  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update the docs.
+
+	* README, README-hacking: Update.
+
+2008-05-19  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Add modules/dict.org/data.c
+
+	Add modules/dict.org/crc.c
+
+	Minor change.
+
+	* modules/dict.org/Makefile.am (dictorg_la_SOURCES): Add crc.c and data.c
+	(noinst_HEADERS): New variable. Add crc.h and dictorg.h
+	* modules/dict.org/crc.h: New file.
+	* modules/dict.org/dictorg.h: New file.
+	* modules/dict.org/dictorg.c: Move includes and data definitions to
+	dictorg.h
+
+	* include/dico/util.h: New file * lib/xutil.c: Renamed from util.c (make_full_file_name): Rewrite using dico_full_file_name. * lib/util.c: New file. * include/dico.h: Include dico/util.h * include/dico/Makefile.am (pkginclude_HEADERS): Add util.h. * include/dico/filter.h (dico_base64_input): New prototype. * lib/Makefile.am (libdico_la_SOURCES): Add util.c (libxdico_a_SOURCES): Remove util.c, add xutil.c * lib/base64.c (b64_input): Rename to dico_base64_input. All callers changed. * modules/dict.org/dictorg.c: Implement mod_init and, partially, mod_open. Parse index file.
+
+	Fix coredump in outline module.
+
+	* modules/outline/outline.c (outline_define): Fix coredump on missing
+	definitions.
+
+2008-05-18  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Add session transcript feature.
+
+	* dictd/logstr.c: New file.
+	* dictd/xscript.c: New file
+	* dictd/Makefile.am (dictd_SOURCES): Add logstr.c and xscript.c
+	* dictd/dictd.c (dictd_loop): Set up session transcript, if requested.
+	* dictd/dictd.h (transcript): New declaration.
+	(transcript_stream_create, log_stream_create): New proto.
+	* dictd/main.c (transcript): New variable.
+	(keywords): New keyword "transcript".
+
+	Implement suffix matching strategy.
+
+	* outline/outline.c (struct entry): New fields: length and peer.
+	(struct outline_file): New field suf_index.
+	(alloc_entry): Set length and wordlen.
+	(suffix_match): New function.
+	(strat_tab): Add suffix_match.
+	(revert_word, init_suffix_index): New functions.
+	(exact_match, prefix_match): Initialize x.length and x.wordlen. Set result
+	type to result_match;
+	(compare_entry_ptr): New function.
+	(outline_close): Free suf_index.
+	(outline_define): Set result type to result_define.
+
+	Re-create the test dictionary.
+
+	* tests/devils.out: Re-create.
+
+2008-05-17  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Provide a macro for the size of a soundex buffer.
+
+	* include/dico/utf8.h (DICO_SOUNDEX_SIZE): New macro.
+	* dictd/dictd.c (soundex_sel): Use DICO_SOUNDEX_SIZE macro.
+	* lib/soundex.c (dico_soundex): Use DICO_SOUNDEX_SIZE macro.
+
+	Minor change
+
+	* Makefile.am (ChangeLog): Append Local variables section.
+
+2008-05-16  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Add a framework for dict.org module.
+
+	* modules/dict.org: New directory.
+	* modules/dict.org/Makefile.am, modules/dict.org/dictorg.c
+	* modules/sample.c: New file.
+	* configure.ac, modules/Makefile.am: Add modules/dict.org.
+
+	* dictd/Makefile.am (dictd_SOURCES): Add stat.c * dictd/stat.c: New file. * dictd/commands.c, dictd/dictd.c: Use begin_timing/report_timing. * dictd/dictd.h (num_defines, num_matches, num_compares): New globals. (begin_timing, report_timing): New prototypes. * dictd/loader.c (print_timing): Remove. Use begin_timing/report_timing for stat output. Use module_compare_count to retrieve number of comparisons. * modules/outline/outline.c: Keep track of the number of comparisons. Provide module_compare_count method.
+
+	Report overall timing.
+
+	* dictd/commands.c (dictd_quit): Print timing information.
+	* dictd/dictd.c (dictd_loop): Start timer.
+
+	Minor change.
+
+	* tests/devils.out: Fix typos.
+
+	Implement Soundex strategy.
+
+	* lib/soundex.c: New file
+	* lib/Makefile.am (libdico_la_SOURCES): Add soundex.c.
+	* dictd/dictd.c (dictd_init_strategies): Add soundex.
+	* include/dico/utf8.h (dico_soundex): New proto.
+
+	Implement regex strategies.
+
+	* dictd/regex.c: New file.
+	* dictd/Makefile.am (dictd_SOURCES): Add regex.c
+	* dictd/loader.c (dictd_load_module0): Update.
+	(dictd_word_first, dictd_word_all, dictd_word_db): Use new dico_strategy_t type.
+	(ictd_match_word_first, ictd_match_word_all): Likewise.
+
+	* dictd/commands.c, dictd/dictd.c, lib/strat.c,
+	modules/outline/outline.c: Use new dico_strategy_t type.
+
+	* dictd/config-gram.y (config_error): Correctly handle locus->file == NULL.
+	* dictd/dictd.h (register_lev, register_regex): New functions.
+
+	* dictd/lev.c (lev_sel): Use new signature.
+	* dictd/main.c (main): Call register_regex.
+	* include/dico/strat.h: Move typedef to types.h
+	Use new dico_strategy_t type in prototypes
+
+	* include/dico/types.h (dico_select_t): Change signature.
+	(struct dico_handler_module.module_match_all): Remove.
+	(struct dico_handler_module.module_match): Take const dico_strategy_t strat as
+	the 2nd argument.
+
+2008-05-15  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fixes.
+
+	* dictd/loader.c (print_matches): Quote the word. This is not required by
+	the RFC, but some clients (kdict) expect it.
+	* dictd/server.c (dictd_server): Fix copy-n-paste errors.
+
+	Implement Levenshtein and Damerau-Levenshtein match strategies.
+
+	* dictd/lev.c: New file.
+	* dictd/Makefile.am (dictd_SOURCES): Add lev.c.
+	* dictd/commands.c (dictd_match): Update calls to dictd_match_* functions.
+	* dictd/dictd.h (struct dictd_database.mod): Fix type.
+	(dictd_match_word_db, dictd_match_word_first)
+	(dictd_define_word_db): Change type of `strat'.
+	(DICTD_DEFAULT_STRATEGY): Define to "lev".
+	* dictd/loader.c (dictd_load_module0): Bail out if the module does not define
+	mandatory methods.
+	(dictd_word_first, dictd_word_all)
+	(dictd_match_word_db, dictd_match_word_all): Change type of `strat'.
+	* dictd/main.c: Call register_lev.
+	* include/dico/types.h: New file.
+	* include/dico/Makefile.am (pkginclude_HEADERS): Add types.h
+	* include/dico.h: Move all definitions to dico/types.h. Include it.
+	(dico_handle_t, dico_result_t): Change typedefs to help improve compilation
+	diagnostics.
+	* include/dico/diag.h: Include dico/types.h, instead of sys/types.h.
+	(DICO_PRINTFLIKE): Remove redefinition.
+	* include/dico/strat.h: Include dico/types.h, instead of sys/types.h.
+	(struct dico_strategy): New members `sel' and `closure'.
+	* lib/strat.c (dico_strategy_dup): Handle new fields.
+	* include/dico/stream.h (dico_linebuf_t, dico_stream_t): Move to dico/types.h
+	* include/dico/utf8.h (dico_levenshtein_distance): First two arguments are
+	const.
+	* lib/levenshtein.c: Likewise.
+	* modules/outline/outline.c: Implement module_match_all.
+
+	Minor change.
+
+	* include/dico/utf8.h, lib/utf8.c: Fix a typo.
+
+	Improve UTF-8 functions. Add a function for computing levenshtein distance.
+
+	* lib/levenshtein.c: New file.
+	* lib/Makefile.am (libdico_la_SOURCES): Add levenshtein.c
+	* dico/utf8.h (utf8_symcmp, utf8_symcasecmp, utf8_strcasecmp)
+	(utf8_strncasecmp,utf8_mbstr_to_wc)
+	(dico_levenshtein_distance): New prototypes.
+	* lib/utf8.c (utf8_symcmp, utf8_symcasecmp, utf8_strcasecmp)
+	(utf8_strncasecmp,utf8_mbstr_to_wc): New functions.
+	* modules/outline/outline.c: Use utf8 comparitors.
+
+	Add ChangeLog rule. Use fmt to split long lines in ChangeLog
+
+	Move diagnostics functions to libdico.
+
+	* include/dico/diag.h: New file
+	* lib/diag.c: Prefix all global symbols with dico_. All uses updated.
+	* lib/Makefile.am (libxdico_a_SOURCES): Remove diag.c
+	(libdico_la_SOURCES): Add diag.c
+	* include/dico.h: Include dico/diag.h
+	* include/dico/Makefile.am (pkginclude_HEADERS): Add diag.h
+	* modules/outline/outline.c: Use dico_log instead of syslog.
+
+2008-05-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Discontinue ChangeLog, use git log to regenerate it when making a distribution.
+
+	* .gitignore: Add ChangeLog
+	* ChangeLog: Rename to ChangeLog.2008
+	* Makefile.am (EXTRA_DIST): Add ChangeLog.2008
+	(make-ChangeLog): New rule.
+	(dist-hook): New rule.
+	* bootstrap.conf: Create a placeholder for ChangeLog.
+	* gnulib.modules: Add gitlog-to-changelog
+
+2008-05-13  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor changes.
+
+	* doc/Makefile.am: Add check-options rule
+	* doc/gjdict.texi: New file.
+	* utils/Makefile.am: Remove helpcmp.pl
+	* utils/helpcmp.pl: Remove.
+
+	Introduce a documentation framework:
+
+	* doc/.gitignore, doc/Makefile.am, doc/check-docs.sh,
+	doc/dico.texi, doc/fdl.texi, doc/gendocs_template,
+	doc/macros.texi, doc/mastermenu.el, doc/rendition.texi,
+	doc/untabify.el: New files.
+	* Makefile.am (SUBDIRS): Add doc.
+	* configure.ac (RENDITION): New subst variable.
+	(AC_CONFIG_FILES): Add doc/Makefile.
+
+	Implement quoted-printable encoding.
+
+	* lib/Makefile.am (libdico_la_SOURCES): Add qp.c
+	* lib/qp.c: New file. Implementation of quoted-printable
+	encoding/decoding.
+	* lib/fltstream.c (dico_codec_stream_create): New function.
+	* dictd/ostream.c (print_headers): Use dico_codec_stream_create to
+	create encoder stream.
+	* include/dico/filter.h (dico_codec_stream_create)
+	(dico_qp_stream_create,dico_qp_decode<dico_qp_encode): New
+	functions.
+
+	* dictd/main.c (database_remove_dependent): Use
+	dictd_database_free.
+
+	Implement a framework for various encodings in mime mode; implement base64 encoding.
+
+	* include/dico/filter.h: New file.
+	* lib/base64.c: New file.
+	* lib/fltstream.c: New file.
+
+	* dictd/commands.c: Update calls to dictd_ostream_create.
+	* dictd/loader.c: Update calls to dictd_ostream_create.
+	* dictd/dictd.h (struct dictd_database): New members: content_type
+	and content_transfer_encoding.
+	(dictd_ostream_create): Take two additional arguments.
+	* dictd/fdio.c: Update calls to dico_stream_create.
+	* dictd/main.c (keywords): New keywords `content-type',
+	`content-transfer-encoding'.
+	* dictd/ostream.c (struct ostream): New members: flags, type, and
+	encoding.
+	(print_headers): New function.
+	(ostream_write): Call print_headers.
+	(ostream_flush, ostream_destroy): New functions.
+	(dictd_ostream_create): Take two more arguments, specifying the
+	content type and encoding to be used.
+	* include/dico.h: Include dico/filter.h
+	* include/dico/Makefile.am (pkginclude_HEADERS): Add filter.h
+	* include/dico/stream.h (dico_stream_create): Change signature.
+	* lib/Makefile.am (libdico_la_SOURCES): Add base64.c and
+	fltstream.c.
+	* lib/linebuf.c (dico_linebuf_flush): Initialize rc.
+	* lib/list.c: Fix copyright header.
+	* lib/stream.c (dico_stream_create): Take one more argument.
+	(dico_stream_flush): Call stream->flush, if not NULL.
+	(dico_stream_destroy): Call stream->destroy, if not NULL.
+	* modules/outline/outline.c (outline_output_result): Fix return
+	value.
+
+2008-05-12  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Implement OPTION MIME.
+
+	* README: Update.
+	* dictd/Makefile.am (dictd_SOURCES): Add mime.c, ostream.c.
+	* dictd/dictd.h (register_mime, dictd_ostream_create): New
+	prototypes.
+	* dictd/loader.c (print_matches, print_definitions): Use ostream
+	for output.
+	* dictd/commands.c (dictd_help, dictd_show_info)
+	(dictd_show_databases, dictd_show_strategies)
+	(dictd_show_strategies): Use ostream for output.
+
+	* dictd/main.c (main): Call register_mime.
+	* tests/dictd.cfin: Request mime capability.
+	* lib/stream.c (dico_stream_read_unbuffered)
+	(dico_stream_write_unbuffered): Return 1 and set errno to ENOSYS
+	if the underlying method is NULL.
+
+	Implement authentication and database authorization.
+
+	* dictd/auth.c (auth): Set user_name and user_groups.
+	(init_auth_data): New function.
+	* dictd/commands.c (dictd_show_info): Use database_count and
+	database_iterate instead of dico_list_ functions.
+	* dictd/dbtext.c (dbtext_get_groups): Store groups in a list.
+	* dictd/dictd.c (dictd_loop): Call init_auth_data before
+	returning.
+	* dictd/dictd.h (user_name, user_groups): New globals.
+	(struct dictd_database): New fields: require_auth and groups.
+	(database_count, database_iterate, database_visible_p): New
+	prototypes.
+	(struct udb_def._db_get_groups): Change signature.
+	(udb_get_groups): Change signature.
+	(init_auth_data): New function.
+	* dictd/loader.c (dictd_word_first, dictd_word_all): Ignore
+	databases that are not visible.
+	(dictd_define_word_db): Restore accidentally deleted call to
+	mp->module_define.
+	* dictd/main.c (require_auth, user_name, user_groups): New
+	variables.
+	(kwd_database): New keywords: `require-auth' and `groups'.
+	(keywords): New keyword `require-auth'.
+	(database_visible_p, database_count, database_iterate): New
+	functions.
+	(cmp_database_name): Ignore invisible databases.
+	(struct dictd_user_db._db_get_groups): Change signature.
+	(udb_get_groups): Change signature.
+	* include/dico/list.h (dico_list_intersect_p): New function.
+	* lib/list.c (dico_list_intersect_p): New function.
+	* modules/outline/outline.c (compare_prefix): Bugfix.
+	* tests/devils.out (PRECIPITATE): Remove duplicate entry.
+
+	Optionally print timing information for match and define commands.
+
+	* dictd/commands.c (dictd_match): Resolve strategy before passing
+	it to the handler module.
+	* dictd/dictd.h (timing_option): New global.
+	* dictd/loader.c (print_timing): New function.
+	(dictd_word_first, dictd_word_all, dictd_match_word_db)
+	(dictd_match_word_first, dictd_match_word_all)
+	(dictd_define_word_db, dictd_define_word_first)
+	(dictd_define_word_all): Optionally print timing information.
+	* dictd/main.c (timing_option): New global.
+	(keywords): New statement `timing'.
+	* gnulib.modules: Add gettimeofday.
+	* include/xdico.h (xdico_timer_t): New data type.
+	(timer_get, timer_start, timer_stop, timer_reset)
+	(timer_get_real, timer_get_user, timer_get_system)
+	(timer_format_time): New functions.
+	* lib/Makefile.am (libxdico_a_SOURCES): Add timer.c
+	* lib/timer.c: New file.
+
+	Implement prefix matches
+
+	Update
+
+	Implement working outline module. Add example data and configuration, for testing.
+
+	* dictd/loader.c (dictd_word_all): Bugfix
+	(print_matches): Fix output.
+	(print_definitions): Remove optional ': text follows' part, as it
+	seems to confuse some clients (notably, kdict).
+	* include/dico.h: Include dico/utf8.h
+	* include/dico/utf8.h: New file.
+	* include/xdico.h (utf8_*): Move to dico/utf8.h
+	* lib/Makefile.am (libdico_la_SOURCES): Add utf8.c.
+	(libxdico_la_SOURCES): Remove utf8.c.
+	* lib/utf8.c: Do not include xalloc.h and xdico.h, include dico.h
+	instead.
+	(utf8_wc_strdup): Use calloc.
+	(utf8_wc_to_mbstr): Do not use logmsg.
+
+	* modules/outline/outline.c: Working implementation.
+
+	* tests/.gitignore, tests/Makefile.am, tests/devils.out,
+	tests/dictd.cfin
+	* Makefile.am (SUBDIRS): Add tests.
+	* configure.ac (AC_CONFIG_FILES): Add tests/Makefile.am
+
+2008-05-11  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Provide a generalized framework for ! and * (matches and defines).
+
+	* dictd/commands.c (dictd_match): Handle ! and *.
+	* dictd/dictd.h (dictd_match_word): Remove.
+	(dictd_match_word_db, dictd_match_word_first)
+	(dictd_match_word_all): New functions.
+	* dictd/loader.c (dictd_word_first, dictd_word_all): New functions.
+	(dictd_match_word): Rename to
+	dictd_match_word_db.
+	(dictd_match_word_first,dictd_match_word_all): New functions.
+	(dictd_define_word_first, dictd_define_word_all): Rewrite using
+	dictd_word_first and dictd_word_all.
+
+	Provide a framework for ! and * searches.
+
+	* dictd/commands.c (dictd_define): Implement ! and * searches.
+	* dictd/dictd.h (dictd_define_word): Remove.
+	(dictd_define_word_db, dictd_define_word_first)
+	(dictd_define_word_all): New prototypes.
+	* dictd/loader.c (print_definitions): New function.
+	(dictd_define_word): Rename to dictd_define_word_db; use
+	print_definitions.
+	(dictd_define_word_first, dictd_define_word_all): New functions.
+
+	Provide a default strategy.
+
+	* dictd/dictd.c (init_strategies): Rename to dictd_init_strategies.
+	(dictd_server_init): Remove call to init_strategies, it is done in
+	main. Ensure that a default strategy is set.
+	* dictd/dictd.h (DICTD_DEFAULT_STRATEGY): New define.
+	(dictd_init_strategies): New prototype.
+	* dictd/main.c: Fix typos in diagnostics messages.
+	(keywords): New statement `default-strategy'.
+	(main): Call dictd_init_strategies.
+	* include/dico/strat.h (dico_set_default_strategy)
+	(dico_get_default_strategy): New prototypes.
+	* lib/strat.c (dico_set_default_strategy)
+	(dico_get_default_strategy): New functions.
+
+2008-05-10  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Initial implementation of MATCH and DEFINE.
+
+	* README: Update.
+	* dictd/commands.c: Initial implementation of MATCH and DEFINE
+	commands.
+	* dictd/dictd.c (init_strategies): Always define the "prefix"
+	strategy.
+	* dictd/dictd.h (dictd_match_word, dictd_define_word): New
+	functions.
+	* dictd/fdio.c (fd_close): Don't raise error on closing descr -1.
+	* dictd/loader.c (dictd_get_database_descr)
+	(dictd_get_database_info): Bugfix.
+	(dictd_match_word, dictd_define_word): New functions.
+	* include/dico.h  (dico_result_t): New data type.
+	(struct dico_handler_module): Change signatures of module_match
+	and module_define. Add new methods: module_output_result,
+	module_result_count, module_free_result.
+	* modules/outline/outline.c: Reflect changes to struct
+	dico_handler_module.
+
+2008-05-07  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfix.
+
+	* dictd/dictd.c (tokenize_input): Correctly handle quoted arguments.
+
+	Rewrite interface to strategies.
+
+	* include/dico/strat.h: New file.
+	* include/dico/Makefile.am (pkginclude_HEADERS): Add strat.h
+	* lib/strat.c: New file.
+	* lib/Makefile.am (libdico_la_SOURCES): Add strat.c
+
+	* dictd/dictd.c (init_databases): Remove querying for supported
+	strategies.
+	(init_strategies): New function.
+	(dictd_server_init): Call init_strategies.
+	* dictd/commands.c (dictd_show_strategies): Use new interface to
+	strategies.
+	* dictd/dictd.h (dictd_database_t): Remove stratc and stratv.
+	* dictd/loader.c (strat_name_cmp, add_strategies)
+	(dictd_database_get_strats): Remove.
+	* dictd/main.c (strategy_list): Remove.
+	(dictd_database_free): Remove references to stratc and stratv.
+	* include/dico.h: Include dico/strat.h
+	(dico_strategy_t): Move definition to dico/strat.h
+	(struct dico_handler_module): Remove module_strats.
+	* outline/outline.c (outline_strats): Remove. Register strategies
+	in outline_init.
+
+	Implement SHOW STRAT. Begin writing `outline' handler module.
+
+	* modules: New directory.
+	* modules/Makefile.am: New file.
+	* modules/outline: New directory.
+	* modules/outline/Makefile.am: New file.
+	* modules/outline/outline.c: New file.
+
+	* Makefile.am (SUBDIRS): Add modules.
+	* configure.ac (AC_CONFIG_FILES): Add modules, modules/outline
+	* dictd/commands.c (_show_database, dictd_show_info): Use data
+	returned by the backend module, if not configured in the database
+	structure.
+	(dictd_show_strategies): New function.
+	(command_tab): Implement show strat.
+	* dictd/dictd.c (init_databases): Initialize strategy list.
+	* dictd/dictd.h (strategy_list): New declaration.
+	(dictd_get_database_descr, dictd_free_database_descr)
+	(dictd_get_database_info, dictd_free_database_info): New
+	prototypes.
+	* dictd/loader.c (_add_load_dir): Bugfix.
+	(add_strategies, strat_name_cmp): New functions.
+	(dictd_database_get_strats): Rewrite using new version of
+	module_strats.
+	(dictd_get_database_descr, dictd_free_database_descr)
+	(dictd_get_database_info, dictd_free_database_info): New
+	functions.
+	(dictd_match_word): New placeholder.
+	* dictd/main.c (strategy_list): New variable.
+	* include/dico.h (dico_strategy_t): New data type.
+	(dico_handler_module): New members module_db_info and
+	module_db_descr.
+	(module_strats, module_define): Change signature.
+	* lib/list.c: Initialize p with zeroes.
+
+	Add loader.c
+
+	* README: Update
+	* configure.ac: Require libtool 2.2.5a
+	(DICO_MODDIR): Define
+	* dictd/loader.c: New file.
+	* dictd/Makefile.am: Add loader.c.
+	* dictd/dictd.h (dictd_loader_init): New proto.
+	* dictd/main.c (main): Call dictd_loader_init.
+
+2008-05-06  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Initialize databases.
+
+	* dictd/dictd.c (init_databases): New function.
+	(dictd_server_init): Call init_databases.
+	* dictd/dictd.h (struct dictd_dictionary): New fields: mod, argc,
+	argv.
+	(dictd_open_dictionary_handler): New proto.
+	* dictd/loader.c (dictd_open_dictionary_handler): New function.
+	* dictd/main.c (set_dico_handler): Rename to set_dict_handler (fix
+	a typo). Intialize command, argc and argv.
+
+	Load modules.
+
+	* dictd/commands.c (dictd_show_databases): Return 554 response if
+	no databases are configured.
+	* dictd/dictd.c (dictd_loop): Load all configured handlers.
+	* dictd/dictd.h: Include ltdl.h
+	(handler_list, dictionary_list): Add declarations.
+	(dictd_handler_t): New fields: module and handle.
+	(dictionary_remove_dependent, dictd_load_module): New proto.
+	* dictd/loader.c (dictd_load_module): New function.
+	* dictd/main.c (dictionary_remove_dependent): New function.
+	* dictd/udb.c (udb_create): Improve error diagnostics.
+	* include/dico.h: Include dico/argcv.h
+	(DICO_EXPORT): New define.
+	(dico_handle_t, struct dico_handler_module): New declarations.
+	* include/dico/Makefile.am (pkginclude_HEADERS): Add argcv.h.
+	* include/dico/argcv.h: New file.
+	* include/dico/list.h (dico_iterator_remove_current): Change
+	return type.
+	* lib/Makefile.am (libdico_la_SOURCES): add argcv.c
+	* lib/argcv.c: New file.
+	* lib/list.c, lib/url.c: Fix dummy errors.
+
+	Forgot to add with the previous commit
+
+	Provide an installable library and header files for dico database modules.
+
+	* include/dico/Makefile.am: New file.
+	* include/dico/assoc.h: New file.
+	* include/dico/list.h: New file.
+	* include/dico/url.h: New file.
+	* include/dico/xlat.h: New file.
+	* include/xdico.h: New file.
+	* include/dico.h: Rewrite. Installable header.
+	* include/Makefile.am (pkginclude_HEADERS): New var.
+	Add SUBDIRS.
+
+	* dictd/linebuf.c: Move to ...
+	* lib/linebuf.c: ... this (with mods).
+	* dictd/stream.c: Move to ...
+	* lib/stream.c: ... this (with mods).
+	* lib/Makefile.am (lib_LTLIBRARIES): New installable library
+	libdico.la.
+	(noinst_LIBRARIES): New library libxdico.
+	* lib/assoc.c, lib/list.c, lib/url.c: Avoid using xalloc calls,
+	instead return error status and set errno.
+	* lib/diag.c, lib/iputil.c, lib/userprivs.c, lib/utf8.c,
+	lib/xalloc-die.c: Include xdico.h
+
+	* lib/util.c: Likewise.
+	(xdico_list_create, xdico_iterator_create, xdico_list_append)
+	(xdico_list_prepend, xdico_assoc_create, xdico_assoc_add): New
+	functions.
+
+	* .gitignore: Update.
+	* configure.ac (AC_CONFIG_FILES): Add include/dico/Makefile
+	* dictd/Makefile.am (dictd_SOURCES): Remove linebuf.c and
+	stream.c.
+	(LDADD): Add libxdico.a, libdico.la
+
+	* dictd/auth.c, dictd/capa.c, dictd/commands.c, dictd/config-gram.y,
+	dictd/dictd.c, dictd/dictd.h, dictd/fdio.c, dictd/main.c,
+	dictd/server.c, dictd/udb.c: Reflect changes to the namespace.
+
+	* makedict/Makefile.am (LDADD): Add libxdico.a, libdico.la
+	* makedict/makedict.h: Include xdico.h
+
+	Add loader.c
+
+	* README: Update
+	* configure.ac: Require libtool 2.2.5a
+	(DICO_MODDIR): Define
+	* dictd/loader.c: New file.
+	* dictd/Makefile.am: Add loader.c.
+	* dictd/dictd.h (dictd_loader_init): New proto.
+	* dictd/main.c (main): Call dictd_loader_init.
+
+Local Variables:
+mode: change-log
+version-control: never
+buffer-read-only: t
+End:

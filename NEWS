@@ -1,0 +1,170 @@
+GNU Dico NEWS -- history of user-visible changes. 2012-03-04
+Copyright (C) 2008-2010, 2012 Sergey Poznyakoff
+See the end of file for copying conditions.
+
+Please send Dico bug reports to <bug-dico@gnu.org.ua>
+
+
+Version 2.2, 2012-03-04
+
+* Configuration changes
+
+** load-module
+
+The load-module form allows for a statement use, e.g.:
+
+  load-module word;
+
+The above statement is equivalent to:  
+
+  load-module word {
+     command "word";
+  }
+
+Either string or list of strings is accepted as argument.  The latter
+is useful for loading several modules with a single statement, e.g.:
+
+  load-module (stratall,substr,word);
+  
+* New modules
+
+** gcide
+
+This module provides support for GNU Collaborative International
+Dictionary of English.
+
+** wordnet
+
+This module provides support for WordNet, a lexical database for the
+English language developed in the Princeton University and distributed
+under a BSD style license.
+
+** word
+
+This module provides the following strategies:
+
+word "Match separate words within headwords"
+first "Match the first word within headwords"
+last "Match the last word within headwords"
+
+** nprefix
+
+Provides the nprefix strategy.  It is similar to prefix but returns the
+specified range of matches.  For example
+
+   MATCH <dict> nprefix <skip>#<count>#<string>
+
+returns at most <count> headwords whose prefix matches <string>,
+skipping first <skip> unique matches.
+
+** pcre
+
+Provides matching strategy based on Perl regular expressions.
+
+** pam
+
+Implements PAM authentication.
+
+* New utility: gcider 
+
+"Gcider" is a window-based application for browsing the GNU
+Collaborative International Dictionary of English (see
+http://www.gnu.org/software/gcide).
+
+
+Version 2.1, 2010-07-07
+
+* Normalize exit codes.
+
+The dicod server uses exit codes from sysexits.h.
+
+* Replies to MATCH command.
+
+The dictorg backend filters out duplicate entries from MATCH replies.
+Only the first one from a sequence of such duplicates is retained.
+
+* New configuration statements.
+
+** prepend-load-path
+
+Acts much the same as module-load-path, but adds directories at front
+of the default Dico module directory.
+
+* Strategies
+
+** All
+
+The `all' strategy has been re-implemented as a loadable module.  To
+enable this strategy in daemon, load the `stratall' module:
+
+load-module stratall {
+	command "stratall";
+}
+
+** Substr
+
+New strategy `substr' matches a substring anywhere in the headword.
+To enable this strategy, load the `substr' module:
+
+load-module substr {
+	command "substr";
+}
+
+* LDAP
+
+Dicod now supports LDAP as an underlying mechanism for storing
+user databases.  The LDAP support is loaded as a module:
+
+load-module ldap {
+	command "ldap";
+}
+
+See the documentation, subsection 3.3.3.2 "LDAP Databases", for
+a detailed description.
+
+* Dicoweb
+
+Improved handling of databases without a descriptive name (previous
+version would throw exception for such cases).
+
+The file settings.py renamed to settings-sample.py.
+
+The file static/opensearch.xml has been moved to templates.  If
+you are upgrading from an earlier version, you may safely remove it.
+
+* Bugfixes:
+** Fixed improper handling of conversion errors in levenshtein.c
+(debian #582692)
+** Removed the use of fixed-size buffer in dictorg.c (fixes debian
+#582708)
+
+
+Version 2.0, 2009-03-29
+
+Initial version.
+
+
+=========================================================================
+Copyright information:
+
+Copyright (C) 2008, 2009, 2010 Sergey Poznyakoff
+
+   Permission is granted to anyone to make or distribute verbatim copies
+   of this document as received, in any medium, provided that the
+   copyright notice and this permission notice are preserved,
+   thus giving the recipient permission to redistribute in turn.
+
+   Permission is granted to distribute modified versions
+   of this document, or of portions of it,
+   under the above conditions, provided also that they
+   carry prominent notices stating who last changed them.
+
+Local variables:
+mode: outline
+paragraph-separate: "[	]*$"
+eval: (add-hook 'write-file-hooks 'time-stamp)
+time-stamp-start: "changes. "
+time-stamp-format: "%:y-%02m-%02d"
+time-stamp-end: "\n"
+end:
+

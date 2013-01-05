@@ -1,0 +1,99 @@
+# This file is part of GNU Dico. -*- Autotest -*-
+# Copyright (C) 2012 Sergey Poznyakoff
+#
+# GNU Dico is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# GNU Dico is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Dico.  If not, see <http://www.gnu.org/licenses/>.
+
+AT_SETUP(show info)
+AT_KEYWORDS([show showinfo])
+AT_DICOD([show info dev
+quit
+],
+[220
+112 information for dev
+This file was converted from the original database on:
+Sun May 18 12:45:30 EEST 2008
+
+The original data is available from:
+     http://wiretap.area.com/Gopher/Library/Classic/devils.txt
+
+The original data was distributed with the notice shown below.  No
+additional restrictions are claimed.  Please redistribute this
+changed version under the same conditions and restriction that
+apply to the original version.
+
+   
+   
+               The Internet Wiretap 1st Online Edition of
+   
+   
+                         THE DEVIL'S DICTIONARY
+   
+                                   by
+   
+                             AMBROSE BIERCE
+   
+   
+              Copyright 1911 by Albert and Charles Boni, Inc.
+                  A Public Domain Text, Copyright Expired
+   
+                          Released April 15 1993
+   
+                    Entered by Aloysius of &tSftDotIotE
+                        aloysius@west.darkside.com
+   
+   
+   
+                                 PREFACE
+   
+   _The Devil's Dictionary_ was begun in a weekly paper in 1881, and was
+   continued in a desultory way at long intervals until 1906.  In that
+   year a large part of it was published in covers with the title _The
+   Cynic's Word Book_, a name which the author had not the power to
+   reject or happiness to approve.  To quote the publishers of the
+   present work:
+       "This more reverent title had previously been forced upon him by
+   the religious scruples of the last newspaper in which a part of the
+   work had appeared, with the natural consequence that when it came out
+   in covers the country already had been flooded by its imitators with a
+   score of 'cynic' books -- _The Cynic's This_, _The Cynic's That_, and
+   _The Cynic's t'Other_.  Most of these books were merely stupid, though
+   some of them added the distinction of silliness.  Among them, they
+   brought the word 'cynic' into disfavor so deep that any book bearing
+   it was discredited in advance of publication."
+       Meantime, too, some of the enterprising humorists of the country
+   had helped themselves to such parts of the work as served their needs,
+   and many of its definitions, anecdotes, phrases and so forth, had
+   become more or less current in popular speech.  This explanation is
+   made, not with any pride of priority in trifles, but in simple denial
+   of possible charges of plagiarism, which is no trifle.  In merely
+   resuming his own the author hopes to be held guiltless by those to
+   whom the work is addressed -- enlightened souls who prefer dry wines
+   to sweet, sense to sentiment, wit to humor and clean English to slang.
+       A conspicuous, and it is hope not unpleasant, feature of the book
+   is its abundant illustrative quotations from eminent poets, chief of
+   whom is that learned and ingenius cleric, Father Gassalasca Jape,
+   S.J., whose lines bear his initials.  To Father Jape's kindly
+   encouragement and assistance the author of the prose text is greatly
+   indebted.
+                                                                     A.B.
+   
+
+								     
+.
+250
+221
+])
+AT_CLEANUP
+
+

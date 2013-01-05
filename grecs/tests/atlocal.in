@@ -1,0 +1,10 @@
+# @configure_input@                                     -*- shell-script -*-
+# Configurable variable values for Grecs test suite.
+# Copyright (C) 2011-2012 Sergey Poznyakoff
+
+PATH=@abs_builddir@:$PATH
+
+XFAILFILE=$abs_builddir/.badversion
+
+trap "cleanup; test -r $XFAILFILE && cat $XFAILFILE; exit $?" 1 2 13 15
+

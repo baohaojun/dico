@@ -1,0 +1,53 @@
+# This file is part of GNU Dico -*- Autotest -*-
+# Copyright (C) 2012 Sergey Poznyakoff
+#
+# GNU Dico is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# GNU Dico is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Dico.  If not, see <http://www.gnu.org/licenses/>.
+
+m4_include(testsuite.inc)
+m4_pushdef([AT_DICOD],[
+AT_DATA([input],dico_quote($1))
+AT_CHECK([dnl
+dicod --config $abs_builddir/dicod.conf --stderr -i < input 2>err | dnl
+    tr -d '\r' | sed 's/^\(2[[25][0-9]]\) .*/\1/;s/ *$//' 
+sed '/Notice: gcide_open_idx: creating index/d' err >&2],
+[0],
+[$2],
+[$3])])
+
+AT_INIT
+
+AT_BANNER(General)
+m4_include(markup.at)
+m4_include(nopr.at)
+m4_include(greek.at)
+m4_include(idx.at)
+m4_include(autoidx.at)
+
+AT_BANNER([Dictionary info])
+m4_include(descr.at)
+m4_include(info.at)
+
+AT_BANNER(Match)
+m4_include(exact.at)
+m4_include(prefix.at)
+m4_include(all.at)
+
+AT_BANNER(Define)
+m4_include(def00.at)
+m4_include(def01.at)
+m4_include(def02.at)
+m4_include(def04.at)
+m4_include(def05.at)
+
+m4_popdef([AT_DICOD])

@@ -1,0 +1,42 @@
+<-- A mock GCIDE dictionary for GNU Dico test suite.  File 1 of 26.
+
+    GNU Dico is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 3, or (at your option)
+    any later version.
+
+    GNU Dico is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with GNU Dico.  If not, see <http://www.gnu.org/licenses/>. -->
+
+<p><q>Anything not starting with a headword should be ignored</q></p>
+
+<p><-- p. 1 --></p>
+
+<p><centered><point26>A.</point26></centered></p>
+    
+<p><hw>aard"vark`</hw> <pr>(<aum/rd"v<aum/rk`)</pr>, <pos>n.</pos> <ety>[D., earth-pig.]</ety> <fld>(Zo\'94l.)</fld> <def>Aardvark is an animal.</def><br/
+[<source>Dico testsuite</source>]</p>
+    
+<p><hw>A*ban"don</hw> <pos>v. t.</pos> <def>Verb definition.</def><br/
+[<source>Dico testsuite</source>]</p>
+
+<p><hw>A*ban"don</hw> <pos>n.</pos> <def>Noun definition.</def><br/
+[<source>Dico testsuite</source>]</p>
+
+<p><hw>A*ban"don</hw> <pos>n.</pos> <def>Yet another noun definition.</def><br/
+[<source>Dico testsuite</source>]</p>
+
+<p><hw>Ad"jec*tive</hw>, <pos>a.</pos> <ety>[See <er>Adjective</er>, <pos>n.</pos>]</ety><def>A part of speach.</def><br/
+[<source>Dico testsuite</source>]</p>
+
+<p>\'d8<hw>At*lan"tes</hw>, <pos>n. pl.</pos> <def>A definition with alternate name <altname>telamones</altname>.<br/
+[<source>Dico testsuite</source>]</p>
+
+<-- Local variables: -->
+<-- mode: sgml -->
+<-- End: -->

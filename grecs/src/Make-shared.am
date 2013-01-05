@@ -1,0 +1,24 @@
+# This file is part of grecs - Gray's Extensible Configuration System
+# Copyright (C) 2007, 2009-2012 Sergey Poznyakoff
+#
+# Grecs is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# Grecs is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Grecs.  If not, see <http://www.gnu.org/licenses/>.
+include Make.am
+noinst_LTLIBRARIES=libgrecs.la
+libgrecs_la_SOURCES = $(GRECS_SRC)
+if GRECS_COND_INSTALLHEADERS
+ grecsincludedir = @GRECS_INCLUDE_DIR@
+ grecsinclude_HEADERS = grecs.h wordsplit.h
+else 
+ noinst_HEADERS += grecs.h wordsplit.h
+endif

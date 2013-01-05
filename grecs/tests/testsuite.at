@@ -1,0 +1,103 @@
+# This file is part of grecs - Gray's Extensible Configuration System -*- Autotest -*-
+# Copyright (C) 2007, 2009-2012 Sergey Poznyakoff
+#
+# Grecs is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# Grecs is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Grecs.  If not, see <http://www.gnu.org/licenses/>.
+
+m4_version_prereq([2.52g])
+
+dnl # Standard exit codes (from sysexits.h)
+m4_define([EX_OK],          0)       dnl successful termination 
+m4_define([EX__BASE],       64)      dnl base value for error messages 
+m4_define([EX_USAGE],       64)      dnl command line usage error 
+m4_define([EX_DATAERR],     65)      dnl data format error 
+m4_define([EX_NOINPUT],     66)      dnl cannot open input 
+m4_define([EX_NOUSER],      67)      dnl addressee unknown 
+m4_define([EX_NOHOST],      68)      dnl host name unknown 
+m4_define([EX_UNAVAILABLE], 69)      dnl service unavailable 
+m4_define([EX_SOFTWARE],    70)      dnl internal software error 
+m4_define([EX_OSERR],       71)      dnl system error (e.g., can't fork) 
+m4_define([EX_OSFILE],      72)      dnl critical OS file missing 
+m4_define([EX_CANTCREAT],   73)      dnl can't create (user) output file 
+m4_define([EX_IOERR],       74)      dnl input/output error 
+m4_define([EX_TEMPFAIL],    75)      dnl temp failure; user is invited to retry 
+m4_define([EX_PROTOCOL],    76)      dnl remote error in protocol 
+m4_define([EX_NOPERM],      77)      dnl permission denied 
+m4_define([EX_CONFIG],      78)      dnl configuration error 
+
+m4_define([AT_SKIP_TEST],[exit 77])
+
+dnl GRECS_TEST([config],[cmd],[status],[stdout],[stderr])
+m4_define([GRECS_TEST],[
+AT_DATA([test.cf],[$1])
+AT_CHECK([$2 ./test.cf],m4_shift(m4_shift($@)))])
+
+dnl # Begin tests
+
+AT_INIT
+m4_if(GRECS_DISTCK_AT,,,[m4_include(GRECS_DISTCK_AT)])
+
+m4_include([format00.at])
+m4_include([format01.at])
+m4_include([format02.at])
+
+m4_include([enum.at])
+
+m4_include([peek00.at])
+m4_include([peek01.at])
+m4_include([peek02.at])
+m4_include([peek03.at])
+
+m4_include([glob00.at])
+m4_include([glob01.at])
+m4_include([glob02.at])
+m4_include([glob03.at])
+
+m4_include([cfhelp.at])
+m4_include([set.at])
+
+m4_include([reduce00.at])
+m4_include([reduce01.at])
+m4_include([reduce02.at])
+m4_include([reduce03.at])
+
+m4_include([join.at])
+
+m4_ifdef([ENABLE_BIND_PARSER],[
+m4_include([parser-bind.at])
+m4_include([bind00.at])
+m4_include([locus-bind.at])
+])
+
+m4_ifdef([ENABLE_META1_PARSER],[
+m4_include([parser-meta1.at])
+m4_include([locus-meta1.at])
+])
+
+m4_ifdef([ENABLE_GIT_PARSER],[
+m4_include([parser-git.at])
+m4_include([locus-git.at])
+])
+
+m4_include([vercmp.at])
+
+m4_include([grecs00.at])
+
+m4_include([empty.at])
+
+m4_include([locus00.at])
+m4_include([locus01.at])
+m4_include([locus02.at])
+m4_include([path-locus.at])
+
+# End of testsuite.at

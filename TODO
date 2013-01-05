@@ -1,0 +1,22 @@
+Dico TODO list.
+
+
+* Streams
+
+Drop stream functions from lib and import the stream library from Mailutils.
+It sprang off from Dico a couple of years ago and evolved into a pretty 
+mature system.
+
+* Documentation.
+** Add a pointer to ellinika.gnu.org.ua:dict.
+
+* A module for kanjidic/edict.
+
+* X client for the above.
+
+
+Local variables:
+mode: outline
+paragraph-separate: "[ 	]*$"
+end:
+

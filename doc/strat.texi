@@ -1,0 +1,138 @@
+@c This file is part of the GNU Dico manual.
+@c Copyright (C) 2012 Sergey Poznyakoff
+@c This file is distributed under GFDL 1.1 or any later version
+@c published by the Free Software Foundation.
+  This appendix summarizes search strategies available for use in Dico
+@value{VERSION}.
+
+@table @asis
+@item exact
+@cindex exact, a strategy
+Match words exactly.  This is a built-in strategy.
+
+@item prefix
+@cindex prefix, a strategy
+Match word prefixes.  This is a built-in strategy.
+
+@item nprefix
+@cindex nprefix, a strategy
+This strategy is similar to @samp{prefix}, except that it allows the
+user to limit the number of returned matches.  If the search term has
+the structure @samp{@var{skip}#@var{count}#@var{string}}, where @var{skip}
+and @var{count} are integer numbers, then the @samp{nprefix} strategy
+will return at most @var{count} headwords that begin with
+@var{string}, omitting first @var{skip} unique matches.
+
+This strategy is implemented in the @file{nprefix} loadable module.
+@xref{nprefix}.
+
+@item suffix
+@cindex suffix, a strategy
+Match word suffixes.  This is a built-in strategy.
+
+@item soundex
+@cindex soundex, a strategy
+Match words using SOUNDEX algorithm@footnote{See
+@uref{http://en.wikipedia.org/wiki/Soundex}}.  This strategy matches  
+headwords that sound approximately the same as the search term.
+Note, that it is suitable only for English words.
+
+This is a built-in strategy.
+
+@item lev
+@cindex lev, a strategy
+Match headwords within given Levenshtein distance (1 by default).
+This strategy accounts for the most usual spelling errors.
+
+@cindex distance, Levenshtein
+@cindex Levenshtein distance
+The Levenshtein distance between two strings is the minimum number of
+@dfn{edits} needed to transform one string into the other.  The
+edits are: insertion, deletion, or substitution of a single character.
+Thus, Levenshtein distance 1 means that only one such operation
+suffices to convert one string to another.  This is the default for
+that strategy.
+
+This built-in strategy is used as a default one (@pxref{default
+strategy}), unless the @code{default-strategy} configuration statement
+mandates otherwise.
+
+The dictionary server may optionally allow users to alter the
+Levenshtein distance using the extension command @code{XLEV}.  This
+command is enabled by setting the @samp{xlev} capability.
+@xref{Capabilities, xlev}, for a detailed description.
+
+@item nlev
+@cindex nlev, a strategy
+Match normalized headwords within given Levenshtein distance.  This
+strategy is similar to @samp{lev}, except that it treats any runlength
+of whitespace characters appearing in a headword as a single space
+(ASCII 32) character.
+
+@item dlev
+@cindex dlev, a strategy
+Match headwords within given Damerau-Levenshtein distance (1 by
+default).
+
+The Damerau-Levenshtein distance extends the Levenshtein distance by
+an additional edit operation: transposition of two adjacent
+characters.
+
+This strategy is similar to @samp{lev}, but covers a much wider range of
+spelling and typographical errors.
+
+The distance threshold optionally be configured using the @code{XLEV}
+command (@pxref{Capabilities, xlev}).
+
+@item ndlev
+@cindex ndlev, a strategy
+This is the same as @samp{dlev}, except that it treats any runlength
+of whitespace characters appearing in a headword as a single space
+(ASCII 32) character.
+
+@item re
+@cindex re, a strategy
+Match using POSIX 1003.2 regular expressions.  This strategy treats
+the search term as a regular expression (@pxref{Extended
+regexps, Extended regular expressions, Extended regular expressions,
+sed, GNU sed}).
+
+@item regexp
+@cindex regexp, a strategy
+Match using basic regular expressions.
+
+@item pcre
+@cindex pcre, a strategy
+Match using Perl-compatible regular expressions.  This strategy is
+implemented in the loadable module @file{pcre}.  @xref{pcre}.
+
+@item all
+@cindex all, a strategy
+Match everything.  This experimental strategy ignores its argument and
+matches all headwords.  It is implemented in the @file{stratall}
+module, which you must load if you wish to make that strategy
+available.  @xref{stratall}.
+
+@item substr
+@cindex substr, a strategy
+Match a substring anywhere in the headword.  This strategy is
+implemented as a loadable module.  @xref{substr}.
+
+@item word
+@cindex word, a strategy
+Match a word anywhere in the headword.  This is one of the strategies
+provided by the @file{word} loadable module.  @xref{word}.
+
+@item first
+@cindex first, a strategy
+Match the first word within headwords.  This strategy is
+implemented in @file{word} loadable module.  @xref{word}.
+
+@item last
+@cindex last, a strategy
+Match the last word within headwords.  This strategy is
+implemented in @file{word} loadable module.  @xref{word}.
+
+@end table
+
+  

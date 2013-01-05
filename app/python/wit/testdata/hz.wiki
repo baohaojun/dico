@@ -1,0 +1,6 @@
+You can make horizontal dividing lines (----)
+to separate text.
+----
+But you should usually use sections instead,
+so that they go in the table of contents.
+

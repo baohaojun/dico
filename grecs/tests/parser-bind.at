@@ -1,0 +1,95 @@
+# This file is part of grecs  -*- Autotest -*-
+# Copyright (C) 2011-2012 Sergey Poznyakoff
+#
+# Grecs is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# Grecs is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Grecs.  If not, see <http://www.gnu.org/licenses/>.
+
+AT_SETUP([BIND-style parser])
+AT_KEYWORDS([parser bind])
+
+AT_CHECK([gcffmt -type=bind -I$abs_srcdir $abs_srcdir/bind.conf|sed 's/ *$//'],
+[0],
+[.acl="upd-dyn-vpn".key: "vpn."
+.acl="upd-dyn-vpn".10.11.0.1: 
+.acl="upd-dyn-vpn".10.10.0.1: 
+.acl="foo-acl".key: "foo."
+.options.version: "Grecs testsuite"
+.options.coresize: "0"
+.options.directory: "/etc/namedb"
+.options.pid-file: "/var/log/bind/named.pid"
+.options.allow-transfer.foo-acl: 
+.options.allow-query.any: 
+.options.serial-query-rate: "5"
+.options.max-journal-size: "5m"
+.options.check-names: "master" "warn"
+.options.check-names: "slave" "warn"
+.options.check-names: "response" "ignore"
+.logging.channel="default_channel".file: "/var/log/bind/named.log" "versions" "9" "size" "524288"
+.logging.channel="default_channel".print-time: "yes"
+.logging.channel="default_channel".print-severity: "yes"
+.logging.channel="debug_channel".file: "/var/log/bind/named.run" "versions" "9" "size" "524288"
+.logging.channel="debug_channel".print-time: "yes"
+.logging.channel="debug_channel".print-severity: "yes"
+.logging.channel="debug_channel".severity: "dynamic"
+.logging.channel="security_channel".file: "/var/log/bind/security" "versions" "9" "size" "524288"
+.logging.channel="security_channel".print-time: "yes"
+.logging.channel="security_channel".print-severity: "yes"
+.logging.channel="xfer_in_channel".file: "/var/log/bind/named-xfer.in" "versions" "9" "size" "524288"
+.logging.channel="xfer_in_channel".print-time: "yes"
+.logging.channel="xfer_out_channel".file: "/var/log/bind/named-xfer.out" "versions" "9" "size" "524288"
+.logging.channel="xfer_out_channel".print-time: "yes"
+.logging.channel="lamers_channel".file: "/var/log/bind/lamers.log" "versions" "5" "size" "524288"
+.logging.channel="lamers_channel".print-time: "yes"
+.logging.channel="lamers_channel".print-category: "yes"
+.logging.channel="update_channel".file: "/var/log/bind/update.log" "versions" "9" "size" "524288"
+.logging.channel="update_channel".print-time: "yes"
+.logging.channel="update_channel".print-category: "yes"
+.logging.channel="update_channel".severity: "debug" "5"
+.logging.channel="notify_channel".file: "/var/log/bind/notify.log" "versions" "9" "size" "524288"
+.logging.channel="notify_channel".print-time: "yes"
+.logging.channel="notify_channel".print-category: "yes"
+.logging.channel="query_channel".file: "/var/log/bind/query.log" "versions" "9" "size" "524288"
+.logging.channel="query_channel".print-time: "yes"
+.logging.category="security".security_channel: 
+.logging.category="queries".null: 
+.logging.category="default".default_channel: 
+.logging.category="default".debug_channel: 
+.logging.category="xfer-in".xfer_in_channel: 
+.logging.category="xfer-out".xfer_out_channel: 
+.logging.category="delegation-only".lamers_channel: 
+.logging.category="lame-servers".lamers_channel: 
+.logging.category="update".update_channel: 
+.logging.category="notify".notify_channel: 
+.key="rndc-key".algorithm: "hmac-md5"
+.key="rndc-key".secret: "1111111111111111111111=="
+.controls: ("inet", "127.0.0.1", "port", "953", "allow", ("127.0.0.1"), "keys", ("rndc-key"))
+.view="internal".match-clients.10.0.0.0/8: 
+.view="internal".zone="int".type: "master"
+.view="internal".zone="int".file: "int.p"
+.view="internal".zone="int".allow-update.upd-dyn-vpn: 
+.view="internal".zone="int".allow-query.internal-hosts: 
+.view="internal".zone="int".allow-transfer.10.11.0.1: 
+.view="internal".zone="int".allow-transfer.10.10.0.4: 
+.view="internal".zone="int".allow-transfer.127.0.0.1: 
+.view="external".zone=".".type: "hint"
+.view="external".zone=".".file: "named.root"
+.view="external".zone="com".type: "delegation-only"
+.view="external".zone="net".type: "delegation-only"
+.view="external".zone="0.0.127.IN-ADDR.ARPA".type: "master"
+.view="external".zone="0.0.127.IN-ADDR.ARPA".file: "local.p"
+.view="external".zone="foo.example.net".type: "master"
+.view="external".zone="foo.example.net".file: "foo.p"
+.view="external".dlz="DLZ".database: "mysql\n   {host=localhost socket=/var/run/mysql/mysql.sock dbname=Foo user=bind ssl=false}\n   {select r.zone from dns_soa r, dns_acl a where r.zone = '%zone%'\n      and a.network <= inet_aton('%client%') and inet_aton('%client%') <=\n      a.bcast\n      and a.view = r.view }\n   {select r.ttl, r.type, r.mx_priority,\n      case when r.type='TXT' then concat('\"', r.data, '\"') else r.data end\n      from dns_records r, dns_acl a,\n      where r.zone = '%zone%' and r.host = '%record%'\n      and not (r.type = 'SOA' or r.type = 'NS')\n      and a.network <= inet_aton('%client%') and inet_aton('%client%') <=\n      a.bcast\n      and a.view = r.view }\n   {select r.ttl, r.type, r.data, r.resp_person, r.serial,\n           r.refresh, r.retry, r.expire, r.minimum\n        from dns_soa r, dns_acl a where r.zone = '%zone%'\n         and (r.type = 'SOA' or r.type='NS')\n      and a.network <= inet_aton('%client%') and\n      inet_aton('%client%') <= a.bcast\n      and a.view = r.view }\n   {select r.ttl, r.type, r.host, r.mx_priority, case when r.type='TXT' then\n        concat('\"', r.data, '\"') else r.data end\n        from dns_records r, dns_acl a where r.zone = '%zone%' \n      and a.network <= inet_aton('%client%') and\n      inet_aton('%client%') <= a.bcast\n      and a.view = r.view }\n   {select zone from dns_xfr where zone = '%zone%' and client = '%client%'}"
+])
+
+AT_CLEANUP

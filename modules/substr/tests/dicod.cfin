@@ -1,0 +1,12 @@
+capability lang;
+timing no;
+prepend-load-path ("~moddir~/outline","~moddir~/substr");
+load-module (outline,substr);
+database {
+	name "dev";
+	handler "outline ~dictdir~/devdict.out";
+}
+
+
+
+

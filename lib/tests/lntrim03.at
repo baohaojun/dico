@@ -1,0 +1,62 @@
+# This file is part of GNU Dico -*- Autotest -*-
+# Copyright (C) 2012 Sergey Poznyakoff
+#
+# GNU Dico is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# GNU Dico is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Dico.  If not, see <http://www.gnu.org/licenses/>.
+
+AT_SETUP([complex input])
+
+AT_DATA([input],[My Father had a small Estate in Nottinghamshire; I was the Third of five Sons. He sent me to Emanuel-College in Cambridge, at Fourteen Years old, where I resided three Years, and applyed my self close to my Studies: But the Charge of maintaining me (although I had a very scanty Allowance) being too great for a narrow Fortune; I was bound Apprentice to Mr. James Bates, an eminent Surgeon in London, with whom I continued four Years; and my Father now and then sending me small Sums of Money,  I laid them out in learning Navigation, and other parts of the Mathematicks, useful to those who intend to travel, as I always believed it would be some time or other my Fortune to do. When I left Mr. Bates, I went down to my Father; where, by the Assistance of him and my Uncle John, and some other Relations, I got Forty Pounds, and a Promise of Thirty Pounds a Year to maintain me at Leyden: There I studied Physick two Years and seven Months, knowing it would be useful in long Voyages.
+
+Soon after my Return from Leyden, I was recommended, by my good
+Master Mr. Bates, to be Surgeon to the Swallow, Captain Abraham Pannell
+Commander; with whom I continued three Years and a half, making a
+Voyage or two into the Levant, and some other Parts. When I came back, I
+resolved to settle in London, to which Mr. Bates, my Master, encouraged
+me, and by him I was recommended to several Patients. I took Part of a
+small House in the Old Jury; and being advised to alter my Condition, I
+married Mrs. Mary Burton, second Daughter to Mr. Edmund Burton,
+Hosier, in Newgate-street, with whom I received four Hundred Pounds for
+a Portion.
+])
+
+AT_CHECK([linetrim < input | sed 's/ *$//'],
+[0],
+[My Father had a small Estate in Nottinghamshire; I was the Third of five 
+Sons. He sent me to Emanuel-College in Cambridge, at Fourteen Years old, 
+where I resided three Years, and applyed my self close to my Studies: But 
+the Charge of maintaining me (although I had a very scanty Allowance)
+being too great for a narrow Fortune; I was bound Apprentice to Mr. James
+Bates, an eminent Surgeon in London, with whom I continued four Years; and
+my Father now and then sending me small Sums of Money,  I laid them out in
+learning Navigation, and other parts of the Mathematicks, useful to those 
+who intend to travel, as I always believed it would be some time or other 
+my Fortune to do. When I left Mr. Bates, I went down to my Father; where, 
+by the Assistance of him and my Uncle John, and some other Relations, I
+got Forty Pounds, and a Promise of Thirty Pounds a Year to maintain me at
+Leyden: There I studied Physick two Years and seven Months, knowing it 
+would be useful in long Voyages.
+
+Soon after my Return from Leyden, I was recommended, by my good
+Master Mr. Bates, to be Surgeon to the Swallow, Captain Abraham Pannell
+Commander; with whom I continued three Years and a half, making a
+Voyage or two into the Levant, and some other Parts. When I came back, I
+resolved to settle in London, to which Mr. Bates, my Master, encouraged
+me, and by him I was recommended to several Patients. I took Part of a
+small House in the Old Jury; and being advised to alter my Condition, I
+married Mrs. Mary Burton, second Daughter to Mr. Edmund Burton,
+Hosier, in Newgate-street, with whom I received four Hundred Pounds for
+a Portion.
+])
+
+AT_CLEANUP

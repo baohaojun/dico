@@ -1,0 +1,33 @@
+# Sample Bind configuration include file (3) for Grecs testsuite.
+# This is a typical (?) DLZ configuraton for BIND.
+# 
+dlz "DLZ" {
+   database "mysql
+   {host=localhost socket=/var/run/mysql/mysql.sock dbname=Foo user=bind ssl=false}
+   {select r.zone from dns_soa r, dns_acl a where r.zone = '%zone%'
+      and a.network <= inet_aton('%client%') and inet_aton('%client%') <=
+      a.bcast
+      and a.view = r.view }
+   {select r.ttl, r.type, r.mx_priority,
+      case when r.type='TXT' then concat('\"', r.data, '\"') else r.data end
+      from dns_records r, dns_acl a,
+      where r.zone = '%zone%' and r.host = '%record%'
+      and not (r.type = 'SOA' or r.type = 'NS')
+      and a.network <= inet_aton('%client%') and inet_aton('%client%') <=
+      a.bcast
+      and a.view = r.view }
+   {select r.ttl, r.type, r.data, r.resp_person, r.serial,
+           r.refresh, r.retry, r.expire, r.minimum
+        from dns_soa r, dns_acl a where r.zone = '%zone%'
+         and (r.type = 'SOA' or r.type='NS')
+      and a.network <= inet_aton('%client%') and
+      inet_aton('%client%') <= a.bcast
+      and a.view = r.view }
+   {select r.ttl, r.type, r.host, r.mx_priority, case when r.type='TXT' then
+        concat('\"', r.data, '\"') else r.data end
+        from dns_records r, dns_acl a where r.zone = '%zone%' 
+      and a.network <= inet_aton('%client%') and
+      inet_aton('%client%') <= a.bcast
+      and a.view = r.view }
+   {select zone from dns_xfr where zone = '%zone%' and client = '%client%'}";
+};

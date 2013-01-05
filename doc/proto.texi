@@ -1,0 +1,431 @@
+@c This file is part of the GNU Dico manual.
+@c Copyright (C) 2008, 2010, 2012 Sergey Poznyakoff
+@c This file is distributed under GFDL 1.1 or any later version
+@c published by the Free Software Foundation.
+  This appendix describes commands understood by Dico dictionary
+server.  The examples provided follow the convention used in @acronym{RFC}
+documents: a text sent by the server is prefixed with @samp{S}, whereas
+a text sent by the client is prefixed with @samp{C}.
+  
+@menu
+* Initial Reply::
+* Standard Commands::
+* Extended Commands::
+@end menu
+
+@node Initial Reply
+@section Initial Reply
+  When a connection is established, the server sends an @dfn{initial reply}
+to the client.  This reply has the following format:
+
+@smallexample
+220 @var{hostname} @var{text} <@var{capabilities}> @var{msg-id}
+@end smallexample
+
+@noindent
+Its parts and their meaning are described in the following table:
+
+@table @var
+@item hostname
+The name of the host.  It is determined automatically, unless set
+using @code{hostname} configuration file statement (@pxref{hostname
+directive}).
+
+@item text
+Arbitrary text, as set via @code{initial-banner-text} configuration
+statement (@pxref{General Settings, initial-banner-text}).
+
+@item capabilities
+A comma-separated list of server capabilities.  It is configured using
+@code{capability} statement (@pxref{Capabilities}).
+
+@item msg-id
+A unique identifier similar to the format specified in
+@uref{ftp://ftp.rfc-editor.org/in-notes/rfc822, RFC822}, except that
+spaces and quoted pairs are not allowed within it.
+
+This identifier will be used by the client when formulating the
+authentication string used in the @code{AUTH} command (@pxref{AUTH}).
+@end table
+
+An example of initial reply follows:
+
+@smallexample
+220 Trurl.gnu.org.ua <auth.mime> <520.1212912026@@Trurl.gnu.org.ua>
+@end smallexample
+
+@node Standard Commands
+@section Standard Commands
+  The following are standard commands, defined in RFC2229.
+
+@menu
+* DEFINE::
+* MATCH::
+* SHOW::
+* OPTION::
+* AUTH::
+* CLIENT::
+* STATUS::
+* HELP::
+* QUIT::
+@end menu
+
+@node DEFINE
+@subsection The DEFINE Command
+
+The @code{DEFINE} command searches for definitions of a word.
+
+@deffn Command DEFINE db word
+Look up the word @var{word} in database @var{db}.  If @var{db} is
+@samp{!}, then all the databases will be searched until the word is
+found, and all matches in that database will be returned.  Similarly,
+if @var{db} is @samp{*}, then all the databases will be searched and
+all matches in all databases will be returned.  In these two cases,
+the databases are searched in the same order as that returned by
+@code{SHOW DB} command (@pxref{SHOW, SHOW DB}).
+
+If the word was not found, response code 552 is returned.
+
+If the word is found, a response code 150 is sent, followed by the
+number of definitions found.  Then, for each definition a response
+code 151 is returned, followed by the textual body of the definition.
+In a 151 response, the first three space-delimited parameters give the
+word looked for, the name and a short description of the database.
+The latter two are the same as shown in the output from @code{SHOW DB}
+command.
+
+The textual body of each definition is terminated with a dot
+(@samp{.}) on a line alone.  If any line in the definition begins with
+a dot, it is duplicated to avoid confusion with body terminator.
+
+After all of the definitions have been sent, a status code 250 is
+sent.  If @code{timing} is set to @samp{true} in the configuration
+file, this latter response also carries timing information.
+@xref{Tuning}, for more information about timing output.
+
+Possible responses from @code{DEFINE} command are:
+
+@table @asis
+@item 550 Invalid database, use SHOW DB for a list
+@item 552 No match
+@item 150 @var{n} definitions found: list follows
+@item 151 @var{word} @var{database} @var{name}
+@item 250 ok (optional timing information here)
+@end table
+
+Example transaction:
+
+@smallexample
+C: DEFINE eng-swa man
+S: 150 1 definitions found: list follows
+S: 151 "man" eng-swa "English-Swahili xFried/FreeDict Dictionary"
+S: man  <n.>
+S: 
+S:    mwanamume
+S:
+S: .
+S: 250 Command complete [d/m/c = 1/0/12 0.000r 0.000u 0.000s]
+@end smallexample
+@end deffn
+
+@node MATCH
+@subsection The MATCH Command
+
+The @code{MATCH} command searches for word in the database index.
+The searching algorithm is determined by @dfn{strategy}.  @xref{Strategies},
+for a list of strategies offered by GNU Dico.
+
+@deffn Command MATCH database strategy word
+Match @var{word} in @var{database} using @var{strategy}.  As with
+@code{DEFINE}, the @var{database} can be @samp{!} or @samp{*}
+(@xref{DEFINE}, for a detailed description of these wildcards).
+
+The @var{strategy} is either the name of a strategy to use, or
+a dot (@samp{.}), meaning to use default strategy.  The default
+strategy is set using @code{default-strategy} configuration file
+statement (@pxref{General Settings, default-strategy}.  Its default
+value is @samp{lev}, which means @samp{use Levenshtein algorithm}
+(@pxref{Strategies}).
+
+If no matches are found in any of the searched databases, then response
+code 552 will be returned.     Otherwise, response code 152 will be
+returned followed by a list of matched words, one per line, in the form:
+
+@smallexample
+@var{database} @var{word}
+@end smallexample
+
+Thus, prepending a @samp{DEFINE } to each such response, one obtains a
+valid @code{DEFINE} command.
+
+The textual body of the match list is terminated with a line
+containing only a dot character.
+
+Following the list, response code 250 is sent, which includes
+timing information, if @code{timing} directive is set in the
+configuration file (@pxref{Tuning}).
+
+Possible responses:
+
+@table @asis
+@item 550 Invalid database, use SHOW DB for a list
+@item 551 Invalid strategy, use SHOW STRAT for a list
+@item 552 No match
+@item 152 @var{n} matches found: list follows
+@item 250 ok (optional timing information here)
+@end table
+
+Examples:
+
+@smallexample
+C: MATCH * . "weather"
+S: 152 12 matches found: list follows
+C: eng-afr "feather"
+C: eng-afr "leather"
+C: eng-afr "weather"
+C: eng-deu "feather"
+C: eng-deu "heather"
+C: eng-deu "leather"
+C: eng-deu "weather"
+C: eng-deu "wether"
+C: eng-deu "wheather"
+C: devils "WEATHER"
+S: .
+S: 250 Command complete [d/m/c = 0/12/100677 0.489r 0.479u 0.007s]
+@end smallexample
+@end deffn
+
+@node SHOW
+@subsection The SHOW Command
+  The @code{SHOW} command outputs various information about the server
+and databases.
+
+@deffn Command {SHOW DB}
+@deffnx Command {SHOW DATABASES}
+Display the list of currently accessible databases, one per line, in
+the form:
+
+@smallexample
+@var{database} @var{description}
+@end smallexample
+
+The list is terminated with is a dot (@samp{.}) on a line alone.
+
+Possible responses:
+
+@table @asis
+@item 110 @var{n} databases present
+@item 554 No databases present
+@end table
+@end deffn
+
+@deffn Command {SHOW STRAT}
+@deffnx Command {SHOW STRATEGIES}
+Display the list of currently supported search strategies, one per
+line, in the form:
+
+@smallexample
+@var{strategy} @var{description}
+@end smallexample
+
+The list is terminated with is a dot (@samp{.}) on a line alone.
+
+Possible responses:
+
+@table @asis
+@item 111 @var{n} strategies available
+@item 555 No strategies available
+@end table
+@end deffn
+
+@deffn Command {SHOW INFO} database
+Displays the information about the specified database.  The
+information is a free-form text and is suitable for display to the user
+in the same manner as a definition.  The textual body of the response
+is terminated with is a dot (@samp{.}) on a line alone.
+
+Possible responses:
+@table @asis
+@item 550 Invalid database, use SHOW DB for a list
+@item 112 database information follows
+@end table
+
+The textual body is retrieved from the @code{info} statement in the
+configuration file (@pxref{Databases, info}), or, if it is not
+specified, from the database itself, using @code{dico_db_info}
+callback function (@pxref{dico_db_info}).  If neither source
+returns anything, the string @samp{No information available.} is returned.
+@end deffn
+
+@deffn Command {SHOW SERVER}
+Return a server-specific information.
+
+Response:
+@table @asis
+@item 114 server information follows
+@end table
+
+The information follows, terminated with a dot on a line alone.
+
+The textual body returned by the @code{SHOW SERVER} command consists
+of two parts.  It begins with a line containing host name of the
+server and, optionally an additional information about the daemon and
+the system it runs on.  The exact look and amount of information in
+this line is controlled by @code{show-sys-info} configuration
+statement (@pxref{Security Settings, show-sys-info}).  This line is
+followed by the text supplied with @code{server-info} configuration
+statement (@pxref{General Settings, server-info}).
+@end deffn
+
+@node OPTION
+@subsection The OPTION Command
+  The @code{OPTION} command allows to request optional features
+on the remote server.  Currently the only implemented subcommand is:
+
+@deffn Command {OPTION MIME}
+Requests that all text responses be prefaced by a @acronym{MIME} header
+(@uref{ftp://ftp.rfc-editor.org/in-notes/rfc2045.txt, RFC2045})
+followed by a single blank line.
+
+After this command is issued, the server begins each textual response
+with a @acronym{MIME} header.  This header consists of
+@samp{Content-type} and @samp{Content-transfer-encoding} headers, as
+supplied by the corresponding configuration file statements for this
+database (@xref{Databases, content-type}, @pxref{Databases,
+content-transfer-encoding}).  Any or both of these headers may be
+missing.
+@end deffn
+
+@node AUTH
+@subsection The AUTH Command
+  The @code{AUTH} command allows client to authenticate itself to the
+server.  Depending on the server configuration, authenticated users
+may get access to more databases (@pxref{Database Visibility}) or more
+detailed server information (@pxref{Security Settings, show-sys-info}).
+
+@deffn Command AUTH username auth-string
+Authenticate client to the server using a username and password.
+The @var{auth-string} is computed as in the @acronym{APOP} protocol
+(@uref{ftp://ftp.rfc-editor.org/in-notes/rfc1929.txt, RFC1939}.
+Briefly, it is the MD5 checksum of the concatenation of the @var{msg-id}
+(@pxref{Initial Reply}) and the @dfn{shared secret} that is
+stored both on the server and client machines.  
+
+@xref{Authentication}, for information on how to configure server for
+authenticating clients.
+
+This command is supported only if @samp{auth} capability is requested
+in the configuration (@pxref{Capabilities, auth}).
+@end deffn
+
+@node CLIENT
+@subsection The CLIENT Command
+
+@deffn Command CLIENT info
+Identify client to server.  The @var{info} argument contains a string
+identifying the client program (e.g. its name and version number).
+This information can then be used in logging (@pxref{Access Log, %C}).
+@end deffn
+
+@node STATUS
+@subsection The STATUS Command
+
+@deffn Command STATUS
+Display cumulative timing information.  This command returns a
+@samp{210} status code, followed by the timing information as
+described in @ref{Tuning}, e.g.
+
+@smallexample
+C: STATUS
+S: 210 [d/m/c = 28/1045/119856 21.180r 10.360u 1.040s]
+@end smallexample
+@end deffn
+
+@node HELP
+@subsection The HELP Command
+
+@deffn Command HELP
+  The @code{HELP} command provides a short summary of commands that
+are understood by the server.  The response begins with a @samp{113}
+code, followed by textual body defined in @code{help-text}
+configuration file statement (@pxref{General Settings, help-text}),
+which is terminated by a dot on a line by itself.  A @samp{250}
+response code finishes the output.  For example:
+
+@smallexample
+113 help text follows
+DEFINE database word         -- look up word in database
+MATCH database strategy word -- match word in database 
+SHOW DB                      -- list all accessible databases
+SHOW DATABASES               -- list all accessible databases
+SHOW STRAT                   -- list available matching strategies
+SHOW STRATEGIES              -- list available matching strategies
+SHOW INFO database           -- provide database information
+SHOW SERVER                  -- provide site-specific information
+CLIENT info                  -- identify client to server
+STATUS                       -- display timing information
+HELP                         -- display this help information
+QUIT                         -- terminate connection
+.
+250 Ok
+@end smallexample
+@end deffn
+
+@node QUIT
+@subsection The QUIT Command
+
+@deffn Command QUIT
+Terminate connection.
+
+This command returns a response code 221, optionally followed by
+timing information (@pxref{Tuning}).
+@end deffn
+
+@node Extended Commands
+@section Extended Commands
+  In addition to the standard commands, the Dico server also offers a
+set of experimental or extended commands.
+
+@deffn Command XIDLE
+This command displays the current inactivity timeout setting
+(@pxref{inactivity-timeout}), and resets idle timer to 0.  The
+timeout value is printed as the first word after a @samp{110} reply
+code, e.g.:
+
+@smallexample
+C: XIDLE
+S: 110 180 second(s)
+@end smallexample
+
+The value of @samp{0} means there are no timeout.
+@end deffn
+
+@deffn Command XVERSION
+This command displays the daemon implementation and version number.
+It becomes available only if @samp{xversion} capability was requested
+in the configuration file (@pxref{Capabilities, xversion}).
+
+@smallexample
+C: XVERSION
+S: 110 dicod (dico @value{VERSION})
+@end smallexample
+@end deffn
+
+@deffn Command XLEV param
+If @var{param} is the word @samp{tell}, displays the current value of
+Levenshtein threshold.  If @var{param} is a positive integer value,
+sets the Levenshtein threshold to this value.
+
+This command becomes available only if @samp{xlev} capability was
+requested in the configuration file (@pxref{Capabilities, xlev}).
+
+@smallexample
+C: xlev tell
+S: 280 1
+C: xlev 3
+S: 250 ok - Levenshtein threshold set to 3
+C: xlev tell
+S: 280 3
+@end smallexample
+@end deffn
+

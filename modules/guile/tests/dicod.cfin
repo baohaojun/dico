@@ -1,0 +1,15 @@
+capability lang;
+timing no;
+prepend-load-path ("~moddir~/guile");
+load-module guile;
+database {
+	name "plnum";
+	handler "guile"
+	        " init-script=~dictdir~/listdict.scm "
+		" init-fun=listdict-init"
+		" ~dictdir~/numerals-pl.ldb";
+}
+
+
+
+

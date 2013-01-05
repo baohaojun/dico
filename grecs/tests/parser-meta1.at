@@ -1,0 +1,122 @@
+# This file is part of grecs  -*- Autotest -*-
+# Copyright (C) 2011-2012 Sergey Poznyakoff
+#
+# Grecs is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# Grecs is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Grecs.  If not, see <http://www.gnu.org/licenses/>.
+
+AT_SETUP([MeTA1-style parser])
+AT_KEYWORDS([parser meta1])
+
+AT_CHECK([gcffmt -type=meta1 $abs_srcdir/meta1.conf],
+[0],
+[.hostname: "host.example.org"
+.smtps.greeting: "220 example.org ESMTP Tossudament alcats\r\n"
+.smtps.log_level: "12"
+.smtps.log.facility: "mail"
+.smtps.log.ident: "smtps"
+.smtps.flags: ("8bitmime", "access")
+.smtps.CDB_gid: "2262"
+.smtps.wait_for_server: "4"
+.smtps.listen_socket.type: "inet"
+.smtps.listen_socket.port: "25"
+.smtps.start_action: "pass"
+.smtps.pass_fd_socket: "smtps/smtpsfd"
+.smtps.user: "meta1s"
+.smtps.path: "/usr/local/libexec/smtps"
+.smtps.arguments: "smtps -f /etc/meta1/meta1.conf"
+.smtps.policy_milter.socket.type: "inet"
+.smtps.policy_milter.socket.address: "127.0.0.1"
+.smtps.policy_milter.socket.port: "3333"
+.smtps.policy_milter.timeout: "1800s"
+.smtps.policy_milter.flags: ("accept_but_reconnect")
+.smtps.io_timeout: "300s"
+.smtps.module_timeout: "1000s"
+.smtps.auth.flags: ("noanonymous")
+.smtps="MSA".log_level: "11"
+.smtps="MSA".log.facility: "mail"
+.smtps="MSA".log.ident: "MSA"
+.smtps="MSA".CDB_gid: "2262"
+.smtps="MSA".listen_socket.type: "inet"
+.smtps="MSA".listen_socket.port: "587"
+.smtps="MSA".start_action: "pass"
+.smtps="MSA".pass_fd_socket: "smtps/msafd"
+.smtps="MSA".user: "meta1s"
+.smtps="MSA".path: "/usr/local/libexec/smtps"
+.smtps="MSA".arguments: "smtps -I 1 -N MSA -f /etc/meta1/meta1.conf"
+.smtpc.log_level: "12"
+.smtpc.log.facility: "mail"
+.smtpc.log.ident: "smtpc"
+.smtpc.flags: ("read_QUIT_reply", "separate_final_dot_and_QUIT", "talk_to_myself")
+.smtpc.LMTP_socket: "lmtpsock"
+.smtpc.wait_for_server: "4"
+.smtpc.start_action: "wait"
+.smtpc.user: "meta1c"
+.smtpc.path: "/usr/local/libexec/smtpc"
+.smtpc.arguments: "smtpc -f /etc/meta1/meta1.conf"
+.qmgr.log_level: "12"
+.qmgr.log.facility: "mail"
+.qmgr.log.ident: "qmgr"
+.qmgr.wait_for_server: "4"
+.qmgr.wait_for_client: "3"
+.qmgr.start_action: "wait"
+.qmgr.user: "meta1q"
+.qmgr.restart_dependencies: ("smtps", "MSA", "smtpc")
+.qmgr.path: "/usr/local/libexec/qmgr"
+.qmgr.arguments: "qmgr -f /etc/meta1/meta1.conf"
+.qmgr.control_socket: "qmgr/sock"
+.smar.DNS.nameservers: ("10.11.0.1", "10.12.0.1")
+.smar.DNS.flags: "use_connect"
+.smar.log_level: "12"
+.smar.log.facility: "mail"
+.smar.log.ident: "smar"
+.smar.nameserver: "10.11.0.1"
+.smar.start_action: "wait"
+.smar.user: "meta1m"
+.smar.restart_dependencies: ("smtps", "MSA", "qmgr")
+.smar.path: "/usr/local/libexec/smar"
+.smar.arguments: "smar -f /etc/meta1/meta1.conf"
+.smar.map="mtdb".type: "hash"
+.smar.map="mtdb".file: "mt.db"
+.smar.mailertable.name: "mtdb"
+.smar.mailertable.flags: ("full_address", "domain")
+.smar.map="password".type: "passwd"
+.smar.map="userdb".type: "socket"
+.smar.map="userdb".path: "/var/spool/meta1/smap/userdb"
+.smar.map="userdb".mapname: "userdb"
+.smar.map="userdb".min_connections: "10"
+.smar.map="userdb".max_connections: "1024"
+.smar.map="userdb".timeout: "5"
+.smar.map="locusr".type: "sequence"
+.smar.map="locusr".maps: ("password", "userdb")
+.smar.local_user_map.name: "locusr"
+.smar.local_user_map.flags: ("localpart", "local_domains")
+.smar.map="lum".type: "socket"
+.smar.map="lum".path: "/var/spool/meta1/smap/userdb"
+.smar.map="lum".mapname: "alias"
+.smar.map="lum".min_connections: "10"
+.smar.map="lum".max_connections: "1024"
+.smar.map="lum".timeout: "6"
+.smar.map="stdal".file: "aliases.db"
+.smar.map="stdal".type: "hash"
+.smar.map="ali".type: "sequence"
+.smar.map="ali".maps: ("lum", "stdal")
+.smar.aliases.name: "ali"
+.smar.aliases.flags: ("localpart", "local_domains")
+.smar.map="acc".type: "socket"
+.smar.map="acc".address: "127.0.0.1"
+.smar.map="acc".port: "1025"
+.smar.map="acc".mapname: "access"
+.smar.access_map.name: "acc"
+])
+
+AT_CLEANUP

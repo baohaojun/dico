@@ -1,0 +1,12 @@
+capability lang;
+timing no;
+prepend-load-path ("~moddir~/outline","~moddir~/stratall");
+load-module (outline,stratall);
+database {
+	name "dev";
+	handler "outline ~dictdir~/devdict.out";
+}
+
+
+
+

@@ -1,0 +1,46 @@
+# This file is part of GNU Dico -*- Autotest -*-
+# Copyright (C) 2012 Sergey Poznyakoff
+#
+# GNU Dico is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# GNU Dico is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Dico.  If not, see <http://www.gnu.org/licenses/>.
+
+m4_include([testsuite.inc])
+
+m4_define([DICOD_CONFIG],[dnl
+cat > dicod.conf <<__EOT__
+prepend-load-path "$abs_builddir";
+load-module echo;
+$*
+__EOT__
+])
+
+AT_INIT
+DICO_VERSION(dicod)
+m4_include([startup.at])
+m4_include([help00.at])
+m4_include([help01.at])
+m4_include([help02.at])
+m4_include([help03.at])
+m4_include([showstrat.at])
+m4_include([showdb.at])
+m4_include([info.at])
+m4_include([descr.at])
+m4_include([match.at])
+m4_include([nomatch.at])
+m4_include([def.at])
+m4_include([nodef.at])
+m4_include([apop.at])
+m4_include([vis00.at])
+m4_include([vis01.at])
+m4_include([vis02.at])
+m4_include([alias.at])

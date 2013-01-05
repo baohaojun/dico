@@ -1,0 +1,160 @@
+# Ukrainian messages for Dicoweb
+# This file is distributed under the same license as the Dico package.
+# Copyright (C) 2009, 2012 Free Software Foundation, Inc.
+# Sergey Poznyakoff <gray@gnu.org>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Dico 1.4.90\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-03-08 17:13+0100\n"
+"PO-Revision-Date: 2009-03-08 17:18+0100\n"
+"Last-Translator: Sergey Poznyakoff <gray@gnu.org>\n"
+"Language-Team: Ukrainian <translation-team-uk@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: dummy_translations.py:21
+msgid "Match words exactly"
+msgstr "Докладне порівнювання слів"
+
+#: dummy_translations.py:22
+msgid "Match word prefixes"
+msgstr "Порівнювання префіксів слів"
+
+#: dummy_translations.py:23
+msgid "Match using SOUNDEX algorithm"
+msgstr "Шукати з використанням алгоритму SOUNDEX"
+
+#: dummy_translations.py:24
+msgid "Match everything (experimental)"
+msgstr "Звертати всі слова (експериментальне)"
+
+#: dummy_translations.py:25
+msgid "Match headwords within given Levenshtein distance"
+msgstr "Шукати слова в межах вказаної відстані Левенштейна"
+
+#: dummy_translations.py:26
+msgid "Match headwords within given Levenshtein distance (normalized)"
+msgstr "Шукати слова в межах вказаної відстані Левенштейна (нормалізовано)"
+
+#: dummy_translations.py:27
+msgid "Match headwords within given Damerau-Levenshtein distance"
+msgstr "Шукати слова в межах вказаної відстані Дамерау-Левенштейна"
+
+#: dummy_translations.py:28
+msgid "Match headwords within given Damerau-Levenshtein distance (normalized)"
+msgstr ""
+"Шукати слова в межах вказаної відстані Дамерау-Левенштейна (нормалізовано)"
+
+#: dummy_translations.py:29
+msgid "POSIX 1003.2 (modern) regular expressions"
+msgstr "Регулярні вирази POSIX 1003.2"
+
+#: dummy_translations.py:30
+msgid "Old (basic) regular expressions"
+msgstr "Базові (старого типу) регулярні вирази"
+
+#: dummy_translations.py:31
+msgid "Match word suffixes"
+msgstr "Порівнювання суфіксів слів"
+
+#: dummy_translations.py:32
+msgid "Reverse search in Quechua databases"
+msgstr "Зворотній пошук у базі слів Кечуа"
+
+#: dummy_translations.py:34
+msgid "Match headwords exactly"
+msgstr "Докладне порівнювання слів"
+
+#: dummy_translations.py:35
+msgid "Match prefixes"
+msgstr "Порівнювання префіксів"
+
+#: dummy_translations.py:36
+msgid "Match substring occurring anywhere in a headword"
+msgstr "Шукати співпадіння у довільному під-рядку слова"
+
+#: dummy_translations.py:37
+msgid "Match suffixes"
+msgstr "Порівнювання суфіксів"
+
+#: dummy_translations.py:38
+msgid "Match headwords within Levenshtein distance one"
+msgstr "Шукати слова в межах відстані Левенштейна = 1"
+
+#: dummy_translations.py:39
+msgid "Match separate words within headwords"
+msgstr "Порівнювати окремі слова у словарних заголовках"
+
+#: views.py:97
+msgid "First match"
+msgstr "Перше співпадіння"
+
+#: views.py:98
+msgid "All"
+msgstr "Всі"
+
+#: views.py:99
+msgid "Default"
+msgstr "Типово"
+
+#: templates/index.html:12
+msgid "Search term:"
+msgstr "Шукана фраза:"
+
+#: templates/index.html:15 templates/index.html.py:117
+msgid "more options"
+msgstr "більше опцій"
+
+#: templates/index.html:22
+msgid "DICT server:"
+msgstr "Сервер DICT:"
+
+#: templates/index.html:31
+msgid "Database:"
+msgstr "База даних:"
+
+#: templates/index.html:39
+msgid "Match strategy:"
+msgstr "Стратегія порівнювання:"
+
+#: templates/index.html:51
+msgid "Search"
+msgstr "Пошук"
+
+#: templates/index.html:52
+msgid "Define (I'm feeling lucky)"
+msgstr "Визнач (Мені пощастить)"
+
+#: templates/index.html:72
+msgid "last match results"
+msgstr "останні результати"
+
+#: templates/index.html:75
+#, python-format
+msgid "Found one definition"
+msgid_plural "Found %(rc)s definitions"
+msgstr[0] "Знайдено %(rc)s визначення"
+msgstr[1] "Знайдено %(rc)s визначення"
+msgstr[2] "Знайдено %(rc)s визначень"
+
+#: templates/index.html:79
+msgid "From"
+msgstr "З"
+
+#: templates/index.html:101
+msgid "Last match results"
+msgstr "останні результати"
+
+#: templates/index.html:107
+#, python-format
+msgid "Define %(term)s"
+msgstr "Визнач %(term)s"
+
+#: templates/index.html:118
+msgid "less options"
+msgstr "менш опцій"

@@ -1,0 +1,76 @@
+# This file is part of grecs  -*- Autotest -*-
+# Copyright (C) 2007, 2009-2012 Sergey Poznyakoff
+#
+# Grecs is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# Grecs is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Grecs.  If not, see <http://www.gnu.org/licenses/>.
+
+AT_SETUP(Help)
+AT_KEYWORDS([help])
+
+AT_CHECK([gcfset -cfhelp],
+[0],
+[# Sample configuration file structure.
+
+# Scalar string
+scalar <label: string>;
+
+# Configure logging logging
+logging {
+  # Send to syslog
+  syslog <arg: boolean>;
+
+  # Set logging facility
+  facility <name: string>;
+
+  # Tag logging messages with this string
+  tag <label: string>;
+
+  # Prefix each message with its priority
+  print-priority <arg: boolean>;
+}
+
+# Mailbox configuration
+mailbox {
+  # Default mailbox pattern
+  mailbox-pattern <arg: string>;
+
+  # Default mailbox type
+  mailbox-type <arg: string>;
+}
+
+# Subprogram configuration
+program <name: string> {
+  # Scalar string
+  scalar <label: string>;
+
+  # Configure logging logging
+  logging {
+    # Send to syslog
+    syslog <arg: boolean>;
+
+    # Set logging facility
+    facility <name: string>;
+
+    # Tag logging messages with this string
+    tag <label: string>;
+
+    # Prefix each message with its priority
+    print-priority <arg: boolean>;
+  }
+}
+
+# list variable
+listvar <arg: list of string>;
+])
+
+AT_CLEANUP

@@ -1,0 +1,82 @@
+# List of Dico files which contain translatable strings.
+
+# Copyright (C) 1998-2000, 2008-2010, 2012 Sergey Poznyakoff
+#
+# Dico is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# Dico is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Dico.  If not, see <http://www.gnu.org/licenses/>.
+
+gnu/strftime.c
+gnu/quotearg.c
+gnu/obstack.c
+gnu/getopt.c
+gnu/strtol.c
+
+lib/parseopt.c
+lib/userprivs.c
+lib/xstream.c
+lib/iostr.c
+lib/udb.c
+
+dico/shell.c
+dico/connect.c
+dico/dico.c
+dico/func.c
+dico/autologin.c
+dico/cmdline.c
+dico/lookup.c
+dico/saslauth.c
+
+dicod/regex.c
+dicod/dicod.c
+dicod/acl.c
+dicod/dbtext.c
+dicod/auth.c
+dicod/main.c
+dicod/cmdline.c
+dicod/loader.c
+dicod/alias.c
+dicod/server.c
+dicod/ident.c
+
+dicod/accesslog.c
+dicod/gsasl.c
+dicod/ckpass.c
+
+modules/dict.org/dictorg.c
+modules/dict.org/dictstr.c
+
+modules/guile/guile.c
+
+modules/outline/outline.c
+
+modules/ldap/ldap.c
+
+modules/gcide/ent.c
+modules/gcide/gcide.c
+modules/gcide/grk.c
+modules/gcide/idx.c
+modules/gcide/idxgcide-cli.opt
+modules/gcide/idxgcide.l
+modules/gcide/markup.l
+modules/gcide/webchr.c
+
+modules/wordnet/wordnet.c
+
+grecs/src/format.c
+grecs/src/grecs-gram.y
+grecs/src/grecs-lex.l
+grecs/src/path-parser.c
+grecs/src/preproc.c
+grecs/src/symtab.c
+grecs/src/tree.c
+grecs/src/wordsplit.c

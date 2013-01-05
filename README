@@ -1,0 +1,205 @@
+GNU Dico README
+Copyright (C) 2008-2010, 2012 Sergey Poznyakoff
+
+* Introduction
+==============
+
+This file contains brief information about configuring, testing
+and running GNU Dico.  It is *not* intended as a replacement
+for the documentation, but is provided as a brief reference only.
+The complete documentation for Dico is available in doc/
+subdirectory. To read it without installing the package run
+`info -f doc/dico.info'. After the package is installed the
+documentation can be accessed running `info Dico'.  Invoking
+`info dico' and `info dicod' (with a lower-case `d') will show you a 
+concise description of the command line syntax (similar to a man-page
+style) of `dico' and `dicod' programs, correspondingly.
+
+An online copy of the documentation in various formats is available
+at http://dico.man.gnu.org.ua.
+
+* Overview
+==========
+
+Dico is a flexible implementation of DICT server (RFC 2229).  The
+server is modular: the daemon itself (dicod) provides only the server
+functionality, and knows nothing about database formats.  Actual
+searches are performed by functions supplied in loadable modules.  A
+single module can handle any number of database instances. 
+
+The package includes several modules for searching in different
+dictionary databases, such as dict.org, WordNet and others.
+
+The server can be configured to handle both anonymous and authorized
+access.  It supports a wide variety of authentication algorithms.
+Simpler configurations can keep the user database in plaintext files,
+while more complex ones can use LDAP.
+
+A console client program, `dico', is included.
+
+A module for lookups in Jim Breen's Kanjidic and Edict databases will
+be added in future.
+
+* What's in a name?
+===================
+
+Dico is informal French for "Dictionary".  It is pronounced "Deekoh",
+with the stress on the last syllable.
+
+* Modules
+=========
+
+The package comes with the following modules:
+
+- dictorg
+  This module handles databases in dict.org format.
+
+- outline
+  Support for databases in Emacs outline format. This module is
+  designed mostly as an example and for testing purposes.
+
+- gcide
+  GNUCIDE dictionary support.
+
+- wordnet
+  WordNet support.  WordNet is a lexical database for the English
+  language, created and maintained at the Cognitive Science Laboratory
+  of Princeton University.
+  
+- guile
+  An abstract layer for interfacing with database modules written in
+  Guile.
+
+- python
+  An abstract layer for interfacing with database modules written in
+  Python.
+ 
+- substr
+  Defines the "substr" lookup strategy, which matches a supplied
+  substring anywhere in the headword.
+
+- stratall
+  Defines a special lookup strategy, named "all", which returns all
+  headwords from the database.
+
+- word
+  Defines the "word" lookup strategy, which matches a supplied
+  word anywhere in the headword.
+
+- pcre
+  Defines a strategy for using Perl-compatible regular expressions.
+  
+- ldap
+  Brings support for LDAP user databases.
+
+- pam
+  Implements PAM authentication.
+  
+* Building
+==========
+
+As usual:
+
+ $ ./configure
+ $ make
+ $ make install
+ 
+See INSTALL for the generic configure instructions.  The rest of this
+section describes configuration options and variables specific for
+Dico.
+
+** Default Preprocessor
+------------------------
+
+The runtime configuration system uses `m4' to preprocess the
+configuration file, which makes the configuration extremely flexible.
+We recommend to use GNU m4 as a preprocessor, although any other
+implementation of `m4' can be used as well.  The `configure' script tries to
+determine the full file name of the preprocessor binary and the necessary
+command line options.  In case it makes a wrong guess, you can instruct
+it to use a particular preprocessor by defining the `DEFAULT_PREPROCESSOR'
+configuration variable.  For example, the following `configure'
+invocation instructs it to use `/usr/local/bin/gm4':
+
+     $ ./configure DEFAULT_PREPROCESSOR="/usr/local/bin/gm4 -s"
+
+Note the use of the `-s' preprocessor option.  It tells `m4' to
+produce line directives which help `dicod' produce correct diagnostics
+about eventual configuration errors.  Unless your `m4' implementation
+does not have this feature, we recommend to always use it in
+`DEFAULT_PREPROCESSOR' value.
+
+   Finally, if you do not wish to use preprocessor at all, use
+the `--without-preprocessor' option.
+
+** Default Server
+-----------------
+
+Unless given an explicit dictionary server, the client program `dico'
+attempts to connect the server `dict://dico.gnu.org.ua'.  You can
+change this default by setting the DEFAULT_DICT_SERVER environment
+variable to the desired server hostname.  For example:
+
+     $ ./configure DEFAULT_DICT_SERVER=dict.org
+
+
+** Guile Support
+-----------------
+
+The "GNU's Ubiquitous Intelligent Language for Extensions" (Guile)
+can be used to write database modules for `dico'.  This
+requires Guile version 1.8.4 or newer.  The `configure' script will
+probe for the presence of Guile on your system and automatically enable
+its use if its version number is high enough.
+
+If you do not wish to use Guile, use `--without-guile' to disable it.
+
+** WordNet database
+-------------------
+
+If you plan to use WordNet database, you will most probably need the
+`--with-wordnet' option to inform the script about the location where
+WordNet libraries and headers can be found.  For example, the command
+
+  ./configure --with-wordnet=/usr/local/WordNet-3.0
+
+instructs the script to look for WordNet library files in
+/usr/local/WordNet-3.0/lib and for include files in
+/usr/local/WordNet-3.0/include.
+
+** Other Configure Settings
+----------------------------
+
+The `dicod' daemon uses syslog for diagnostics.  The default syslog
+facility can be set using `LOG_FACILITY' configuration variable.  
+Allowed arguments are `user', `daemon', `auth', `authpriv', `mail',
+`cron', and `local0' through `local7' (case insensitive).
+
+By default, the `daemon' facility is used.
+
+* Bug reporting.		
+
+Send bug reports to <bug-dico@gnu.org>.
+
+
+* Copyright information:
+
+Copyright (C) 2008-2010, 2012 Sergey Poznyakoff
+
+   Permission is granted to anyone to make or distribute verbatim copies
+   of this document as received, in any medium, provided that the
+   copyright notice and this permission notice are preserved,
+   thus giving the recipient permission to redistribute in turn.
+
+   Permission is granted to distribute modified versions
+   of this document, or of portions of it,
+   under the above conditions, provided also that they
+   carry prominent notices stating who last changed them.
+
+
+Local Variables:
+mode: outline
+paragraph-separate: "[ 	]*$"
+version-control: never
+End:
+

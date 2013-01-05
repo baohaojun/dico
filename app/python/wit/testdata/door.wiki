@@ -1,0 +1,217 @@
+{{wikipedia|Door (disambiguation)}}
+==English==
+
+{{rank|myself|morning|money|275|door|round|kind|form}}
+
+===Pronunciation===
+[[Image:Doorway La Ronce National Trust for Jersey.jpg|thumb|right|A door.]]
+* {{a|RP}} {{enPR|dô(r)}}, {{IPA|/dɔː(ɹ)/}}, {{SAMPA|/dO:(r)/}}
+*: {{rhymes|ɔː(r)}}
+* {{a|US}} {{enPR|dôr}}, {{IPA|/dɔːɹ/|/doʊɹ/}}, {{SAMPA|/dO:r/|/doUr/}}
+*: {{audio|en-us-door.ogg|Audio (US)}}
+* {{homophones|daw}} {{qualifier|in [[non-rhotic]] accents}}
+
+===Etymology===
+From {{etyl|enm|en}} {{term|dor|lang=enm}} &lt; {{etyl|ang|en}} {{term|duru||door|lang=ang}}, {{term|dor||gate|lang=ang}} &lt; {{proto|Germanic|dur-|lang=en}} &lt; {{proto|Indo-European|dʰwer-||dʰwor-|doorway, door, gate|lang=en}}. Cognates include Gothic {{term|𐌳𐌰𐌿𐍂|sc=Goth|tr=daúr|lang=got}}, Danish {{term|dør}}, German {{term|Tür|lang=de}} ( &lt; Old High German {{term|turi|lang=goh}}), Icelandic {{term|dyr|lang=is}} ( &lt; Old Norse {{term|dyrr|lang=non}}), Latin {{term|foris|lang=la}}, Modern Greek {{term|sc=Grek|θύρα|tr=thýra}} ( &lt; Ancient Greek {{term|sc=polytonic|θύρα|tr=thura|lang=grc}}), Persian {{term|sc=fa-Arab|در|tr=dar|lang=fa}}, and Russian {{term|sc=Cyrl|дверь|tr=dver’|lang=ru}}.
+
+===Noun===
+{{wikipedia}}
+{{en-noun}}
+
+# A [[portal]] of entry into a building or room, consisting of a rigid plane movable on a [[hinge]]. Doors are frequently made of [[wood]] or [[metal]]. May have a [[handle]] to help open and close, a [[latch]] to hold the door closed{{,}} and a [[lock]] that ensures the door cannot be opened without the key.
+#: ''I knocked on the vice president's '''door'''''
+# An non-physical entry into the next world, a particular feeling, a company, etc.
+#: ''Keep a '''door''' on your anger.''
+
+====Translations====
+{{trans-top|portal of entry into a building or room}}
+* Albanian: [[derë]]
+* Arabic: {{Arab|[[باب|بَابٌ]]}} {{IPAchar|(bāb)}} {{m}}, {{Arab|[[باب|أبْوَاب]]}} {{IPAchar|(’abwāb)}} {{p}}
+* Aramaic:
+*: Syriac: [[ܬܪܥܐ]] (tar‘ā’, tar‘o’) {{m}}
+*: Hebrew: [[תרעא]] (tar‘ā’, tar‘o’) {{m}}
+* Armenian: {{t+|hy|դուռ|sc=Hayeren|xs=Armenian}} (duṙ)
+* [[Basque]]: [[ate]]
+* Bengali: [[দরজা]]
+* Bosnian: [[vrata]] {{f|s}}/{{p}}
+* [[Breton]]: [[dor]] {{f}}, dorioù {{p}} ''(note:'' nor ''after article in the singular)''
+* Bulgarian: {{t+|bg|врата|n|p|tr=vrata|sc=Cyrl}}
+* [[Catalan]]: [[porta]] {{f}}
+* Chinese: [[門]], [[门]] (mén)
+* Croatian: {{t-|hr|vrata|n|p}}
+* Czech: {{t-|cs|dveře|f|p}}
+* Danish: {{t-|da|dør}}
+* Dutch: {{t+|nl|deur|f}}
+* Esperanto: {{t+|eo|pordo|xs=Esperanto}}
+* Estonian: {{t+|et|uks}}
+* [[Ewe]]: [[ʋɔtru]] {{n}}
+* Faroese: {{t-|fo|dyr|xs=Faroese}}, {{t-|fo|hurð|xs=Faroese}}
+* Finnish: {{t+|fi|ovi}}
+* French: {{t+|fr|porte|f}}
+* Georgian: [[კარი]] (kari)
+* German: [[Tür]] {{f}}, [[Türen]] {{p}}, [[Türe]] {{f}}
+* Greek: {{t+|el|πόρτα|f|tr=pórta|sc=Grek}}, {{t+|el|θύρα|f|tr=thýra|sc=Grek}}
+** Ancient Greek: {{t+|el|θύρα|f|tr=thýra|sc=Grek}}
+* Hebrew: [[דלת]] (délet) {{f}}
+* Hindi: [[दरवाज़ा]] (darvāzā) {{m}}
+* Hungarian: [[ajtó]], [[kapu]], [[bejárat]]; [[ajtónyílás]]
+* Indonesian: {{t-|id|pintu|xs=Indonesian}}
+* Irish: {{t-|ga|doras|m|xs=Irish}}
+* Italian: {{t+|it|porta|f}}, {{t-|it|portiera|f}}, {{t+|it|sportello|m}}
+* Japanese: [[戸]] ([[と]], to), [[扉]] ([[とびら]], tobira), [[ドア]] (dóa)
+* {{trreq|Kannada}}
+* Korean: [[문]] (mun)
+* Kurdish: {{t+|ku|derî|m}}, {{t+|ku|dergeh|m}}, {{t+|ku|ده‌رگا|sc=KUchar}}, {{t+|ku|قاپی|sc=KUchar}}
+* Lao: {{t|lo|ປະຕູ|tr=pa-tuu|sc=Laoo}}
+* Latin: {{t-|la|ostium|n}}, {{t+|la|ianua|f}}
+{{trans-mid}}
+* Latvian: [[durvis]] {{m}}
+* Lithuanian: {{t-|lt|durys|xs=Lithuanian}}
+* [[Lower Sorbian]]: [[źurja]] {{p}}
+* Malay: {{t+|ms|pintu|xs=Malay}}
+* [[Malayalam]]: [[വാതില്‍]], [[കതക്]], [[കവാടം]], [[പ്രവേശനമുഖം]]
+* Maltese: [[bieb]] {{m}}
+* [[Marathi]]: [[दरवाजा]] (darvājā), [[दार]] (dār)
+* Mongolian: [[үүд]] (üüd)
+* Norwegian: {{t-|no|dør|m}}
+* Old English: {{t+|ang|duru|xs=Old English}}, {{t-|ang|dor|xs=Old English}}
+* {{trreq|Oriya}}
+* Persian: {{fa-Arab|[[در]]}} (dar)
+* Polish: {{t+|pl|drzwi|n|p}}
+* Portuguese: {{t+|pt|porta|f}}
+* [[Punjabi]]: [[ਬੂਹਾ]] (būhā), [[ਦਰਵਾਜ਼ਾ]] (darvāzā)
+* Romanian: {{t+|ro|uşă|f}}
+* Russian: [[дверь]] (dver’) {{f}}
+* Sanskrit: [[द्वारं]]
+* [[Scottish Gaelic]]: [[dorus]] {{m}}
+* Serbian: {{t-|sr|врата|f|sc=Cyrl}}, {{t-|sr|vrata|f}}
+* Slovak: {{t-|sk|dvere|f|p}}
+* Slovene: {{t+|sl|vrata|n|p}}
+* Spanish: {{t+|es|puerta|f}}
+* Swahili: [[mlango]]
+* Swedish: {{t+|sv|dörr|c}}
+* [[Tagalog]]: [[pinto]]
+* [[Tamil]]: [[கதவு]] (kathavu)
+* [[Taos]]: [[kə̏dénemą]]
+* [[Telugu]]: [[తలుపు]], [[ద్వారము]]
+* Thai: {{Thai|[[ประตู]]}} (bprà-dtoo)
+* Turkish: {{t+|tr|kapı}}
+* Ukrainian: {{t+|uk|двері|f|p|tr=dveri|sc=Cyrl|xs=Ukrainian}}
+* [[Upper Sorbian]]: [[durje]] {{p}}
+* Urdu: {{ur-Arab|[[دروازہ]]}} (darvāza) {{m}}
+* Vietnamese: {{t+|vi|cửa|xs=Vietnamese}}
+* Welsh: {{t-|cy|drws|xs=Welsh}}
+* [[West Frisian]]: [[doar]]
+* Yiddish: [[טיר]] (tir) {{f}}
+* {{trreq|Zulu}}
+{{trans-bottom}}
+
+====Derived terms====
+* [[door brake]]
+* [[sliding door]]
+* [[up and over door]]
+* [[show somebody the door]]
+
+===Verb===
+{{en-verb}}
+
+# {{transitive|cycling}} To cause a collision by opening the door of a vehicle in the front of (an oncoming cyclist or pedestrian).
+
+[[Category:1000 English basic words]]
+
+----
+
+==Dutch==
+
+===Pronunciation===
+* {{audio|Nl-door.ogg|audio}}
+* {{IPA|lang=nl|[dʊːr]}}
+
+===Preposition===
+{{infl|nl|preposition}}
+
+# [[through]]
+#: ''Hij schoot de bal '''door''' het raam.'' &amp;mdash; He kicked the ball '''through''' the window.
+# [[around]] within an enclosed space
+#: ''Dolenthousiast rende het hondje '''door''' de kamer.'' &amp;mdash; Very enthusiastically the puppy ran '''around''' the room.
+# [[because of]]
+#: '''''Door''' files kan ik niet op tijd komen.'' &amp;mdash; '''Because of''' traffic jams I'm unable to arrive on time.
+
+====Synonyms====
+* {{sense|because of}} [[vanwege]]
+
+===Postposition===
+{{infl|nl|postposition}}
+
+# [[through]] (implying motion)
+#: ''Ik rijd nu de stad '''door'''.'' &amp;mdash; I'm now driving '''through''' the city.
+# [[around]] within an enclosed space
+#: ''Dolenthousiast rende het hondje de kamer '''door'''.'' &amp;mdash; Very enthusiastically the puppy ran '''around''' the room.
+
+===Adverb===
+{{infl|nl|adverb}}
+
+# [[through]], [[forward]], [[on]]
+#: ''Ondanks slecht weer ging het feest ging toch '''door.''''' &amp;mdash; Despite bad weather, the party went '''on''' anyway.
+
+====Derived terms====
+{{top4}}
+* [[doorgaan]]
+* [[doorgang]]
+* [[doorgeven]]
+* [[doorstaan]]
+* [[doorstart]]
+* [[doortocht]]
+* [[doorwerken]]
+* [[doorzichtig]]
+{{bottom}}
+
+===Conjunction===
+{{infl|nl|conjunction}}
+
+# [[by]]
+#: ''Hij vermeed een confrontatie '''door''' de andere kant op te lopen.'' &amp;mdash; He avoided a confrontation '''by''' walking the other way.
+
+====Derived terms====
+* [[door middel van]]
+
+[[am:door]]
+[[ang:door]]
+[[ar:door]]
+[[cs:door]]
+[[de:door]]
+[[et:door]]
+[[el:door]]
+[[es:door]]
+[[fa:door]]
+[[fr:door]]
+[[ko:door]]
+[[hy:door]]
+[[io:door]]
+[[id:door]]
+[[it:door]]
+[[kk:door]]
+[[ku:door]]
+[[lo:door]]
+[[lt:door]]
+[[li:door]]
+[[hu:door]]
+[[nl:door]]
+[[ja:door]]
+[[no:door]]
+[[oc:door]]
+[[ug:door]]
+[[km:door]]
+[[pl:door]]
+[[pt:door]]
+[[simple:door]]
+[[sr:door]]
+[[fi:door]]
+[[sv:door]]
+[[ta:door]]
+[[te:door]]
+[[th:door]]
+[[vi:door]]
+[[tr:door]]
+[[uk:door]]
+[[zh:door]]

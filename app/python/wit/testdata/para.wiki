@@ -1,0 +1,5 @@
+First paragraph consists of two sentences. 
+Each sentence occupies a line.
+
+Second paragraph consists of two sentences as well.
+Each of them, again, occupies its own line.

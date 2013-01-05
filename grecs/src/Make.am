@@ -1,0 +1,80 @@
+# This file is part of grecs - Gray's Extensible Configuration System
+# Copyright (C) 2007, 2009-2012 Sergey Poznyakoff
+#
+# Grecs is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# Grecs is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Grecs.  If not, see <http://www.gnu.org/licenses/>.
+
+PARSER_DEFS =
+
+if GRECS_COND_META1_PARSER
+  GRECS_PARSER_META1 = meta1-gram.y meta1-lex.l
+  GRECS_EXTRA_META1 = meta1-gram.h
+  PARSER_DEFS += -DENABLE_META1_PARSER
+endif
+
+if GRECS_COND_BIND_PARSER
+  GRECS_PARSER_BIND = bind-gram.y bind-lex.l
+  GRECS_EXTRA_BIND = bind-gram.h
+  PARSER_DEFS += -DENABLE_BIND_PARSER
+endif
+
+if GRECS_COND_GIT_PARSER
+  GRECS_PARSER_GIT = git-parser.c
+  PARSER_DEFS += -DENABLE_GIT_PARSER 
+endif
+
+GRECS_SRC = \
+ asprintf.c\
+ diag.c\
+ format.c\
+ grecs-gram.y\
+ grecs-lex.l\
+ join.c\
+ lineacc.c\
+ list.c\
+ lookup.c\
+ mem.c\
+ parser.c\
+ parsertab.c\
+ path-parser.c\
+ preproc.c\
+ sort.c\
+ symtab.c\
+ text.c\
+ tree.c\
+ txtacc.c\
+ version.c\
+ wordsplit.c\
+ $(GRECS_PARSER_BIND)\
+ $(GRECS_PARSER_GIT)\
+ $(GRECS_PARSER_META1)
+
+noinst_HEADERS = grecs-locus.h
+
+EXTRA_DIST=\
+ grecs-gram.h\
+ $(GRECS_EXTRA_BIND)\
+ $(GRECS_EXTRA_META1)\
+ $(PP_SETUP_FILE)\
+ Make.am Make-inst.am Make-shared.am Make-static.am
+
+INCLUDES = -I$(srcdir) -I$(top_srcdir)/@GRECS_SUBDIR@ @GRECS_INCLUDES@ @GRECS_HOST_PROJECT_INCLUDES@
+AM_CPPFLAGS = $(PARSER_DEFS)
+AM_YFLAGS = -dtv
+AM_LFLAGS = -d
+
+incdir=$(pkgdatadir)/$(VERSION)/include
+inc_DATA = $(PP_SETUP_FILE)
+
+LEXCOMPILE = $(top_srcdir)/@GRECS_SUBDIR@/build-aux/yyrename '$(LEX) $(LFLAGS) $(AM_LFLAGS)'
+YACCCOMPILE = $(top_srcdir)/@GRECS_SUBDIR@/build-aux/yyrename '$(YACC) $(YFLAGS) $(AM_YFLAGS)'

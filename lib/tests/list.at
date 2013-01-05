@@ -1,0 +1,187 @@
+# This file is part of GNU Dico. -*- Autotest -*-
+# Copyright (C) 2012 Sergey Poznyakoff
+#
+# GNU Dico is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# GNU Dico is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Dico.  If not, see <http://www.gnu.org/licenses/>.
+
+AT_BANNER(List)
+
+dnl ------------------------------------------------------------
+dnl TESTLIST([NAME], [KW = `'], [INPUT], [STDOUT = `'],
+dnl          [STDERR = `'], [RUN-IF-FAIL], [RUN-IF-PASS])
+dnl
+m4_pushdef([TESTLIST],[
+AT_SETUP($1)
+AT_KEYWORDS(list $2)
+AT_DATA([input],[$3])
+AT_CHECK([listop < input],
+0,
+[$4],
+[$5],
+[$6],
+[$7])
+AT_CLEANUP
+])
+
+
+# ------------------------------------------------------------
+# Lists
+# ------------------------------------------------------------
+
+TESTLIST([build],[],
+[add en to tre fire fem
+print
+],
+[# items: 5
+en
+to
+tre
+fire
+fem
+])
+
+TESTLIST([prepend],[],
+[add en to tre fire fem
+prep null jeden dwa trzy
+print
+],
+[# items: 9
+trzy
+dwa
+jeden
+null
+en
+to
+tre
+fire
+fem
+])
+
+TESTLIST([delete],[],
+[add en to tre fire fem
+del to fire
+print
+],
+[# items: 3
+en
+tre
+fem
+])
+
+TESTLIST([push],[],
+[push en to tre
+print
+],
+[# items: 3
+en
+to
+tre
+])
+
+TESTLIST([pop],[],
+[push en to tre
+pop
+pop
+pop
+],
+[tre
+to
+en
+])
+
+TESTLIST([pop-null],[],
+[pop
+],
+[],
+[listop: Notice: nothing to pop
+])
+
+TESTLIST([get],[],
+[add en to tre fire fem
+3
+],
+[fire
+])
+
+
+# ------------------------------------------------------------
+# Iterators
+# ------------------------------------------------------------
+AT_BANNER(Iterators)
+
+TESTLIST([forward],[iterator itr],
+[add en to tre fire fem
+first
+cur
+next 3
+cur
+],
+[0:en
+0:fire
+])
+
+TESTLIST([locate],[],
+[add en to tre fire fem
+find tre
+cur
+],
+[0:tre
+])
+
+TESTLIST([backward],[],
+[add en to tre fire fem
+find fem
+cur
+prev
+cur
+prev 2
+cur
+],
+[0:fem
+0:fire
+0:to
+])
+
+TESTLIST([interaction],[],
+[add en to tre fire fem
+first
+iter 1
+find tre
+cur
+iter 0
+cur
+],
+[1:tre
+0:en
+])
+
+TESTLIST([interaction: moves],[],
+[add en to tre fire fem
+first
+iter 1
+find tre
+iter 0
+next
+iter 1
+next
+iter 0
+cur
+iter 1
+cur
+],
+[0:to
+1:fire
+])
+
+
+m4_popdef([TESTLIST])

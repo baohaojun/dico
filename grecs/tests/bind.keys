@@ -1,0 +1,11 @@
+# Sample Bind configuration include file (1) for Grecs testsuite.
+
+key "rndc-key" {
+    algorithm hmac-md5;
+    secret "1111111111111111111111==";
+};
+		
+
+
+
+

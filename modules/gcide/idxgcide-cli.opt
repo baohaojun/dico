@@ -1,0 +1,74 @@
+/* This file is part of GNU Dico. -*- c -*-
+   Copyright (C) 2012 Sergey Poznyakoff
+
+   GNU Dico is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 3, or (at your option)
+   any later version.
+
+   GNU Dico is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with GNU Dico.  If not, see <http://www.gnu.org/licenses/>. */
+
+OPTIONS_BEGIN("idxgcide",
+              [<standalone indexer for GCIDE dictionaries>],
+	      [<DICTDIR [IDXDIR]>],
+	      [<gnu>],
+	      [<copyright_year=2012>],
+	      [<copyright_holder=Free Software Foundation, Inc.>])
+
+OPTION(debug, d,,
+       [<debug mode>])
+BEGIN
+   yy_flex_debug = 1;
+END
+
+OPTION(dry-run, n,,
+       [<dry run: do nothing, but print everything>])
+BEGIN
+   dry_run_option = 1;
+   verbose_option++;
+END
+
+OPTION(verbose, v,,
+       [<increase verbosity>])
+BEGIN
+   verbose_option++;
+END
+
+OPTION(page-size,p,NUMBER,
+       [<set index page size>])
+BEGIN
+   char *p;
+   idx_header.ihdr_pagesize = strtoul(optarg, &p, 10);
+   switch (*p) {
+   case 0:
+       break;
+   case 'g':
+   case 'G':
+       idx_header.ihdr_pagesize <<= 10;
+   case 'm':
+   case 'M':
+       idx_header.ihdr_pagesize <<= 10;
+   case 'k':
+   case 'K':
+       idx_header.ihdr_pagesize <<= 10;
+       break;
+   default:
+       dico_log(L_ERR, 0, _("not a valid size: %s"), optarg);
+       exit(EX_USAGE);
+   }
+END
+
+OPTIONS_END
+
+void
+get_options(int argc, char *argv[], int *index)
+{
+    GETOPT(argc, argv, *index, exit(EX_USAGE))
+}
+

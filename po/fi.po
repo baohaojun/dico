@@ -1,0 +1,2805 @@
+# Finnish messages for dico.
+# Copyright © 2010, 2012 Free Software Foundation, Inc.
+# This file is distributed under the same license as the dico package.
+# Jorma Karvonen <karvonen.jorma@gmail.com>, 2010, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GNU dico 2.1.90\n"
+"Report-Msgid-Bugs-To: bug-dico@gnu.org\n"
+"POT-Creation-Date: 2012-03-04 14:17+0200\n"
+"PO-Revision-Date: 2012-01-28 15:55+0200\n"
+"Last-Translator: Jorma Karvonen <karvonen.jorma@gmail.com>\n"
+"Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. TRANSLATORS:
+#. Get translations for open and closing quotation marks.
+#.
+#. The message catalog should translate "`" to a left
+#. quotation mark suitable for the locale, and similarly for
+#. "'".  If the catalog has no translation,
+#. locale_quoting_style quotes `like this', and
+#. clocale_quoting_style quotes "like this".
+#.
+#. For example, an American English Unicode locale should
+#. translate "`" to U+201C (LEFT DOUBLE QUOTATION MARK), and
+#. should translate "'" to U+201D (RIGHT DOUBLE QUOTATION
+#. MARK).  A British English Unicode locale should instead
+#. translate these to U+2018 (LEFT SINGLE QUOTATION MARK)
+#. and U+2019 (RIGHT SINGLE QUOTATION MARK), respectively.
+#.
+#. If you don't know what to put here, please see
+#. <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
+#. and use glyphs suitable for your language.
+#: gnu/quotearg.c:273
+msgid "`"
+msgstr "”"
+
+#: gnu/quotearg.c:274
+msgid "'"
+msgstr "”"
+
+#: gnu/obstack.c:423 gnu/obstack.c:425 grecs/src/wordsplit.c:57
+#: grecs/src/wordsplit.c:1576 grecs/src/wordsplit.c:1606
+msgid "memory exhausted"
+msgstr "muisti loppui"
+
+#: gnu/getopt.c:529 gnu/getopt.c:545
+#, c-format
+msgid "%s: option '%s' is ambiguous\n"
+msgstr "%s: valitsin ’%s’ ei ole yksiselitteinen\n"
+
+#: gnu/getopt.c:578 gnu/getopt.c:582
+#, c-format
+msgid "%s: option '--%s' doesn't allow an argument\n"
+msgstr "%s: valitsin ’--%s’ ei salli argumenttia\n"
+
+#: gnu/getopt.c:591 gnu/getopt.c:596
+#, c-format
+msgid "%s: option '%c%s' doesn't allow an argument\n"
+msgstr "%s: valitsin ’%c%s’ ei salli argumenttia\n"
+
+#: gnu/getopt.c:639 gnu/getopt.c:658
+#, c-format
+msgid "%s: option '--%s' requires an argument\n"
+msgstr "%s: valitsin ’--%s’ vaatii argumentin\n"
+
+#: gnu/getopt.c:696 gnu/getopt.c:699
+#, c-format
+msgid "%s: unrecognized option '--%s'\n"
+msgstr "%s: tunnistamaton valitsin ’--%s’\n"
+
+#: gnu/getopt.c:707 gnu/getopt.c:710
+#, c-format
+msgid "%s: unrecognized option '%c%s'\n"
+msgstr "%s: tunnistamaton valitsin ’%c%s’\n"
+
+#: gnu/getopt.c:759 gnu/getopt.c:762
+#, c-format
+msgid "%s: invalid option -- '%c'\n"
+msgstr "%s: virheellinen valitsin -- ’%c’\n"
+
+#: gnu/getopt.c:812 gnu/getopt.c:829 gnu/getopt.c:1037 gnu/getopt.c:1055
+#, c-format
+msgid "%s: option requires an argument -- '%c'\n"
+msgstr "%s: valitsin vaatii argumentin -- ’%c’\n"
+
+#: gnu/getopt.c:885 gnu/getopt.c:901
+#, c-format
+msgid "%s: option '-W %s' is ambiguous\n"
+msgstr "%s: valitsin ’-W %s’ ei ole yksiselitteinen\n"
+
+#: gnu/getopt.c:925 gnu/getopt.c:943
+#, c-format
+msgid "%s: option '-W %s' doesn't allow an argument\n"
+msgstr "%s: valitsin ’-W %s’ ei salli argumenttia\n"
+
+#: gnu/getopt.c:964 gnu/getopt.c:982
+#, c-format
+msgid "%s: option '-W %s' requires an argument\n"
+msgstr "%s: valitsin ’-W %s’ vaatii argumentin\n"
+
+#: lib/parseopt.c:118
+#, c-format
+msgid "%s: %s: unknown option"
+msgstr "%s: %s: tuntematon valitsin"
+
+#: lib/parseopt.c:129
+#, c-format
+msgid "%s: %s: %s is not a valid number"
+msgstr "%s: %s: %s ei ole kelvollinen numero"
+
+#: lib/parseopt.c:170
+#, c-format
+msgid "%s: %s: invalid value %s"
+msgstr "%s: %s: virheellinen arvo %s"
+
+#: lib/userprivs.c:42
+msgid "Refusing to run as root"
+msgstr "Kielletään suorittaminen root-käyttäjänä"
+
+#: lib/userprivs.c:60
+#, c-format
+msgid "setgroups(1, %lu) failed"
+msgstr "setgroups(1, %lu) epäonnistui"
+
+#: lib/userprivs.c:71
+#, c-format
+msgid "setegid(%lu) failed"
+msgstr "setegid(%lu) epäonnistui"
+
+#: lib/userprivs.c:75
+#, c-format
+msgid "setregid(%lu,%lu) failed"
+msgstr "setregid(%lu,%lu) epäonnistui"
+
+#: lib/userprivs.c:79
+#, c-format
+msgid "setresgid(%lu,%lu,%lu) failed"
+msgstr "setresgid(%lu,%lu,%lu) epäonnistui"
+
+#: lib/userprivs.c:87
+#, c-format
+msgid "setgid(%lu) failed"
+msgstr "setgid(%lu) epäonnistui"
+
+#: lib/userprivs.c:90
+#, c-format
+msgid "Cannot set effective gid to %lu"
+msgstr "Ei voi asettaa voimassa olevaa gid-tunnusta arvoon %lu"
+
+#: lib/userprivs.c:108
+#, c-format
+msgid "setreuid(%lu,-1) failed"
+msgstr "setreuid(%lu,-1) epäonnistui"
+
+#: lib/userprivs.c:113
+#, c-format
+msgid "second setuid(%lu) failed"
+msgstr "toinen setuid(%lu) epäonnistui"
+
+#: lib/userprivs.c:120
+#, c-format
+msgid "setuid(%lu) failed"
+msgstr "setuid(%lu) epäonnistui"
+
+#: lib/userprivs.c:128
+msgid "seteuid(0) succeeded when it should not"
+msgstr "setuid(0) onnistui kun sen ei olisi pitänyt"
+
+#: lib/userprivs.c:131
+msgid "Cannot drop non-root setuid privileges"
+msgstr "Ei voi suorittaa drop-käskyä ei-root setuid-käyttöoikeuksilla"
+
+#: lib/xstream.c:43
+msgid "not enough memory while formatting reply message"
+msgstr "muisti ei riitä muodostettaessa vastausviestiä"
+
+#: lib/iostr.c:93
+msgid "No error"
+msgstr "Ei virhettä"
+
+#: dico/shell.c:34
+msgid "WORD"
+msgstr "SANA"
+
+#: dico/shell.c:34
+msgid "Define WORD."
+msgstr "Määritä SANA."
+
+#: dico/shell.c:35
+msgid "/WORD"
+msgstr "/SANA"
+
+#: dico/shell.c:35
+msgid "Match WORD."
+msgstr "Täsmää SANA."
+
+#: dico/shell.c:36
+msgid "Redisplay previous matches."
+msgstr "Näytä uudelleen edelliset täsmäykset."
+
+#: dico/shell.c:37
+msgid "NUMBER"
+msgstr "NUMERO"
+
+#: dico/shell.c:37
+msgid "Define NUMBERth match."
+msgstr "Määritä NUMERO. täsmäys."
+
+#: dico/shell.c:39
+msgid "Edit NUMBERth previous command."
+msgstr "Muokkaa NUMERO. edellistä komentoa."
+
+#: dico/shell.c:45
+msgid "[HOST [PORT]]"
+msgstr "[TIETOKONE [PORTTI]]"
+
+#: dico/shell.c:46
+msgid "Connect to a DICT server."
+msgstr "Yhdistä DICT-palvelimeen."
+
+#: dico/shell.c:50
+msgid "Close the connection."
+msgstr "Sulje yhteys."
+
+#: dico/shell.c:53 dico/shell.c:57
+msgid "[NAME]"
+msgstr "[NIMI]"
+
+#: dico/shell.c:54
+msgid "Set or display current database name."
+msgstr "Aseta tai näytä nykyinen tietokantanimi."
+
+#: dico/shell.c:58
+msgid "Set or display current strategy."
+msgstr "Aseta tai näytä nykyinen strategia."
+
+#: dico/shell.c:61
+msgid "[NUM]"
+msgstr "[NUMERO]"
+
+#: dico/shell.c:62
+msgid "Set or query Levenshtein distance (server-dependent)."
+msgstr "Aseta tai kysy Levenshtein-etäisyys (palvelinriippuvainen)."
+
+#: dico/shell.c:66
+msgid "List available matching strategies"
+msgstr "Luettele käytettävissä olevia täsmäysstrategioita"
+
+#: dico/shell.c:70
+msgid "List all accessible databases"
+msgstr "Luettele kaikki käytettävissä olevat tietokannat"
+
+#: dico/shell.c:73
+msgid "[DB]"
+msgstr "[TIETOKANTA]"
+
+#: dico/shell.c:74
+msgid "Display the information about the database."
+msgstr "Näytä tietoja tietokannasta."
+
+#: dico/shell.c:77
+msgid "[CHAR]"
+msgstr "[MERKKI]"
+
+#: dico/shell.c:78
+msgid "Set or display command prefix."
+msgstr "Aseta tai näytä komennon etuliite."
+
+#: dico/shell.c:81 dico/shell.c:101
+msgid "[BOOL]"
+msgstr "[BOOLEAN]"
+
+#: dico/shell.c:82
+msgid "Set or display session transcript mode."
+msgstr "Aseta tai näytä istunnon kopiotila."
+
+#: dico/shell.c:85
+msgid "[NUMBER]"
+msgstr "[NUMERO]"
+
+#: dico/shell.c:86
+msgid "Set or display verbosity level."
+msgstr "Aseta tai näytä monisanaisuustaso."
+
+#: dico/shell.c:89 dico/shell.c:93 cmdline.opt:165 cmdline.opt:177
+msgid "STRING"
+msgstr "MERKKIJONO"
+
+#: dico/shell.c:90
+msgid "Change command line prompt."
+msgstr "Muuta komentorivikehote."
+
+#: dico/shell.c:94
+msgid "Change or display pager settings."
+msgstr "Vaihda tai näytä sivuttaja-asetukset."
+
+#: dico/shell.c:97
+msgid "[FILE]"
+msgstr "[TIEDOSTO]"
+
+#: dico/shell.c:98
+msgid "Set or display autologin file name."
+msgstr "Aseta tai näytä autologin-tiedostonimi."
+
+#: dico/shell.c:102
+msgid "Enable SASL authentication."
+msgstr "Ota käyttöön SASL-todennus."
+
+#: dico/shell.c:107
+msgid "Display command history."
+msgstr "Näytä komentohistoria."
+
+#: dico/shell.c:112
+msgid "Display this help text."
+msgstr "Näytä tämä opasteteksti."
+
+#: dico/shell.c:116
+msgid "Print program version."
+msgstr "Tulosta ohjelman versio."
+
+#: dico/shell.c:120
+msgid "Print copyright statement."
+msgstr "Tulosta copyright-ilmoitus."
+
+#: dico/shell.c:128
+msgid "Quit the shell."
+msgstr "Poistu komentotulkista."
+
+#: dico/shell.c:149
+#, c-format
+msgid "Command prefix is %c\n"
+msgstr "Komentoetuliite on %c\n"
+
+#: dico/shell.c:151
+msgid "Expected a single punctuation character"
+msgstr "Odotettiin yksittäistä välimerkkiä"
+
+#: dico/shell.c:229
+msgid "warning: "
+msgstr "varoitus: "
+
+#: dico/shell.c:342
+msgid "unknown command"
+msgstr "tuntematon komento"
+
+#: dico/shell.c:352
+msgid "not enough arguments"
+msgstr "argumentteja ei ole riittävästi"
+
+#: dico/shell.c:355 dicod/main.c:170 dicod/main.c:228 dicod/main.c:558
+msgid "too many arguments"
+msgstr "liian monta argumenttia"
+
+#: dico/shell.c:398
+#, c-format
+msgid "Cannot open init file %s"
+msgstr "Ei voida avata init-tiedostoa %s"
+
+#: dico/shell.c:644
+msgid "Type ? for help summary"
+msgstr "Kirjoita ? opasteyhteenvetoa varten"
+
+#: dico/connect.c:89 dico/connect.c:326
+msgid "No reply from server"
+msgstr "Ei vastausta palvelimelta"
+
+#: dico/connect.c:110
+msgid "Attempting APOP authentication\n"
+msgstr "Yritetään APOP-todennusta\n"
+
+#: dico/connect.c:117 dico/saslauth.c:338
+msgid "Not enough credentials for authentication"
+msgstr "Ei riittävästi valtuutustietoja todennusta varten"
+
+#: dico/connect.c:121 dico/saslauth.c:343
+msgid "Skipping authentication\n"
+msgstr "Ohitetaan todennus\n"
+
+#: dico/connect.c:204
+msgid "Obtained authentication credentials from the command line\n"
+msgstr "Saatiin todennusvaltuutukset komentoriviltä\n"
+
+#: dico/connect.c:211
+#, c-format
+msgid "File %s does not exist"
+msgstr "Tiedostoa %s ei ole olemassa"
+
+#: dico/connect.c:228
+msgid "Password:"
+msgstr "Salasana:"
+
+#: dico/connect.c:244
+#, c-format
+msgid "INTERNAL ERROR at %s:%d: cannot get stream transport"
+msgstr "SISÄINEN VIRHE osoitteessa %s:%d: ei voida hakea vuosiirtoa"
+
+#: dico/connect.c:252
+#, c-format
+msgid "INTERNAL ERROR at %s:%d: cannot set stream transport"
+msgstr "SISÄINEN VIRHE osoitteessa %s:%d: ei voida asettaa vuosiirtoa"
+
+#  Parametri %s on host url ja parametri %d on porttinumero.
+#: dico/connect.c:281
+#, c-format
+msgid "Connecting to %s:%d\n"
+msgstr "Yhdistetään osoitteeseen %s:%d\n"
+
+#: dico/connect.c:286
+msgid "cannot create dict socket"
+msgstr "ei voi luoda dict-pistoketta"
+
+#: dico/connect.c:295 dicod/ident.c:401
+msgid "cannot bind AUTH socket"
+msgstr "ei voida sitoa TODENNUSpistoketta"
+
+#: dico/connect.c:300 cmdline.opt:60
+#, c-format
+msgid "%s: Invalid IP or unknown host name"
+msgstr "%s: Virheellinen IP-osoite tai tuntematon tietokonenimi"
+
+#: dico/connect.c:308
+#, c-format
+msgid "cannot connect to DICT server %s:%d"
+msgstr "ei voida yhdistää DICT-palvelimeen %s:%d"
+
+#: dico/connect.c:316
+#, c-format
+msgid "cannot create dict stream: %s"
+msgstr "ei voida luoda dict-vuota: %s"
+
+#: dico/connect.c:330
+msgid "Invalid reply from server"
+msgstr "Virheellinen vastaus palvelimelta"
+
+#: dico/connect.c:335
+msgid "Sending client information\n"
+msgstr "Asiakastietojen lähetys\n"
+
+#: dico/connect.c:340
+#, c-format
+msgid "Unexpected reply to CLIENT command: `%s'"
+msgstr "Odottamaton vastaus ASIAKAS-komentoon: ”%s”"
+
+#: dico/connect.c:346
+msgid "Authentication failed"
+msgstr "Todennus epäonnistui"
+
+#: dico/connect.c:419
+#, c-format
+msgid "Sending query for word \"%s\" in database \"%s\"\n"
+msgstr "Lähetetään kysely sanalle ”%s” tietokannassa ”%s”\n"
+
+#: dico/connect.c:430
+#, c-format
+msgid "Reading %lu definition\n"
+msgid_plural "Reading %lu definitions\n"
+msgstr[0] "Luetaan %lu määrittely\n"
+msgstr[1] "Luetaan %lu määrittelyä\n"
+
+#: dico/connect.c:437
+#, c-format
+msgid "Unexpected reply in place of definition %lu"
+msgstr "Odottamaton vastaus määrittelyn %lu sijasta"
+
+#: dico/connect.c:460
+msgid "Setting Levenshtein threshold\n"
+msgstr "Asetetaan Levenshtein-kynnys\n"
+
+#: dico/connect.c:466
+msgid "Server rejected XLEV command"
+msgstr "Palvelin torjui XLEV-komennon"
+
+#: dico/connect.c:467
+#, c-format
+msgid "Server reply: %s"
+msgstr "Palvelin vastasi: %s"
+
+#: dico/connect.c:470
+#, c-format
+msgid "Sending query to match word \"%s\" in database \"%s\", using \"%s\"\n"
+msgstr ""
+"Lähetetään kysely täsmäävään sanaan ”%s” tietokannassa ”%s”, käytetään ”%s”\n"
+
+#: dico/connect.c:483
+#, c-format
+msgid "Reading %lu match\n"
+msgid_plural "Reading %lu matches\n"
+msgstr[0] "Luetaan %lu täsmäys\n"
+msgstr[1] "Luetaan %lu täsmäystä\n"
+
+#: dico/connect.c:561
+msgid "Not enough data in the result"
+msgstr "Tuloksessa ei ole riittävästi tietoja"
+
+#: dico/connect.c:628
+msgid "Freeing unlinked result"
+msgstr "Vapautetaan linkittämätön tulos"
+
+#: dico/dico.c:78
+msgid "extra command line arguments ignored"
+msgstr "ylimääräiset komentoriviargumentit ohitetaan"
+
+#: dico/dico.c:86
+msgid "you should give a word to look for or an URL"
+msgstr "sinun pitäisi antaa etsittävä sana tai verkko-osoite"
+
+#: dico/dico.c:105
+msgid "Database name not specified"
+msgstr "Tietokantanimeä ei ole määritelty"
+
+#: dico/func.c:33 dicod/main.c:1010
+msgid "Expected boolean value"
+msgstr "Odotettiin boolean-arvoa"
+
+#: dico/func.c:67
+#, c-format
+msgid "Cannot get listing: %s"
+msgstr "Ei voida saada luetteloa: %s"
+
+#: dico/func.c:104 dico/func.c:137
+msgid "Please specify server name or IP address"
+msgstr "Määritä palvelinnimi tai IP-osoite"
+
+#: dico/func.c:109
+msgid "Cannot connect to the server"
+msgstr "Ei voida yhdistää palvelimeen"
+
+#: dico/func.c:112
+msgid "Getting list of databases\n"
+msgstr "Haetaan tietokantojen luettelo\n"
+
+#: dico/func.c:114
+msgid "Getting list of strategies\n"
+msgstr "Haetaan strategioiden luettelo\n"
+
+#: dico/func.c:116
+msgid "Finished getting server information\n"
+msgstr "Palvelintietojen hakeminen päättyi\n"
+
+#: dico/func.c:128
+msgid "Invalid port number or service name"
+msgstr "Virheellinen porttinumero tai palvelunimi"
+
+#: dico/func.c:149
+msgid "Nothing to close"
+msgstr "Ei mitään suljettavaa"
+
+#: dico/func.c:159
+msgid "No autologin file."
+msgstr "Ei autologin-tiedostoa."
+
+#: dico/func.c:176 dico/func.c:267
+msgid "on"
+msgstr "käytössä"
+
+#: dico/func.c:176 dico/func.c:267
+msgid "off"
+msgstr "ei-käytössä"
+
+#: dico/func.c:257 dico/func.c:365
+msgid "invalid number"
+msgstr "virheellinen numero"
+
+#: dico/func.c:267
+#, c-format
+msgid "transcript is %s\n"
+msgstr "kopio on %s\n"
+
+#: dico/func.c:308 dico/func.c:324
+msgid "No previous match"
+msgstr "Ei edellistä täsmäystä"
+
+#: dico/func.c:328
+msgid "Invalid match number.  Type / to see the matches."
+msgstr "Virheellinen täsmäysnumero. Kirjoita / nähdäksesi täsmäykset."
+
+#: dico/func.c:343
+#, c-format
+msgid "Server does not support XLEV extension"
+msgstr "Palvelin ei tue XLEV-laajennusta"
+
+#: dico/func.c:349
+#, c-format
+msgid "Reported Levenshtein distance:%s\n"
+msgstr "Ilmoitettu Levenshtein-etäisyys:%s\n"
+
+#: dico/func.c:352
+msgid "Cannot query Levenshtein distance.  Server responded:"
+msgstr "Ei voi kysellä Levenshtein-etäisyyttä.  Palvelin vastasi:"
+
+#: dico/func.c:357
+#, c-format
+msgid "No distance configured\n"
+msgstr "Etäisyyttä ei ole asetettu\n"
+
+#: dico/func.c:359
+#, c-format
+msgid "Configured Levenshtein distance: %u\n"
+msgstr "Asetettu Levenshtein-etäisyys: %u\n"
+
+#: dico/func.c:394
+#, c-format
+msgid ""
+"Search all of the databases until a match is found,\n"
+"and display all matches in that database.\n"
+msgstr ""
+"Etsitään kaikista tietokannoista, kunnes täsmäys löytyy,\n"
+"ja näytetään kaikki täsmäykset tuossa tietokannassa.\n"
+
+#: dico/func.c:397
+#, c-format
+msgid "Search all of the databases and display all matches."
+msgstr "Etsii kaikki tietokannat ja näyttää kaikki täsmäykset."
+
+#: dico/autologin.c:151
+#, c-format
+msgid "Found matching line %d\n"
+msgstr "Löytyi täsmäävä rivi %d\n"
+
+#: dico/autologin.c:160
+#, c-format
+msgid "Found default line %d\n"
+msgstr "Löytyi oletusrivi %d\n"
+
+#: dico/autologin.c:192
+#, c-format
+msgid "Cannot open autologin file %s"
+msgstr "Ei voida avata autologin-tiedostoa %s"
+
+#: dico/autologin.c:197
+#, c-format
+msgid "Reading autologin file %s...\n"
+msgstr "Luetaan autologin-tiedosto %s...\n"
+
+#: dico/autologin.c:218
+#, c-format
+msgid "failed to parse command `%s': %s"
+msgstr "komennon ”%s” jäsentäminen epäonnistui: %s"
+
+#: dico/autologin.c:229
+#, c-format
+msgid "failed to add line marker: %s"
+msgstr "rivimerkinnän lisääminen epäonnistui: %s"
+
+#: dico/autologin.c:251
+msgid "No matching line found\n"
+msgstr "Täsmäävää riviä ei löytynyt\n"
+
+#: dico/autologin.c:269
+#, c-format
+msgid "%s:%d: unknown keyword"
+msgstr "%s:%d: tuntematon avainsana"
+
+#: dico/autologin.c:277
+#, c-format
+msgid "%s:%d: %s without argument"
+msgstr "%s:%d: %s ilman argumenttia"
+
+#: dico/autologin.c:335
+#, c-format
+msgid "%s:%d: failed to parse line: %s"
+msgstr "%s:%d: rivin jäsentäminen epäonnistui: %s"
+
+#: cmdline.opt:31
+msgid "Server selection"
+msgstr "Palvelinvalinta"
+
+#: cmdline.opt:47
+msgid "SERVER"
+msgstr "PALVELIN"
+
+#: cmdline.opt:47
+msgid "Connect to this server."
+msgstr "Yhdistetään tälle palvelimelle."
+
+#: cmdline.opt:53
+msgid "SERVICE"
+msgstr "PALVELU"
+
+#: cmdline.opt:53
+msgid "Specify port to connect to."
+msgstr "Määritä portti, johon yhdistetään."
+
+#: cmdline.opt:61 cmdline.opt:84 cmdline.opt:158 cmdline.opt:171
+msgid "NAME"
+msgstr "NIMI"
+
+#: cmdline.opt:61
+msgid "Select a database to search."
+msgstr "Valitse etsittävä tietokanta."
+
+#: cmdline.opt:67
+msgid "ADDR"
+msgstr "OSOITE"
+
+#: cmdline.opt:67
+msgid "Set a source address for TCP connections."
+msgstr "Aseta lähdeosoite TCP-yhteyksille."
+
+#: cmdline.opt:62
+msgid "Operation modes"
+msgstr "Toimintotilat"
+
+#: cmdline.opt:78
+msgid "Match instead of define."
+msgstr "Täsmäys määrittelyn sijasta."
+
+#: cmdline.opt:84
+msgid "Select a strategy for matching.  Implies --match."
+msgstr "Valitse täsmäysstrategia.  Tarkoittaa samaa kuin --match."
+
+#: cmdline.opt:92
+msgid "N"
+msgstr "N"
+
+#: cmdline.opt:92
+msgid "Set maximum Levenshtein distance to N."
+msgstr "Aseta maksimi Levenshtein-etäisyys kohteeseen N."
+
+#: cmdline.opt:101
+msgid "Show available databases."
+msgstr "Näytä käytettävissä olevat tietokannat."
+
+#: cmdline.opt:107
+msgid "Show available search strategies."
+msgstr "Näytä käytettävissä olevat hakustrategiat."
+
+#: cmdline.opt:113
+msgid "show server help."
+msgstr "näytä palvelinopaste."
+
+#: cmdline.opt:119
+msgid "DBNAME"
+msgstr "TIETOKANTANIMI"
+
+#: cmdline.opt:119
+msgid "Show information about database DBNAME."
+msgstr "Näytä tietoja tietokannasta TIETOKANTANIMI"
+
+#: cmdline.opt:126
+msgid "Show information about the server."
+msgstr "Näytä tiedot palvelimesta."
+
+#: cmdline.opt:132
+msgid "Do not print the normal dico welcome."
+msgstr "Älä tulosta normaalia dico-tervetuloviestiä."
+
+#: cmdline.opt:124
+msgid "Authentication"
+msgstr "Todennus"
+
+#: cmdline.opt:140
+msgid "Disable authentication."
+msgstr "Ota todennus pois käytöstä."
+
+#: cmdline.opt:146
+msgid "Enable SASL authentication (default)."
+msgstr "Ota käyttöön SASL-todennus (oletus)."
+
+#: cmdline.opt:152
+msgid "Disable SASL authentication."
+msgstr "Ota pois käytöstä SASL-todennus."
+
+#: cmdline.opt:158
+msgid "Set user name for authentication."
+msgstr "Aseta käyttäjänimi todennusta varten."
+
+#: cmdline.opt:165
+msgid "Set shared secret for authentication."
+msgstr "Aseta jaettu salaisuus todennusta varten."
+
+#: cmdline.opt:171
+msgid "Set the name of autologin file to use."
+msgstr "Aseta käytettävä autologin-tiedoston nimi."
+
+#: cmdline.opt:177
+msgid "Additional text for client command."
+msgstr "Lisäteksti asiakaskomentoa varten."
+
+#: cmdline.opt:169 cmdline.opt:88
+msgid "Debugging"
+msgstr "Vianjäljitys"
+
+#: cmdline.opt:184 cmdline.opt:104
+msgid "Enable session transcript."
+msgstr "Ota käyttöön istuntokopio."
+
+#: cmdline.opt:190
+msgid "Increase debugging verbosity level."
+msgstr "Kasvata vianjäljityksen monisanaisuustasoa."
+
+#: cmdline.opt:196
+msgid "Include time stamp in the debugging output."
+msgstr "Sisällytä aikaleima vianjäljitystulosteeseen."
+
+#: cmdline.opt:203 cmdline.opt:123
+msgid "Include source line information in the debugging output."
+msgstr "Sisällytä lähderivitieto vianjäljitystulosteeseen."
+
+#: cmdline.opt:195 cmdline.opt:173
+msgid "Other options"
+msgstr "Muut valitsimet"
+
+#: cmdline.opt:207 cmdline.opt:185
+msgid "Give this help list"
+msgstr "Näytä tämä opasteluettelo"
+
+#: cmdline.opt:207 cmdline.opt:185
+msgid "Give a short usage message"
+msgstr "Näytä lyhyt käyttöviesti"
+
+#: cmdline.opt:207 cmdline.opt:185
+msgid "Print program version"
+msgstr "Tulosta ohjelmaversio"
+
+#: cmdline.opt:25
+msgid "GNU dictionary client program"
+msgstr "GNU-sanakirja-asiakasohjelma"
+
+#: cmdline.opt:27
+msgid "[URL-or-WORD]"
+msgstr "[VERKKO-OSOITE-tai-SANA]"
+
+#: cmdline.opt:245 cmdline.opt:518 cmdline.opt:251 cmdline.opt:524
+msgid "Usage:"
+msgstr "Käyttö:"
+
+#: cmdline.opt:245 cmdline.opt:251
+msgid "OPTION"
+msgstr "VALITSIN"
+
+#: cmdline.opt:367 cmdline.opt:373
+msgid ""
+"Mandatory or optional arguments to long options are also mandatory or "
+"optional for any corresponding short options."
+msgstr ""
+"Pakolliset tai valinnaiset argumentit pitkille valitsimille ovat pakollisia "
+"tai valinnaisia myös kaikille vastaaville lyhyille valitsimille."
+
+#: cmdline.opt:386 cmdline.opt:392
+#, c-format
+msgid "Report bugs to %s.\n"
+msgstr ""
+"Ilmoita virheistä (englanniksi) osoitteeseen %s.\n"
+"Ilmoita käännösvirheistä osoitteeseen <translation-team-fi@lists.sourceforge."
+"net>.\n"
+
+#: cmdline.opt:392 cmdline.opt:398
+#, c-format
+msgid "%s home page: <%s>\n"
+msgstr "%s kotisivu: <%s>\n"
+
+#: cmdline.opt:396 cmdline.opt:402
+#, c-format
+msgid "%s home page: <http://www.gnu.org/software/%s/>\n"
+msgstr ""
+
+#: cmdline.opt:402 cmdline.opt:408
+msgid "General help using GNU software: <http://www.gnu.org/gethelp/>\n"
+msgstr ""
+
+#: cmdline.opt:778 cmdline.opt:784
+msgid "(C)"
+msgstr "©"
+
+#: cmdline.opt:810 cmdline.opt:816
+msgid ""
+"License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl."
+"html>\n"
+"This is free software: you are free to change and redistribute it.\n"
+"There is NO WARRANTY, to the extent permitted by law.\n"
+"\n"
+msgstr ""
+"Lisenssi GPLv3+: GNU GPL versio 3 tai myöhäisempi <http://gnu.org/licenses/"
+"gpl.html>\n"
+"Tämä on vapaa ohjelmisto: voit vapaasti muuttaa sitä ja jakaa sitä "
+"edelleen.\n"
+"Ohjelmalle EI OLE MITÄÄN TAKUUTA, siinä laajuudessa mitä laki sallii.\n"
+"\n"
+
+#: cmdline.opt:46
+msgid "Invalid port"
+msgstr "Virheellinen portti"
+
+#: cmdline.opt:86
+#, c-format
+msgid "%s: invalid number"
+msgstr "%s: virheellinen numero"
+
+#: dico/lookup.c:23
+msgid "No match"
+msgstr "Ei täsmäystä"
+
+#: dico/lookup.c:65 dico/lookup.c:175
+#, c-format
+msgid "From %s, %s:\n"
+msgstr "Tietokannasta %s, %s:\n"
+
+#: dico/lookup.c:137
+msgid "(no description available)"
+msgstr "(kuvausta ei ole käytettävissä)"
+
+#: dico/lookup.c:209
+#, c-format
+msgid "%s:%d: INTERNAL ERROR: unexpected request type"
+msgstr "%s:%d: SISÄINEN VIRHE: odottamaton pyyntötyyppi"
+
+#: dico/lookup.c:229 dico/lookup.c:296
+msgid "Server name or IP not specified"
+msgstr "Palvelinnimeä tai IP-osoitetta ei ole määritelty"
+
+#: dico/lookup.c:238
+msgid "Quitting\n"
+msgstr "Poistutaan\n"
+
+#: dico/saslauth.c:39 dicod/gsasl.c:370
+#, c-format
+msgid "cannot get list of available SASL mechanisms: %s"
+msgstr "ei voida saada luetteloa käytettävissä olevista SASL-mekanismeista: %s"
+
+#: dico/saslauth.c:110
+#, c-format
+msgid "Unknown callback property %d"
+msgstr "Tuntematon vastakutsuominaisuus %d"
+
+#: dico/saslauth.c:121 dico/saslauth.c:127
+msgid "GSASL handshake aborted"
+msgstr "GSASL-kättely keskeytetty"
+
+#: dico/saslauth.c:168
+#, c-format
+msgid "GSASL handshake aborted: unexpected reply: %s"
+msgstr "GSASL-kättely keskeytettiin: odottamaton vastaus: %s"
+
+#: dico/saslauth.c:186 dicod/gsasl.c:148
+#, c-format
+msgid "GSASL error: %s"
+msgstr "GSAL-virhe: %s"
+
+#: dico/saslauth.c:233
+#, fuzzy
+msgid "Initializing SASL\n"
+msgstr "Yritetään SASL-salausta\n"
+
+#: dico/saslauth.c:236
+#, c-format
+msgid "Cannot initialize libgsasl: %s"
+msgstr "Ei voida alustaa kirjastoa libgsasl: %s"
+
+#: dico/saslauth.c:281
+msgid "Trying SASL\n"
+msgstr "Yritetään SASL-salausta\n"
+
+#: dico/saslauth.c:291
+msgid "No suitable SASL mechanism found"
+msgstr "Sopivaa SASL-mekanismia ei löytynyt"
+
+#: dico/saslauth.c:300
+#, c-format
+msgid "Selected authentication mechanism %s"
+msgstr "Valittu todennusmekanismi %s"
+
+#: dico/saslauth.c:310
+msgid "SASL authentication succeeded"
+msgstr "SASL-todennus onnistui"
+
+#: dico/saslauth.c:311
+msgid "SASL authentication failed"
+msgstr "SASL-todennus epäonnistui"
+
+#: dico/saslauth.c:374
+msgid "Dico compiled without SASL support"
+msgstr "Dico käännetty ilman SASL-tukea"
+
+#: dicod/regex.c:46
+#, c-format
+msgid "Regex error: %s"
+msgstr "Regex-virhe: %s"
+
+#: dicod/dicod.c:119 dicod/dicod.c:135 dicod/main.c:1440
+#, c-format
+msgid "removing database %s"
+msgstr "poistetaan tietokanta %s"
+
+#: dicod/dicod.c:151
+#, c-format
+msgid "error closing database %s"
+msgstr "virhe suljettaessa tietokantaa %s"
+
+#: dicod/dicod.c:289
+#, c-format
+msgid "error freeing database %s"
+msgstr "virhe vapautettaessa tietokantaa %s"
+
+#: dicod/dicod.c:342
+msgid "connection from"
+msgstr "yhteys tietokannasta"
+
+#: dicod/dicod.c:361
+msgid "session finished:"
+msgstr "istunto päättyi:"
+
+#: dicod/acl.c:60
+msgid "expected string"
+msgstr "odotettiin merkkijonoa"
+
+#: dicod/acl.c:116
+msgid "expected string but found list"
+msgstr "odotettiin merkkijonoa, mutta löytyi luettelo"
+
+#: dicod/acl.c:129
+#, c-format
+msgid "socket name too long: `%s'"
+msgstr "pistokenimi liian pitkä: ”%s”"
+
+#: dicod/acl.c:149
+#, c-format
+msgid "cannot resolve host name: `%s'"
+msgstr "ei voida ratkaista tietokonenimeä: ”%s”"
+
+#: dicod/acl.c:181 dicod/acl.c:188
+#, c-format
+msgid "invalid netmask: `%s'"
+msgstr "virheellinen verkkopeite: ”%s”"
+
+#: dicod/acl.c:205
+msgid "expected `from', but found list"
+msgstr "odotettiin ”from”-valitsinta, mutta löytyi luettelo"
+
+#: dicod/acl.c:208
+#, c-format
+msgid "expected `from', but found `%s'"
+msgstr "odotettiin ”from”-valitsinta, mutta löytyi ”%s”"
+
+#: dicod/acl.c:217
+msgid "unexpected end of statement after `from'"
+msgstr "odotettiin lauseen loppua ”from”-valitsimen jälkeen"
+
+#  käskyn syntaksi on from <addr: list>
+#: dicod/acl.c:243
+msgid "junk after `from' list"
+msgstr "roskaa ”from”-osoiteluettelon jälkeen"
+
+#: dicod/acl.c:259
+msgid "expected ACL name, but found end of statement"
+msgstr "odotettiin ACL-nimeä, mutta löytyi lauseen loppu"
+
+#: dicod/acl.c:265
+msgid "expected string, but found list"
+msgstr "odotettiin merkkijonoa, mutta löytyi luettelo"
+
+#: dicod/acl.c:272
+#, c-format
+msgid "ACL not defined: `%s'"
+msgstr "ACL ei ole määritelty: ”%s”"
+
+#: dicod/acl.c:290
+msgid "expected group list, but found end of statement"
+msgstr "odotettiin ryhmäluetteloa, mutta löytyi lauseen loppu"
+
+#: dicod/acl.c:303
+msgid "expected group list, but found array"
+msgstr "odotettiin ryhmäluetteloa, mutta löytyi taulukko"
+
+#: dicod/acl.c:316
+msgid "expected string value"
+msgstr "odotettiin merkkijonoarvoa"
+
+#: dicod/acl.c:338
+#, c-format
+msgid "unknown word `%s'"
+msgstr "tuntematon sana ”%s”"
+
+#: dicod/acl.c:350
+msgid "unexpected list"
+msgstr "odottamaton luettelo"
+
+#: dicod/acl.c:452
+msgid "MATCHES"
+msgstr "TÄSMÄÄ"
+
+#: dicod/acl.c:452
+msgid "does not match"
+msgstr "ei täsmää"
+
+#: dicod/dbtext.c:28
+#, c-format
+msgid "cannot get path from URL `%s'"
+msgstr "ei voida saada polkua verkko-osoitteesta ”%s”"
+
+#: dicod/dbtext.c:33
+#, c-format
+msgid "cannot stat directory `%s'"
+msgstr "ei voi kutsua stat-funktiota hakemistolle ”%s”"
+
+#: dicod/dbtext.c:39
+#, c-format
+msgid "%s: not a directory"
+msgstr "%s: ei ole hakemisto"
+
+#: dicod/dbtext.c:55
+#, c-format
+msgid "cannot open file `%s'"
+msgstr "ei voi avata tiedostoa ”%s”"
+
+#: dicod/auth.c:46 dicod/gsasl.c:190
+msgid "failed to open user database"
+msgstr "käyttäjätietokannan avaaminen epäonnistui"
+
+#  argumentti on username
+#: dicod/auth.c:51 dicod/gsasl.c:240 dicod/gsasl.c:276
+#, c-format
+msgid "failed to get password for `%s' from the database"
+msgstr "salasanan hakeminen käyttäjänimelle ”%s” tietokannasta epäonnistui"
+
+#: dicod/auth.c:55
+#, c-format
+msgid "no such user `%s'"
+msgstr "tuntematon käyttäjä ”%s”"
+
+#  argumentti on username
+#: dicod/auth.c:61
+#, c-format
+msgid "authentication failed for `%s'"
+msgstr "todennus epäonnistui käyttäjänimelle ”%s”"
+
+#: dicod/main.c:161
+msgid "list element must be a string"
+msgstr "luetteloelementin on oltava merkkijono"
+
+#: dicod/main.c:213
+msgid "list element must be a socket specification"
+msgstr "luetteloelementin on oltava pistokemäärittely"
+
+#: dicod/main.c:245 dicod/main.c:261 dicod/main.c:329 dicod/main.c:354
+#: dicod/main.c:394 dicod/main.c:429 dicod/main.c:472 dicod/main.c:632
+#: dicod/main.c:688 dicod/main.c:709 dicod/main.c:868 dicod/main.c:1001
+#: dicod/main.c:1040 dicod/main.c:1061
+msgid "Unexpected block statement"
+msgstr "Odottamaton lohkolause"
+
+#: dicod/main.c:281
+msgid "ACL name must be a string"
+msgstr "ACL-nimen on oltava merkkijono"
+
+#: dicod/main.c:283
+msgid "missing ACL name"
+msgstr "puuttuva ACL-nimi"
+
+#: dicod/main.c:289
+#, c-format
+msgid "redefinition of ACL %s"
+msgstr "ACL %s -uudelleenmäärittely"
+
+#: dicod/main.c:292
+msgid "location of the previous definition"
+msgstr "edellisen määrittelyn sijainti"
+
+#  Näitä ei mielestäni pidä suomentaa ollenkaan
+#: dicod/main.c:308 dicod/main.c:312
+msgid "[all|authenticated|group <grp: list>] [from <addr: list>]"
+msgstr "[all|authenticated|group <grp: list>] [from <addr: list>]"
+
+#: dicod/main.c:309
+msgid "Allow access"
+msgstr "Salli pääsy"
+
+#: dicod/main.c:313
+msgid "Deny access"
+msgstr "Kiellä pääsy"
+
+#: dicod/main.c:333 dicod/main.c:714
+msgid "expected scalar value"
+msgstr "odottamaton skalaariarvo"
+
+#: dicod/main.c:337
+#, c-format
+msgid "no such ACL: `%s'"
+msgstr "tuntematon ACL: ”%s”"
+
+#: dicod/main.c:359 dicod/main.c:434 dicod/main.c:476 dicod/main.c:637
+msgid "expected scalar value but found list"
+msgstr "odotettiin skalaariarvoa, mutta löytyi luettelo"
+
+#: dicod/main.c:365
+#, c-format
+msgid "%s: no such user"
+msgstr "%s: tuntematon käyttäjä"
+
+#: dicod/main.c:408
+#, c-format
+msgid "%s: unknown group"
+msgstr "%s: tuntematon ryhmä"
+
+#: dicod/main.c:438
+msgid "unknown mode"
+msgstr "tuntematon tila"
+
+#: dicod/main.c:483
+msgid "unknown syslog facility"
+msgstr "tuntematon syslog-apuneuvo"
+
+#: dicod/main.c:502 dicod/main.c:533
+msgid "tag must be a string"
+msgstr "tunnisteen on oltava merkkijono"
+
+#: dicod/main.c:504 dicod/main.c:535
+msgid "missing tag"
+msgstr "puuttuva tunniste"
+
+#: dicod/main.c:597
+msgid "database name not supplied"
+msgstr "tietokantanimeä ei tueta"
+
+#: dicod/main.c:614 grecs/src/tree.c:610
+msgid "invalid use of block statement"
+msgstr "lohkolauseen virheellinen käyttö"
+
+#: dicod/main.c:642 dicod/loader.c:104
+#, c-format
+msgid "cannot parse command line `%s': %s"
+msgstr "ei voida jäsentää komentoriviä ”%s”: %s"
+
+#: dicod/main.c:658
+#, c-format
+msgid "%s: handler not declared"
+msgstr "%s: käsittelijää ei oltu esitelty"
+
+#: dicod/main.c:694
+#, c-format
+msgid "unknown capability: %s"
+msgstr "tuntematon kapasiteetti: %s"
+
+#: dicod/main.c:719
+#, c-format
+msgid "cannot parse headers: %s"
+msgstr "ei voi jäsentää otsakkeita: %s"
+
+#: dicod/main.c:726
+#, c-format
+msgid "unknown encoding type: %s"
+msgstr "tuntematon koodaustyyppi: %s"
+
+#: dicod/main.c:733 dicod/main.c:743 dicod/main.c:747 dicod/main.c:752
+#: dicod/main.c:756 dicod/main.c:787 dicod/main.c:790 dicod/main.c:794
+#: dicod/main.c:920 dicod/main.c:1208 dicod/main.c:1217 dicod/main.c:1220
+#: dicod/main.c:1222 dicod/main.c:1227 dicod/main.c:1236 dicod/main.c:1258
+#: dicod/main.c:1273 grecs/src/format.c:138
+msgid "arg"
+msgstr "argumentti"
+
+#: dicod/main.c:733
+msgid "Command line."
+msgstr "Komentorivi."
+
+#: dicod/main.c:740
+msgid "word"
+msgstr "sana"
+
+#: dicod/main.c:740
+msgid "Dictionary name (a single word)."
+msgstr "Sanakirjanimi (yksittäinen sana)."
+
+#: dicod/main.c:744
+msgid "Short description, to be shown in reply to SHOW DB command."
+msgstr "Lyhyt kuvaus, joka näytetään vastauksena SHOW DB -komentoon."
+
+#: dicod/main.c:748
+msgid ""
+"Full description of the database, to be shown in reply to SHOW INFO command."
+msgstr ""
+"Tietokannan täydellinen kuvaus, joka näytetään vastauksena SHOW INFO -"
+"komentoon."
+
+#: dicod/main.c:753
+msgid "List of languages this database translates from."
+msgstr "Luettelo kielistä, joista tässä tietokannassa käännetään."
+
+#: dicod/main.c:757
+msgid "List of languages this database translates to."
+msgstr "Luettelo kielistä, joihin tässä tietokannassa käännetään."
+
+#: dicod/main.c:760 dicod/main.c:914 dicod/main.c:917 dicod/main.c:1192
+#: dicod/main.c:1195 dicod/main.c:1214 dicod/main.c:1233 dicod/main.c:1238
+#: dicod/main.c:1256 dicod/main.c:1270
+msgid "name"
+msgstr "nimi"
+
+#: dicod/main.c:760
+msgid "Name of the handler for this database."
+msgstr "Tämän tietokannan käsittelijän nimi."
+
+#: dicod/main.c:763 dicod/main.c:1205 dicod/main.c:1277 dicod/main.c:1280
+msgid "arg: acl"
+msgstr "argumentti: acl"
+
+#: dicod/main.c:764
+msgid "ACL controlling visibility of this database"
+msgstr "ACL ohjaa tämän tietokannan näkyvyyttä"
+
+#: dicod/main.c:767 dicod/main.c:1202 dicod/main.c:1249 dicod/main.c:1252
+msgid "text"
+msgstr "teksti"
+
+#: dicod/main.c:768
+msgid "Additional MIME headers"
+msgstr "Ylimääräisiä MIME-otsakkeita"
+
+#: dicod/main.c:787
+msgid "Password file or query."
+msgstr "Salasanatiedosto tai kysely."
+
+#: dicod/main.c:791
+msgid "File containing user group information or a query to retrieve it."
+msgstr ""
+"Tiedosto sisältää käyttäjäryhmätietoja tai kyselyjä niiden noutamiseksi."
+
+#: dicod/main.c:795
+msgid "Implementation-dependent options"
+msgstr "Toteutusriippuvat valitsimet"
+
+#: dicod/main.c:817 dicod/main.c:833
+msgid "URL must be a string"
+msgstr "Verkko-osoitteen on oltava merkkijono"
+
+#: dicod/main.c:819 dicod/main.c:835
+msgid "empty URL"
+msgstr "tyhjä verkko-osoite"
+
+#: dicod/main.c:850
+msgid "cannot create user database"
+msgstr "ei voi luoda käyttäjätietokantaa"
+
+#: dicod/main.c:872
+msgid "Not enough arguments for alias"
+msgstr "Aliakselle ei ole riittävästi argumentteja"
+
+#: dicod/main.c:879
+#, c-format
+msgid "argument %d has wrong type"
+msgstr "argumentti %d on väärää tyyppiä"
+
+#: dicod/main.c:899
+msgid "expected boolean value but found list"
+msgstr "odotettiin boolean-arvoa, mutta löytyi luettelo"
+
+#: dicod/main.c:908 dicod/main.c:911
+msgid "mech: list"
+msgstr "mekanismi: luettelo"
+
+#: dicod/main.c:909
+msgid "Disable SASL mechanisms listed in <mech>."
+msgstr ""
+"Ota pois käytöstä SASL-mekanismit, jotka on lueteltu luettelossa <mekanismi>."
+
+#: dicod/main.c:912
+msgid "Enable SASL mechanisms listed in <mech>."
+msgstr ""
+"Ota käyttöön SASL-mekanismit, jotka on luetteloitu luettelossa <mekanismi>."
+
+#: dicod/main.c:915
+msgid "Set service name for GSSAPI and Kerberos."
+msgstr "Aseta palvelunimi GSSAPI:lle ja Kerberos-palvelimelle."
+
+#: dicod/main.c:918
+msgid "Set realm name for GSSAPI and Kerberos."
+msgstr "Aseta realm-nimi GSSAPI:lle ja Kerberos-palvelimelle."
+
+#: dicod/main.c:921
+msgid "Define groups for anonymous users."
+msgstr "Määritä ryhmiä anonyymeille käyttäjille."
+
+#: dicod/main.c:960
+msgid "Section name must be a string"
+msgstr "Lohkonimen on oltava merkkijono"
+
+#: dicod/main.c:962
+msgid "missing section name"
+msgstr "puuttuva lohkonimi"
+
+#: dicod/main.c:986
+msgid "Unexpected statement"
+msgstr "Odottamaton lause"
+
+#: dicod/main.c:1023
+msgid "Expected string value"
+msgstr "Odotettiin merkkijonoarvoa"
+
+#: dicod/main.c:1049
+msgid "expected list or string"
+msgstr "odotettiin luetteloa tai merkkijonoa"
+
+#: dicod/main.c:1072
+msgid "Expected number"
+msgstr "Odotettiin numeroa"
+
+#: dicod/main.c:1143
+msgid "arg: bool"
+msgstr "argumentti: bool"
+
+#: dicod/main.c:1143
+msgid "Deny all * and ! look ups"
+msgstr "Kiellä kaikki * ja ! -haut"
+
+#: dicod/main.c:1147
+msgid "cond"
+msgstr "ehto"
+
+#: dicod/main.c:1147
+msgid "Deny * and ! look-ups on these words."
+msgstr "Kiellä * ja ! -haut näille sanoille."
+
+#: dicod/main.c:1152 dicod/main.c:1158 dicod/main.c:1164 dicod/main.c:1170
+#: dicod/main.c:1176 dicod/main.c:1182
+msgid "len: number"
+msgstr "pituus: numero"
+
+#: dicod/main.c:1153
+msgid "Deny * and ! look-ups on words with length < <len>."
+msgstr "Kiellä * ja ! -haut sanoille, joiden pituus < <pituus>."
+
+#: dicod/main.c:1159
+msgid "Deny * and ! look-ups on words with length <= <len>."
+msgstr "Kiellä * ja ! -haut sanoille, joiden pituus <= <pituus>."
+
+#: dicod/main.c:1165
+msgid "Deny * and ! look-ups on words with length > <len>."
+msgstr "Kiellä * ja ! -haut sanoille, joiden pituus > <pituus>."
+
+#: dicod/main.c:1171
+msgid "Deny * and ! look-ups on words with length >= <len>."
+msgstr "Kiellä * ja ! -haut sanoille, joiden pituus >= <pituus>."
+
+#: dicod/main.c:1177
+msgid "Deny * and ! look-ups on words with length == <len>."
+msgstr "Kiellä * ja ! -haut sanolle, joiden pituus == <pituus>."
+
+#: dicod/main.c:1183
+msgid "Deny * and ! look-ups on words with length != <len>."
+msgstr "Kiellä * ja ! -haut sanoille, joiden pituus != <pituus>."
+
+#: dicod/main.c:1192
+msgid "Run with these user privileges."
+msgstr "Suorita näillä käyttäjäoikeuksilla."
+
+#: dicod/main.c:1196
+msgid "Supplementary group to retain with the user privileges."
+msgstr "Lisäryhmä käyttäjäoikeuksien säilyttämiseksi."
+
+#: dicod/main.c:1199
+msgid "arg: [daemon|inetd]"
+msgstr "argumentti: [daemon|inetd]"
+
+#: dicod/main.c:1199
+msgid "Operation mode."
+msgstr "Toimintatila."
+
+#: dicod/main.c:1203
+msgid "Server description to be shown in reply to SHOW SERVER command."
+msgstr "Palvelinkuvaus, joka näytetään vastauksena SHOW SERVER-komennolle."
+
+#: dicod/main.c:1206
+msgid "Show system information if arg matches."
+msgstr "Näytä järjestelmätiedot, jos argumentti täsmää."
+
+#: dicod/main.c:1209
+msgid "Enable identification check using AUTH protocol (RFC 1413)"
+msgstr ""
+"Ota käyttöön tunnistustarkistus käyttäen TODENNUS-yhteyskäytäntöä (RFC 1413)"
+
+#: dicod/main.c:1211
+msgid "val"
+msgstr "arvo"
+
+#: dicod/main.c:1212
+msgid "Set timeout for AUTH I/O operations."
+msgstr "Aseta aikakatkaisu TODENNUS-siirräntätoimille."
+
+#: dicod/main.c:1215
+msgid "Name of the file containing the keys for decrypting AUTH replies."
+msgstr ""
+"Sen tiedoston nimi, joka sisältää avaimet TODENNUS-vastausten purkamiseen."
+
+#: dicod/main.c:1218
+msgid "Maximum number of children running simultaneously."
+msgstr "Samanaikaisesti suoritettavien lapsiprosessien enimmäismäärä."
+
+#: dicod/main.c:1220
+msgid "Tag syslog diagnostics with this tag."
+msgstr "Tunniste-syslog-dianostiikka tälle tunnisteelle."
+
+#: dicod/main.c:1223
+msgid ""
+"Set syslog facility. Arg is one of the following: user, daemon, auth, "
+"authpriv, mail, cron, local0 through local7 (case-insensitive), or a "
+"facility number."
+msgstr ""
+"Aseta syslog-apuneuvot. Argumentti on yksi seuraavista: user, daemon, auth, "
+"authpriv, mail, cron, local0 ... local7 (kirjainkoosta riippuvia) tai "
+"apuneuvonumero."
+
+#: dicod/main.c:1228
+msgid "Prefix diagnostics messages with their severity."
+msgstr "Liitä diagnostiikkaviestien eteen niiden vakavuus."
+
+#: dicod/main.c:1230
+msgid "fmt"
+msgstr "fmt"
+
+#: dicod/main.c:1231
+msgid "Set format string for access log file."
+msgstr "Aseta muotomerkkijono käyttölokitiedostolle."
+
+#: dicod/main.c:1234
+msgid "Set access log file name."
+msgstr "Aseta käyttölokitiedostonimi."
+
+#: dicod/main.c:1236
+msgid "Log session transcript."
+msgstr "Tee loki istuntokopiosta."
+
+#: dicod/main.c:1239
+msgid "Store PID of the master process in this file."
+msgstr "Tallenna isäntäprosessin PID tässä tiedostossa."
+
+#: dicod/main.c:1241 dicod/main.c:1244
+msgid "seconds"
+msgstr "sekuntia"
+
+#: dicod/main.c:1242
+msgid "Wait this number of seconds for all children to terminate."
+msgstr "Odota tämä sekuntimäärä kaikkien lapsiprosessien päättymistä."
+
+#: dicod/main.c:1245
+msgid "Set inactivity timeout."
+msgstr "Aseta joutilaisuusaikavalvonta."
+
+#: dicod/main.c:1247
+msgid "addr"
+msgstr "osoite"
+
+#: dicod/main.c:1247
+msgid "Listen on these addresses."
+msgstr "Kuuntele näitä osoitteita."
+
+#: dicod/main.c:1250
+msgid "Display this text in the initial 220 banner"
+msgstr "Näytä tämä teksti alustavassa 220-banner-ilmoituksessa."
+
+#: dicod/main.c:1253
+msgid ""
+"Display this text in reply to the HELP command. If text begins with a +, "
+"usual command summary is displayed before it."
+msgstr ""
+"Näytä tämä teksti vastauksessa HELP-komentoon. Jos teksti alkaa +-merkillä, "
+"tavallinen komentoyhteenveto näytetään ennen sitä."
+
+#: dicod/main.c:1256
+msgid "Override the host name."
+msgstr "Korvaa tietokonenimi."
+
+#: dicod/main.c:1258
+msgid "Request additional capabilities."
+msgstr "Pyyntö lisäkapasiteetista."
+
+#: dicod/main.c:1261 dicod/main.c:1265
+msgid "path"
+msgstr "polku"
+
+#: dicod/main.c:1262
+msgid "List of directories searched for database modules."
+msgstr "Tietokantamoduulien hakuhakemistojen luettelo."
+
+#: dicod/main.c:1266
+msgid ""
+"List of directories searched for database modules prior to the default "
+"module directory"
+msgstr ""
+"Luettelo hakemistoista, joista etsitään tietokantamoduuleja ennen "
+"oletusmoduulihakemistoa"
+
+#: dicod/main.c:1271
+msgid "Set the name of the default matching strategy."
+msgstr "Aseta oletustäsmäysstrategian nimi."
+
+#: dicod/main.c:1274
+msgid "Provide timing information after successful completion of an operation."
+msgstr "Tarjoa ajastustietoja toiminnan onnistuneen toteutuksen jälkeen."
+
+#: dicod/main.c:1278
+msgid "Set ACL to control visibility of all databases."
+msgstr "Aseta ACL ohjaamaan kaikkien tietokantojen näkyvyyttä."
+
+#: dicod/main.c:1281
+msgid "Apply this ACL to incoming connections."
+msgstr "Sovella tämä ACL tuleville yhteyksille."
+
+#: dicod/main.c:1283
+msgid "Define a dictionary database."
+msgstr "Määritä sanakirjatietokanta."
+
+#: dicod/main.c:1287 dicod/main.c:1296 dicod/main.c:1302 dicod/main.c:1309
+msgid "name: string"
+msgstr "nimi: merkkijono"
+
+#: dicod/main.c:1288
+msgid ""
+"Load a module instance.\n"
+"If <name> is the same as <arg> in command, it can be simplified as:\n"
+"  load-module <name: string>;\n"
+"Furthermore, several simplified forms can be combined into one\n"
+"by using a list of names as its argument, as in:\n"
+"  load-module (stratall,word);\n"
+msgstr ""
+"Lataa moduuli-ilmentymä.\n"
+"Jos <nimi> on sama kuin komennon <argumentti>, se voidaan yksinkertaistaa:\n"
+"  load-module <nimi: merkkijono>;\n"
+"Edelleen, useita yksinkertaistettuja muotoja voidaan yhdistää yhdeksi\n"
+"käyttämällä nimien luetteloa sen argumenttina, kuten kohteeessa:\n"
+"  load-module (stratall,word);\n"
+
+#: dicod/main.c:1296
+msgid "Define an ACL."
+msgstr "Määritä ACL."
+
+#: dicod/main.c:1298
+msgid "url: string"
+msgstr "verkko-osoite: merkkijono"
+
+#: dicod/main.c:1299
+msgid "Define user database for authentication."
+msgstr "Määritä käyttäjätietokanta todentamista varten."
+
+#: dicod/main.c:1302
+msgid "Define a command alias."
+msgstr "Määritä komentoalias."
+
+#: dicod/main.c:1306
+msgid "Control SASL authentication."
+msgstr "Ohjaa SASL-todennusta."
+
+#: dicod/main.c:1310
+msgid "Additional configuration for strategy <name>"
+msgstr "Lisäasetukset strategialle <nimi>"
+
+#: dicod/main.c:1343
+msgid ""
+"Configuration file structure for dicod.\n"
+"For more information, use `info dico configuration'."
+msgstr ""
+"Asetustiedostorakenne ohjelmalle dicod.\n"
+"Lisätietoja: käytä ”info dico configuration”."
+
+#: dicod/main.c:1653
+msgid "unknown strategy"
+msgstr "tuntematon strategia"
+
+#: cmdline.opt:37
+msgid "Select program mode"
+msgstr "Valitse ohjelmatila"
+
+#: cmdline.opt:52
+msgid "Preprocess configuration file and exit"
+msgstr "Esikäsittele asetustiedosto ja poistu"
+
+#: cmdline.opt:58
+msgid "Check configuration file syntax and exit."
+msgstr "Tarkista asetustiedostosyntaksi ja poistu."
+
+#: cmdline.opt:64
+msgid "Inetd mode."
+msgstr "Inetd-tila."
+
+#: cmdline.opt:56
+msgid "Modifiers"
+msgstr "Määreet"
+
+#: cmdline.opt:72
+msgid "FILE"
+msgstr "TIEDOSTO"
+
+#: cmdline.opt:72
+msgid "Read this configuration file."
+msgstr "Lue tämä asetustiedosto."
+
+#: cmdline.opt:78
+msgid "Operate in foreground."
+msgstr "Toimi edustalla."
+
+#: cmdline.opt:84
+msgid "Output diagnostic to stderr."
+msgstr "Tulosta diagnostiikkaviestit vakiovirheeseen."
+
+#: cmdline.opt:90
+msgid "Output diagnostic to syslog (default)."
+msgstr "Tulosta diagnostiikkaviestit syslog-tiedostoon (oletus)."
+
+#: cmdline.opt:96
+msgid "Single-process mode."
+msgstr "Yksiprosessitila."
+
+#: cmdline.opt:110
+msgid "Disable session transcript."
+msgstr "Ota pois käytöstä istuntokopio."
+
+#: cmdline.opt:116
+msgid "LEVEL-SPEC"
+msgstr "TASO-MÄÄRITTELY"
+
+#: cmdline.opt:116
+msgid "Set debug verbosity level."
+msgstr "Aseta vianjäljityksen monisanaisuustaso."
+
+#: cmdline.opt:129
+msgid "Trace parsing of configuration file."
+msgstr "Asetustiedoston jäljitysjäsentely."
+
+#: cmdline.opt:135
+msgid "Trace config file lexer."
+msgstr "Jäljitä config-tiedoston sana-analysoija."
+
+#: cmdline.opt:127
+msgid "Additional help"
+msgstr "Lisäopaste"
+
+#: cmdline.opt:143
+msgid "Show configuration file summary."
+msgstr "Näytä asetustiedostoyhteenveto."
+
+#: cmdline.opt:136
+msgid "Preprocessor control"
+msgstr "Esikäsittelijäohjaus"
+
+#: cmdline.opt:152
+msgid "PROG"
+msgstr "OHJELMA"
+
+#: cmdline.opt:152
+msgid "Use PROG as a preprocessor for config file."
+msgstr "Käytä OHJELMAa config-tiedoston esikäsittelijänä."
+
+#: cmdline.opt:158
+msgid "Do not use external preprocessor."
+msgstr "Älä käytä ulkoista esikäsittelijää."
+
+#: cmdline.opt:164
+msgid "DIR"
+msgstr "HAKEMISTO"
+
+#: cmdline.opt:164
+#, fuzzy
+msgid ""
+"Add the directory DIR to the list of directories to be searched for "
+"preprocessor include files"
+msgstr ""
+"Lisää hakemisto HAKEMISTO niiden hakemistojen luetteloon,         joista on "
+"etsittävä esikäsittelijän include-tiedostoja"
+
+#: cmdline.opt:170
+msgid "SYMBOL[=VALUE]"
+msgstr ""
+
+#: cmdline.opt:170
+msgid "define a preprocessor symbol"
+msgstr ""
+
+#: cmdline.opt:31
+msgid "GNU dictionary server"
+msgstr "GNU-sanakirjapalvelin"
+
+#: dicod/loader.c:39
+#, c-format
+msgid "%s: faulty module: (%s) failed"
+msgstr "%s: vikamoduuli: (%s) epäonnistui"
+
+#: dicod/loader.c:53
+#, c-format
+msgid "module %s already loaded"
+msgstr "moduuli %s on jo ladattu"
+
+#: dicod/loader.c:63
+#, c-format
+msgid "cannot load module %s: %s"
+msgstr "ei voi ladata moduulia %s: %s"
+
+#: dicod/loader.c:88
+#, c-format
+msgid "%s: initialization failed"
+msgstr "%s: alustus epäonnistui"
+
+#: dicod/loader.c:122
+#, c-format
+msgid "cannot initialize database `%s': module `%s' does not support databases"
+msgstr "ei voi alustaa tietokantaa ”%s”: moduuli ”%s” ei tue tietokantoja"
+
+#: dicod/loader.c:132
+#, c-format
+msgid "cannot initialize database `%s'"
+msgstr "ei voi alustaa tietokantaa ”%s”"
+
+#: dicod/loader.c:147
+#, c-format
+msgid "cannot open database `%s'"
+msgstr "ei voi avata tietokantaa ”%s”"
+
+#: dicod/alias.c:68
+#, c-format
+msgid "alias `%s' already defined"
+msgstr "alias ”%s” on jo määritelty"
+
+#: dicod/alias.c:70
+msgid "this is the location of the previous definition"
+msgstr "tämä on edellisen määrittelyn sijainti"
+
+#: dicod/server.c:98
+#, c-format
+msgid "file %s exists but cannot be stat'd"
+msgstr "tiedosto %s on olemassa, mutta sitä ei voi stat-kutsua"
+
+#: dicod/server.c:105
+#, c-format
+msgid "file %s is not a socket"
+msgstr "tiedosto %s ei ole pistoke"
+
+#: dicod/server.c:111
+#, c-format
+msgid "cannot unlink file %s"
+msgstr "ei voi purkaa tiedoston %s linkkiä"
+
+#: dicod/server.c:125
+#, c-format
+msgid "unsupported address family: %d"
+msgstr "tukematon osoiteperhe: %d"
+
+#: dicod/server.c:157
+msgid "No sockets opened"
+msgstr "Pistokkeita ei ole avoinna"
+
+#: dicod/server.c:200
+#, c-format
+msgid "%lu exited successfully"
+msgstr "%lu poistui onnistuneesti"
+
+#: dicod/server.c:205
+#, c-format
+msgid "%lu timed out"
+msgstr "%lu aikakatkaisu"
+
+#: dicod/server.c:210
+#, c-format
+msgid "%lu failed with status %d"
+msgstr "%lu epäonnistui tilassa %d"
+
+#: dicod/server.c:221
+#, c-format
+msgid "%lu terminated on signal %d"
+msgstr "%lu päättyi signaalilla %d"
+
+#: dicod/server.c:224
+#, c-format
+msgid "%lu stopped on signal %d"
+msgstr "%lu pysähtyi signaalilla %d"
+
+#: dicod/server.c:228
+#, c-format
+msgid "%lu dumped core"
+msgstr "%lu vedostettu ydin"
+
+#: dicod/server.c:231
+#, c-format
+msgid "%lu terminated with unrecognized status"
+msgstr "%lu päättyi tunnistamattomassa tilassa"
+
+#: dicod/server.c:299
+#, c-format
+msgid "Cannot open pidfile `%s'"
+msgstr "Ei voi avata pid-tiedostoa ”%s”"
+
+#: dicod/server.c:302
+#, c-format
+msgid "Cannot get pid from pidfile `%s'"
+msgstr "Ei voitu saada pid-tunnusta pid-tiedostosta ”%s”"
+
+#: dicod/server.c:308
+#, c-format
+msgid "%s appears to run with pid %lu. If it does not, remove `%s' and retry."
+msgstr ""
+"%s näyttää suoritettavan pid-tunnuksella %lu. Jos pid ei ole se, poista ”%s” "
+"ja yritä uudelleen."
+
+#: dicod/server.c:318 dicod/server.c:337
+#, c-format
+msgid "Cannot unlink pidfile `%s'"
+msgstr "Ei voi purkaa pid-tiedoston ”%s” linkkiä"
+
+#: dicod/server.c:328
+#, c-format
+msgid "Cannot create pidfile `%s'"
+msgstr "Ei voi luoda pid-tiedostoa ”%s”"
+
+#  argumentti on asiakasosoite
+#: dicod/server.c:394
+#, c-format
+msgid "connection from %s denied"
+msgstr "yhteys asiakasosoitteesta %s on kielletty"
+
+#: dicod/server.c:451
+msgid "fork failed"
+msgstr "fork-kutsu epäonnistui"
+
+#: dicod/server.c:467
+msgid "refusing to restart due to errors in configuration file"
+msgstr "kielletään uudelleenkäynnistys asetustiedoston virheiden vuoksi"
+
+#: dicod/server.c:473
+msgid ""
+"refusing to restart due to unexpected return status of configuration checker"
+msgstr ""
+"kielletään uudelleenkäynnistys, koska asetustarkistaja palautti "
+"odottamattoman paluutilan"
+
+#: dicod/server.c:481
+msgid ""
+"refusing to restart: configuration checker did not exit within 5 seconds"
+msgstr ""
+"kielletään uudelleenkäynnistys: asetustarkistaja ei sulkeutunut 5 sekunnin "
+"aikana"
+
+#: dicod/server.c:490
+msgid "waitpid failed"
+msgstr "waitpid epäonnistui"
+
+#: dicod/server.c:491
+msgid "refusing to restart"
+msgstr "kielletään uudelleenkäynnistys"
+
+#: dicod/server.c:531
+#, c-format
+msgid "too many children (%lu)"
+msgstr "liian monta lapsiprosessia (%lu)"
+
+#: dicod/server.c:549
+msgid "select error"
+msgstr "valitse virhe"
+
+#: dicod/server.c:565
+#, c-format
+msgid "%s started"
+msgstr "%s käynnistyi"
+
+#: dicod/server.c:570
+msgid "not running as root: ignoring user/group settings"
+msgstr ""
+
+#: dicod/server.c:583
+msgid "dicod started without full file name"
+msgstr "dicod käynnistyi ilman täyttä tiedostonimeä"
+
+#: dicod/server.c:584 dicod/server.c:588
+msgid "restart (SIGHUP) will not work"
+msgstr "uudelleenkäynnistys (SIGHUP) ei toimi"
+
+#: dicod/server.c:587
+msgid "configuration file is not given with a full file name"
+msgstr "asetustiedostoa ei ole annettu täydellä tiedostonimellä"
+
+#: dicod/server.c:595
+msgid "Cannot become a daemon"
+msgstr "Ei voi tulla taustaprosessiksi"
+
+#: dicod/server.c:612
+#, c-format
+msgid "Exit code = %d, last error status"
+msgstr "Poistumiskoodi = %d, viimeisin virhetila"
+
+#: dicod/server.c:620
+#, c-format
+msgid "%s restarting"
+msgstr "%s käynnistetään uudelleen"
+
+#: dicod/server.c:624
+msgid "Cannot restart"
+msgstr "Ei voi käynnistää uudelleen"
+
+#: dicod/server.c:626
+#, c-format
+msgid "%s terminating"
+msgstr "%s päätetään"
+
+#: dicod/ident.c:200
+msgid "Incorrect length of IDENT DES packet"
+msgstr "IDENT DES -paketin virheellinen pituus"
+
+#: dicod/ident.c:207
+#, c-format
+msgid "Cannot open file %s"
+msgstr "Ei voi avata tiedostoa %s"
+
+#: dicod/ident.c:389
+msgid "cannot create socket for AUTH identification"
+msgstr "ei voida luoda pistoketta TODENNUS-tunnistukseen"
+
+#: dicod/ident.c:414 dicod/ident.c:467
+#, c-format
+msgid "cannot connect to AUTH server %s"
+msgstr "ei voi yhdistää TODENNUS-palvelimeen %s"
+
+#: dicod/ident.c:440
+#, c-format
+msgid "Malformed IDENT response: `%s', from %s"
+msgstr "Vääränmuotoinen IDENT-vastaus: ”%s”, pistokeosoitteesta %s"
+
+#: dicod/ident.c:445
+msgid ""
+"Keyfile for AUTH responses not specified in config; use `ident-keyfile FILE'"
+msgstr ""
+"Avaintiedosto TODENNUS-vastauksille ei ole määritelty config-tiedostossa; "
+"käytä ”ident-keyfile TIEDOSTO”"
+
+#: dicod/ident.c:461
+#, c-format
+msgid "failure while communicating with AUTH server %s"
+msgstr "virhe viestinnässä TODENNUSpalvelimen %s kanssa"
+
+#: dicod/ident.c:472
+#, c-format
+msgid "no reply from AUTH server %s"
+msgstr "ei vastausta TODENNUSpalvelimelta %s"
+
+#: dicod/ident.c:478
+#, c-format
+msgid "I/O error while communicating with AUTH server %s"
+msgstr "Siirräntävirhe kun viestitään TODENNUSpalvelimen %s kanssa"
+
+#: dicod/accesslog.c:487
+#, c-format
+msgid "log format error (near char %d): missing terminating `}'"
+msgstr "lokimuotovirhe (lähellä merkkiä %d): puuttuu päätemerkki ”}”"
+
+#: dicod/accesslog.c:502
+#, c-format
+msgid "log format error (near char %d): unknown format char `%c'"
+msgstr "lokimuotovirhe (lähellä merkkiä %d): tuntematon muotomerkki ”%c”"
+
+#: dicod/accesslog.c:510
+#, c-format
+msgid ""
+"log format warning (near char %d): format char `%c' does not take arguments"
+msgstr ""
+"lokimuotovaroitus (lähellä merkkiä %d): muotomerkki ”%c” ei ota argumentteja"
+
+#: dicod/accesslog.c:553
+#, c-format
+msgid "cannot open access log file `%s'"
+msgstr "ei voida avata käyttölokitiedostoa ”%s”"
+
+#: dicod/gsasl.c:84
+#, c-format
+msgid "Unexpected input instead of SASLRESP command: %s"
+msgstr "Odottamaton syöttö SASLRESP-komennon sijasta: %s"
+
+#: dicod/gsasl.c:123
+#, c-format
+msgid "SASL gsasl_server_start: %s"
+msgstr "SASL gsasl_server_start: %s"
+
+#: dicod/gsasl.c:163
+#, c-format
+msgid "GSASL %s: cannot get username"
+msgstr "GSASL %s: ei voi hakea käyttäjänimeä"
+
+#: dicod/gsasl.c:269
+msgid "user name not supplied"
+msgstr "käyttäjänimeä ei tueta"
+
+#: dicod/gsasl.c:333
+#, c-format
+msgid "cannot initialize libgsasl: %s"
+msgstr "ei voida alustaa kirjastoa libgsasl: %s"
+
+#: modules/dict.org/dictorg.c:28 modules/guile/guile.c:153
+#, c-format
+msgid "%s: not enough memory"
+msgstr "%s: muisti ei riitä"
+
+#: modules/dict.org/dictorg.c:51
+#, c-format
+msgid "mod_init: cannot stat `%s'"
+msgstr "mod_init: ei voida stat-kutsua ”%s”"
+
+#: modules/dict.org/dictorg.c:56
+#, c-format
+msgid "mod_init: `%s' is not a directory"
+msgstr "mod_init: ”%s” ei ole hakemisto"
+
+#: modules/dict.org/dictorg.c:61
+#, c-format
+msgid "mod_init: `%s' is not readable"
+msgstr "mod_init: ”%s” ei ole luettava"
+
+#: modules/dict.org/dictorg.c:186
+#, c-format
+msgid "%s:%lu: invalid base64 value: `%.*s'"
+msgstr "%s:%lu: virheellinen base64-arvo: ”%.*s”"
+
+#: modules/dict.org/dictorg.c:201
+#, c-format
+msgid "%s:%lu: malformed entry"
+msgstr "%s:%lu: vääränmuotoinen tulopiste"
+
+#: modules/dict.org/dictorg.c:240
+#, c-format
+msgid "open_index: cannot stat `%s'"
+msgstr "open_index: ei voida stat-kutsua ”%s”"
+
+#: modules/dict.org/dictorg.c:244
+#, c-format
+msgid "open_index: `%s' is not a regular file"
+msgstr "open_index: ”%s” ei ole tavallinen tiedosto"
+
+#: modules/dict.org/dictorg.c:253 modules/dict.org/dictorg.c:350
+#: modules/gcide/gcide.c:316 modules/gcide/gcide.c:726
+#, c-format
+msgid "cannot create stream `%s'"
+msgstr "ei voi luoda vuota ”%s”"
+
+#: modules/dict.org/dictorg.c:259 modules/dict.org/dictorg.c:358
+#: modules/gcide/gcide.c:323 modules/gcide/gcide.c:733
+#, c-format
+msgid "cannot open stream `%s': %s"
+msgstr "ei voi avata vuota ”%s”: %s"
+
+#: modules/dict.org/dictorg.c:368
+#, c-format
+msgid "cannot open stream for dictionary `%s'"
+msgstr "ei voi avata vuota sanakirjalle ”%s”"
+
+#: modules/dict.org/dictorg.c:398
+#, c-format
+msgid "mod_init_db(%s): database name not given"
+msgstr "mod_init_db(%s): tietokantanimeä ei ole annettu"
+
+#: modules/dict.org/dictorg.c:408
+#, c-format
+msgid "mod_init_db: `%s' is not an absolute file name"
+msgstr "mod_init_db: ”%s” ei ole absoluuttinen tiedostonimi"
+
+#: modules/dict.org/dictorg.c:742 modules/dict.org/dictorg.c:907
+#: modules/gcide/gcide.c:757
+#, c-format
+msgid "%s: read error: %s"
+msgstr "%s: lukuvirhe: %s"
+
+#: modules/dict.org/dictorg.c:819
+msgid "_match_all: key initialization failed"
+msgstr "_match_all: avainalustus epäonnistui"
+
+#: modules/dict.org/dictorg.c:897
+#, c-format
+msgid "%s: seek error: %s"
+msgstr "%s: hakuvirhe: %s"
+
+#: modules/dict.org/dictstr.c:179
+#, c-format
+msgid "cannot initialize inflation engine: %s"
+msgstr "ei voi alustaa inflation-konetta: %s"
+
+#: modules/dict.org/dictstr.c:201
+#, c-format
+msgid "%s:%d: INTERNAL ERROR: inflate did not flush (%d pending, %d avail)"
+msgstr ""
+"%s:%d: SISÄINEN VIRHE: inflate ei tyhjennä välimuistia (%d avointa, %d "
+"käytettävää)"
+
+#: modules/dict.org/dictstr.c:306
+#, c-format
+msgid "%s:%d: INTERNAL ERROR: cannot shut down inflation engine: %s"
+msgstr "%s:%d: SISÄINEN VIRHE: ei voida sulkea inflation-konetta: %s"
+
+#: modules/dict.org/dictstr.c:457
+#, c-format
+msgid "file position (%lu) != header length + 1 (%lu)"
+msgstr "tiedostosijainti (%lu) != otsakepituus + 1 (%lu)"
+
+#: modules/dict.org/dictstr.c:495
+msgid "unknown dictionary format"
+msgstr "tuntematon sanakirjamuoto"
+
+#: modules/dict.org/dictstr.c:498
+msgid "unsupported dictionary format"
+msgstr "tukematon sanakirjamuoto"
+
+#: modules/dict.org/dictstr.c:501
+msgid "unsupported dictionary version"
+msgstr "tukematon sanakirjaversio"
+
+#: modules/dict.org/dictstr.c:504
+msgid "malformed header"
+msgstr "vääränmuotoinen otsake"
+
+#: modules/dict.org/dictstr.c:507
+msgid "cannot seek on pure gzip format files"
+msgstr "ei voida etsiä puhtaita gzip-muototiedostoja"
+
+#: modules/dict.org/dictstr.c:510
+msgid "error decompressing stream"
+msgstr "virhe laventaessa vuota"
+
+#: modules/guile/guile.c:166
+#, c-format
+msgid "%s: invalid return type"
+msgstr "%s: virheellinen paluutyyppi"
+
+#: modules/guile/guile.c:186
+#, c-format
+msgid "procedure `%s' failed: see error output for details"
+msgstr "proseduuri ”%s” epäonnistui: katso yksityiskohdat virhetulosteesta"
+
+#: modules/guile/guile.c:779
+#, c-format
+msgid "%s: %s: unknown virtual function"
+msgstr "%s: %s: tuntematon virtuaalifunktio"
+
+#: modules/guile/guile.c:838
+msgid "mod_init: cannot initialize error port"
+msgstr "mod_init: ei voi alustaa virheporttia"
+
+#: modules/guile/guile.c:846 modules/guile/guile.c:880
+#, c-format
+msgid "mod_init: cannot load init script %s"
+msgstr "mod_init: ei voi ladata init-skriptiä %s"
+
+#: modules/guile/guile.c:906
+#, c-format
+msgid "%s: %s: void virtual function"
+msgstr "%s: %s: void-virtuaalifunktio"
+
+#: modules/guile/guile.c:1128
+msgid "mod_match: key initialization failed"
+msgstr "mod_match: avainalustus epäonnistui"
+
+#: modules/outline/outline.c:473
+msgid "outline_open: wrong number of arguments"
+msgstr "outline_open: väärä argumenttimäärä"
+
+#: modules/outline/outline.c:479 modules/gcide/idxgcide.l:270
+#, c-format
+msgid "cannot open file %s"
+msgstr "ei voi avata tiedostoa %s"
+
+#: modules/outline/outline.c:622
+msgid "outline_lang: not enough memory"
+msgstr "outline_lang: muisti ei riitä"
+
+#: modules/outline/outline.c:662
+msgid "outline_match_all: not enough memory"
+msgstr "outline_match_all: muisti ei riitä"
+
+#: modules/outline/outline.c:667
+msgid "outline_match_all: key initialization failed"
+msgstr "outline_match_all: avainalustus epäonnistui"
+
+#: modules/ldap/ldap.c:62
+#, c-format
+msgid "cannot set LBER_OPT_DEBUG_LEVEL %d"
+msgstr "ei voida asettaa LBER_OPT_DEBUG_LEVEL %d"
+
+#: modules/ldap/ldap.c:67
+#, c-format
+msgid "could not set LDAP_OPT_DEBUG_LEVEL %d"
+msgstr "ei voida asettaa LDAP_OPT_DEBUG_LEVEL %d"
+
+#: modules/ldap/ldap.c:75
+#, c-format
+msgid "cannot create LDAP session handle for URI=%s (%d): %s"
+msgstr "ei voida luoda LDAP-istuntokäsittelijää verkko-osoitteelle=%s (%d): %s"
+
+#: modules/ldap/ldap.c:83
+#, c-format
+msgid "ldap_start_tls failed: %s"
+msgstr "ldap_start_tls epäonnistui: %s"
+
+#: modules/ldap/ldap.c:201
+#, c-format
+msgid "cannot parse options `%s': %s"
+msgstr "ei voida jäsentää valitsimia ”%s”: %s"
+
+#: modules/ldap/ldap.c:217
+msgid "cannot allocate handle"
+msgstr "ei voi varata käsittelijää"
+
+#: modules/ldap/ldap.c:257
+#, c-format
+msgid "cannot expand query `%s': %s"
+msgstr "ei voi laajentaa kyselyä ”%s”: %s"
+
+#: modules/gcide/gcide.c:87
+#, c-format
+msgid "gcide: cannot stat `%s'"
+msgstr "gcide: ei voida stat-kutsua ”%s”"
+
+#: modules/gcide/gcide.c:91
+#, c-format
+msgid "gcide: `%s' is not a directory"
+msgstr "gcide: ”%s” ei ole hakemisto"
+
+#: modules/gcide/gcide.c:95 modules/gcide/gcide.c:160
+#, c-format
+msgid "gcide: `%s' is not readable"
+msgstr "gcide: ”%s” ei ole luettava"
+
+#: modules/gcide/gcide.c:115
+#, c-format
+msgid "gcide_open_idx: creating index %s"
+msgstr "gcide_open_idx: luodaan indeksi %s"
+
+#: modules/gcide/gcide.c:118
+#, c-format
+msgid "gcide_open_idx: cannot run %s"
+msgstr "gcide_open_idx: ei voida suorittaa kohdetta %s"
+
+#: modules/gcide/gcide.c:127
+msgid "gcide_open_idx: fork failed"
+msgstr "gcide_open_idx: fork epäonnistui"
+
+#: modules/gcide/gcide.c:131 modules/gcide/gcide.c:136
+#, c-format
+msgid "gcide_open_idx: %s failed"
+msgstr "gcide_open_idx: %s epäonnistui"
+
+#: modules/gcide/gcide.c:143
+#, c-format
+msgid "gcide_open_idx: %s exited with status %d"
+msgstr "gcide_open_idx: %s poistui tilassa %d"
+
+#: modules/gcide/gcide.c:164 modules/gcide/gcide.c:184
+#, fuzzy, c-format
+msgid "gcide: can't stat `%s'"
+msgstr "gcide: ei voida stat-kutsua ”%s”"
+
+#: modules/gcide/gcide.c:190
+msgid "gcide: index file older than database, reindexing"
+msgstr ""
+
+#: modules/gcide/gcide.c:192
+#, c-format
+msgid "gcide_open_idx: cannot access %s"
+msgstr "gcide_open_idx: ei voida kutsua kohdetta %s"
+
+#: modules/gcide/gcide.c:249
+msgid "gcide_init_db: database directory not given"
+msgstr "gcide_init_db: tietokantahakemistoa ei ole annettu"
+
+#: modules/gcide/gcide.c:335 modules/gcide/gcide.c:354
+#, fuzzy, c-format
+msgid "read error in stream `%s': %s"
+msgstr "ei voi avata vuota ”%s”: %s"
+
+#: modules/gcide/gcide.c:344
+#, fuzzy, c-format
+msgid "cannot get size of stream `%s': %s"
+msgstr "ei voi avata vuota ”%s”: %s"
+
+#: modules/gcide/gcide.c:351
+#, fuzzy
+msgid "cannot allocate dictionary information buffer"
+msgstr "tuntematon sanakirjamuoto"
+
+#: modules/gcide/gcide.c:519
+msgid "gcide_match_all: key initialization failed"
+msgstr "gcide_match_all: avainalustus epäonnistui"
+
+#: modules/gcide/gcide.c:743
+#, c-format
+msgid "seek error on `%s' while positioning to %lu: %s"
+msgstr "etsintävirhe kohteessa ”%s” sijainnissa %lu: %s"
+
+#: modules/gcide/idx.c:70
+#, c-format
+msgid "error reading from `%s'"
+msgstr "virhe luettaessa kohteesta ”%s”"
+
+#: modules/gcide/idx.c:73
+#, c-format
+msgid "short read while reading from `%s'"
+msgstr "lyhyt luku luettaessa kohteesta ”%s”"
+
+#: modules/gcide/idx.c:93
+#, c-format
+msgid "file `%s' is not a valid gcide index file"
+msgstr "tiedosto ”%s” ei ole kelvollinen gcide-indeksitiedosto"
+
+#: modules/gcide/idx.c:105
+#, c-format
+msgid "index file `%s' is corrupted"
+msgstr "indeksitiedosto ”%s” on rikkinäinen"
+
+#: modules/gcide/idx.c:130
+#, c-format
+msgid "cannot open index file `%s'"
+msgstr "ei voi avata indeksitiedostoa ”%s”"
+
+#: modules/gcide/idx.c:248
+#, c-format
+msgid "seek error on `%s' while positioning to %lu"
+msgstr "etsintävirhe kohteessa ”%s” sijainnissa %lu"
+
+#: modules/gcide/idxgcide-cli.opt:62
+#, c-format
+msgid "not a valid size: %s"
+msgstr "kelvoton koko: %s"
+
+#: modules/gcide/idxgcide.l:69
+msgid "write error"
+msgstr "kirjoitusvirhe"
+
+#: modules/gcide/idxgcide.l:79
+msgid "page too small, aborting"
+msgstr "sivu liian pieni, keskeytetään"
+
+#: modules/gcide/idxgcide.l:122
+msgid "Sorting references"
+msgstr "Lajitellaan viitteitä"
+
+#: modules/gcide/idxgcide.l:126
+msgid "Writing references"
+msgstr "Kirjoitetaan viitteitä"
+
+#: modules/gcide/idxgcide.l:218
+#, c-format
+msgid "%s:%u: unknown or illegible character in a headword"
+msgstr "%s:%u: tuntematon tai laitoin merkki pääsanassa"
+
+#: modules/gcide/idxgcide.l:222
+#, c-format
+msgid "%s:%u: unrecognized entity: %s"
+msgstr "%s:%u: tunnistamaton entiteetti: %s"
+
+#: modules/gcide/idxgcide.l:237
+#, c-format
+msgid "%s:%u: unknown character sequence %s"
+msgstr "%s:%u: tuntematon merkkisekvenssi %s"
+
+#: modules/gcide/idxgcide.l:267
+#, c-format
+msgid "Indexing %s"
+msgstr "Indeksoidaan %s"
+
+#: modules/gcide/idxgcide.l:294 modules/gcide/idxgcide.l:319
+#: modules/gcide/idxgcide.l:329
+msgid "not enough memory"
+msgstr "muisti ei riitä"
+
+#: modules/gcide/idxgcide.l:302
+msgid "page size too small"
+msgstr "sivukoko liian pieni"
+
+#: modules/gcide/idxgcide.l:311
+msgid "bad number of arguments"
+msgstr "väärä argumenttimäärä"
+
+#: modules/gcide/idxgcide.l:335
+#, c-format
+msgid "cannot create index file `%s'"
+msgstr "Ei voi luoda indeksitiedostoa ”%s”"
+
+#: modules/gcide/idxgcide.l:356
+#, c-format
+msgid "headwords=%lu, definitions=%lu, refs per page=%lu, pages=%lu"
+msgstr "pääsanoja=%lu, määrittelyjä=%lu, viitteitä per sivu=%lu, sivuja=%lu"
+
+#: modules/gcide/markup.l:150
+#, c-format
+msgid "cannot parse line %.*s: %s"
+msgstr "ei voi jäsentää riviä %.*s: %s"
+
+#: modules/gcide/markup.l:301
+#, c-format
+msgid "%u: unrecognized entity: %s"
+msgstr "%u: tunnistamaton entiteetti: %s"
+
+#: modules/gcide/markup.l:313
+#, c-format
+msgid "%u: unknown character sequence %s"
+msgstr "%u: tuntematon merkkisekvenssi %s"
+
+#: modules/wordnet/wordnet.c:81
+msgid "cannot open wordnet database"
+msgstr "ei voi avata wordnet-tietokantaa"
+
+#: modules/wordnet/wordnet.c:234
+#, c-format
+msgid "wordnet: unknown option %s"
+msgstr "wordnet: tuntematon valitsin %s"
+
+#: modules/wordnet/wordnet.c:241
+#, c-format
+msgid "wordnet: option %s is not yet supported"
+msgstr "wordnet: valitsinta %s ei vielä tueta"
+
+#: modules/wordnet/wordnet.c:619
+msgid "wn_foreach: key initialization failed"
+msgstr "wn_foreach: avainalustus epäonnistui"
+
+#: grecs/src/format.c:130
+msgid "Disabled;"
+msgstr "Otettu pois käytöstä;"
+
+#: grecs/src/grecs-lex.l:178
+#, c-format
+msgid "stray character %c"
+msgstr "satunnaismerkki %c"
+
+#: grecs/src/grecs-lex.l:181
+#, c-format
+msgid "stray character \\%03o"
+msgstr "satunnaismerkki \\%03o"
+
+#: grecs/src/grecs-lex.l:210 grecs/src/preproc.c:466
+#, c-format
+msgid "Cannot open `%s'"
+msgstr "Ei voi avata tiedostoa ”%s”"
+
+#: grecs/src/grecs-lex.l:218 grecs/src/preproc.c:639
+#, c-format
+msgid "Unable to start external preprocessor `%s'"
+msgstr "Ei kyetä käynnistämään ulkoista esikäsittelijää ”%s”"
+
+#: grecs/src/grecs-lex.l:384 grecs/src/grecs-lex.l:420
+msgid "cannot parse #line line"
+msgstr "ei voi jäsentää #line-riviä"
+
+#: grecs/src/grecs-lex.l:404 grecs/src/grecs-lex.l:423
+msgid "invalid #line statement"
+msgstr "virheellinen #line-lause"
+
+#: grecs/src/grecs-lex.l:407 grecs/src/grecs-lex.l:427
+msgid "malformed #line statement"
+msgstr "vääränmuotoinen #line-lause"
+
+#: grecs/src/path-parser.c:62
+#, c-format
+msgid "cannot open `%s'"
+msgstr "ei voi avata tiedostoa ”%s”"
+
+#: grecs/src/path-parser.c:108 grecs/src/path-parser.c:123
+msgid "unexpected end of file"
+msgstr "odottamaton tiedostoloppu"
+
+#: grecs/src/path-parser.c:143
+msgid "parse error"
+msgstr "jäsennysvirhe"
+
+#: grecs/src/preproc.c:434 grecs/src/preproc.c:456
+#, c-format
+msgid "Cannot stat `%s'"
+msgstr "Ei voi kutsua stat-funktiota ”%s”"
+
+#: grecs/src/preproc.c:439 grecs/src/preproc.c:444
+msgid "Recursive inclusion"
+msgstr "Rekursiivinen mukaanottaminen"
+
+#: grecs/src/preproc.c:447
+#, c-format
+msgid "`%s' already included here"
+msgstr "”%s” on jo sisällytetty tänne"
+
+#: grecs/src/preproc.c:451
+#, c-format
+msgid "`%s' already included at top level"
+msgstr "”%s” on jo sisällytetty ylimmälle tasolle"
+
+#: grecs/src/preproc.c:563
+msgid "Cannot parse include line"
+msgstr "Ei voida jäsentää include-riviä"
+
+#: grecs/src/preproc.c:566
+msgid "invalid include statement"
+msgstr "virheellinen include-lause"
+
+#: grecs/src/preproc.c:586
+#, c-format
+msgid "%s: No such file or directory"
+msgstr "%s: Tuntematon tiedosto tai hakemisto"
+
+#: grecs/src/preproc.c:706 grecs/src/preproc.c:726
+#, c-format
+msgid "Cannot run `%s'"
+msgstr "Ei voi suorittaa komentoa ”%s”"
+
+#: grecs/src/symtab.c:193
+msgid "element not found in table"
+msgstr "elementtiä ei löytynyt taulusta"
+
+#: grecs/src/symtab.c:195
+msgid "symbol table is full"
+msgstr "symbolitaulu on täysi"
+
+#: grecs/src/tree.c:312
+#, c-format
+msgid "%s: not a valid boolean value"
+msgstr "%s: ei ole kelvollinen boolean-arvo"
+
+#: grecs/src/tree.c:342
+#, c-format
+msgid "%s: UNIX socket name too long"
+msgstr "%s: UNIX-pistokenimi on liian pitkä"
+
+#: grecs/src/tree.c:371 grecs/src/tree.c:592
+#, c-format
+msgid "%s: not a valid IP address or hostname"
+msgstr "%s: ei ole kelvollinen IP-osoite tai tietokonenimi"
+
+#: grecs/src/tree.c:395
+#, c-format
+msgid "%s: not a valid port number"
+msgstr "%s: ei ole kelvollinen porttinumero"
+
+#: grecs/src/tree.c:403
+msgid "missing port number"
+msgstr "puuttuva porttinumero"
+
+#: grecs/src/tree.c:452
+msgid "numeric overflow"
+msgstr "numeerinen ylivuoto"
+
+#: grecs/src/tree.c:457
+msgid "value out of allowed range"
+msgstr "arvo sallitun lukualueen ulkopuolella"
+
+#: grecs/src/tree.c:492 grecs/src/tree.c:522
+#, c-format
+msgid "not a number (stopped near `%s')"
+msgstr "ei ole numero (pysähtyi lähellä ”%s”"
+
+#: grecs/src/tree.c:583
+#, c-format
+msgid "%s: not a valid IP address"
+msgstr "%s: ei ole kelvollinen IP-osoite"
+
+#: grecs/src/tree.c:605
+#, c-format
+msgid "INTERNAL ERROR at %s:%d"
+msgstr "SISÄINEN VIRHE osoitteessa %s:%d"
+
+#  argumentti on ident-yhteyskäytäntö
+#: grecs/src/tree.c:697
+#, c-format
+msgid "too many arguments to `%s'; missing semicolon?"
+msgstr "liian monta argumenttia yhteyskäytännölle ”%s”; puolipilkku puuttuu?"
+
+#: grecs/src/tree.c:711 grecs/src/tree.c:759
+#, c-format
+msgid "INTERNAL ERROR at %s:%d: unhandled data type %d"
+msgstr "SISÄINEN VIRHE osoitteessa %s:%d: käsittelemätön data-tyyppi %d"
+
+#: grecs/src/tree.c:726
+#, c-format
+msgid "%s: incompatible data type in list item #%d"
+msgstr "%s: yhteensopimaton tietotyyppi luetteloalkiossa #%d"
+
+#  argumentti on ident-yhteyskäytäntö
+#: grecs/src/tree.c:746
+#, c-format
+msgid "incompatible data type for `%s'"
+msgstr "yhteensopimaton datatyyppi yhteyskäytännölle ”%s”"
+
+#: grecs/src/tree.c:855 grecs/src/tree.c:865
+msgid "Unknown keyword"
+msgstr "Tuntematon avainsana"
+
+#: grecs/src/tree.c:1074
+#, c-format
+msgid "%s: unknown keyword"
+msgstr "%s: tuntematon avainsana"
+
+#: grecs/src/wordsplit.c:789
+#, c-format
+msgid "warning: undefined variable `%.*s'"
+msgstr "varoitus: määrittelemätön muuttuja ”%.*s”"
+
+#: grecs/src/wordsplit.c:1566 grecs/src/wordsplit.c:1604
+msgid "no error"
+msgstr "ei virhettä"
+
+#: grecs/src/wordsplit.c:1570
+#, c-format
+msgid "missing closing %c (start near #%lu)"
+msgstr "puuttuu sulkeva %c (alku lähellä #%lu)"
+
+#: grecs/src/wordsplit.c:1580 grecs/src/wordsplit.c:1607
+msgid "command substitution is not yet supported"
+msgstr "komentokorvausta ei vielä tueta"
+
+#: grecs/src/wordsplit.c:1583 grecs/src/wordsplit.c:1608
+msgid "invalid wordsplit usage"
+msgstr "virheellinen wordsplit-käyttö"
+
+#: grecs/src/wordsplit.c:1587 grecs/src/wordsplit.c:1609
+msgid "unbalanced curly brace"
+msgstr "pariton aaltosulje"
+
+#: grecs/src/wordsplit.c:1591 grecs/src/wordsplit.c:1610
+msgid "undefined variable"
+msgstr "määrittelemätön muuttuja"
+
+#: grecs/src/wordsplit.c:1595 grecs/src/wordsplit.c:1611
+msgid "input exhausted"
+msgstr "syöte loppui"
+
+#: grecs/src/wordsplit.c:1599 grecs/src/wordsplit.c:1621
+msgid "unknown error"
+msgstr "tuntematon virhe"
+
+#: grecs/src/wordsplit.c:1605
+msgid "missing closing quote"
+msgstr "puuttuu sulkeva lainausmerkki"
+
+#~ msgid "Unsupported callback property %d"
+#~ msgstr "Tukematon vastakutsuominaisuus %d"
+
+#~ msgid "dico_argcv_get failed"
+#~ msgstr "dico_argcv_get epäonnistui"
+
+#~ msgid "%s:%d: not enough memory"
+#~ msgstr "%s:%d: muisti ei riitä"
+
+#~ msgid "A DICT client."
+#~ msgstr "DICT-asiakas."
+
+#~ msgid "Load a module instance."
+#~ msgstr "Lataa moduuli-ilmentymä."
+
+#~ msgid "A DICT daemon."
+#~ msgstr "DICT-taustaprosessi."
+
+#~ msgid "cannot convert `%s' to number"
+#~ msgstr "ei voi muuntaa merkkijonoa ”%s” numeroksi"
+
+#~ msgid "%s: value out of allowed range %<PRIiMAX>..%<PRIiMAX>"
+#~ msgstr "%s: arvo sallitun lukualueen %<PRIiMAX>..%<PRIiMAX> ulkopuolella"
+
+#~ msgid "Skipping authenitcation\n"
+#~ msgstr "Ohitetaan todennus\n"
+
+#~ msgid "%s: invalid URL"
+#~ msgstr "%s: virheelllinen verkko-osoite"
+
+#~ msgid "%s: invalid URL: unknown protocol"
+#~ msgstr "%s: virheellinen verkko-osoite: tuntematon yhteyskäytäntö"
+
+#~ msgid "Match words exactly"
+#~ msgstr "Täsmää sanat tarkalleen"
+
+#~ msgid "Match words prefixes"
+#~ msgstr "Täsmää sanat etuliitteillä"
+
+#~ msgid "Match using SOUNDEX algorithm"
+#~ msgstr "Täsmää käyttäen SOUNDEX-algoritmia"
+
+#~ msgid "Match headwords within given Levenshtein distance"
+#~ msgstr "Täsmää pääsanat annetun Levenshtein-etäisyyden sisällä"
+
+#~ msgid "Match headwords within given Levenshtein distance (normalized)"
+#~ msgstr ""
+#~ "Täsmää pääsanat annetun Levenshtein-etäisyyden sisällä (normalisoitu)"
+
+#~ msgid "Match headwords within given Damerau-Levenshtein distance"
+#~ msgstr "Täsmää pääsanat annetun Damerau-Levenshtein-etäisyyden sisällä"
+
+#~ msgid ""
+#~ "Match headwords within given Damerau-Levenshtein distance (normalized)"
+#~ msgstr ""
+#~ "Täsmää pääsanat annetun Damerau-Levenshtein-etäisyyden sisällä "
+#~ "(normalisoitu)"
+
+#~ msgid "POSIX 1003.2 (modern) regular expressions"
+#~ msgstr "POSIX 1003.2 (nykyaikaiset) säännölliset lausekkeet"
+
+#~ msgid "Old (basic) regular expressions"
+#~ msgstr "Vanhat (perus) säännölliset lausekkeet"
+
+#~ msgid "Match everything (experimental)"
+#~ msgstr "Täsmää kaikki (kokeiluversio)"
+
+#~ msgid "Match a substring anywhere in the headword"
+#~ msgstr "Täsmää osamerkkijono kaikkialla pääsanassa"
+
+#~ msgid "Match word suffixes"
+#~ msgstr "Täsmää sanajälkiliitteet"
+
+#~ msgid "Reverse search in Quechua databases"
+#~ msgstr "Käänteinen etsintä Quechua-tietokannoissa"
+
+#~ msgid "Warning: "
+#~ msgstr "Varoitus: "
+
+#~ msgid "Error: "
+#~ msgstr "Virhe: "

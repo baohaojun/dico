@@ -1,0 +1,40 @@
+# This file is part of grecs  -*- Autotest -*-
+# Copyright (C) 2007, 2009-2012 Sergey Poznyakoff
+#
+# Grecs is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# Grecs is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Grecs.  If not, see <http://www.gnu.org/licenses/>.
+
+AT_SETUP(Locations: bind)
+AT_KEYWORDS([locus bind bind-locus00])
+
+AT_DATA([test.cf],[
+string val;
+])
+
+AT_CHECK([gcffmt -type=bind -locus test.cf],
+[0],
+[test.cf:2.1-10: .string: "val"
+])
+
+AT_CHECK([gcffmt -type=bind -novalue -locus test.cf],
+[0],
+[test.cf:2.1-6: .string
+])
+
+AT_CHECK([gcffmt -type=bind -nopath -locus test.cf],
+[0],
+[test.cf:2.8-10: "val"
+])
+
+AT_CLEANUP
+

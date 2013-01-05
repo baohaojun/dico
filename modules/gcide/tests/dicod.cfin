@@ -1,0 +1,13 @@
+capability lang;
+timing no;
+prepend-load-path ("~moddir~/gcide","~moddir~/stratall");
+load-module gcide;
+load-module stratall;
+database {
+	name "gcide";
+	handler "gcide dbdir=~dictdir~ idxdir=~idxdir~ index-program=~moddir~/gcide/idxgcide";
+}
+
+
+
+

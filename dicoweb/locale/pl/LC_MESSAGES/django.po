@@ -1,0 +1,160 @@
+# Polish translations for GNU Dico (Dicoweb) package.
+# Copyright (C) 2008-2009, 2012 Wojciech Polak
+# This file is distributed under the same license as the GNU Dico package.
+# Wojciech Polak <polak@gnu.org>, 2008, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dico 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-03-07 22:40+0100\n"
+"PO-Revision-Date: 2008-11-01 19:11+0100\n"
+"Last-Translator: Wojciech Polak <polak@gnu.org>\n"
+"Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#: dummy_translations.py:21
+msgid "Match words exactly"
+msgstr "Dokładne dopasowanie słów"
+
+#: dummy_translations.py:22
+msgid "Match word prefixes"
+msgstr "Dopasowanie prefiksów słów"
+
+#: dummy_translations.py:23
+msgid "Match using SOUNDEX algorithm"
+msgstr "Dopasowanie za pomocą algorytmu SOUNDEX"
+
+#: dummy_translations.py:24
+msgid "Match everything (experimental)"
+msgstr "Dopasowanie wszystkiego (eksperymentalne)"
+
+#: dummy_translations.py:25
+msgid "Match headwords within given Levenshtein distance"
+msgstr "Dopasowanie lematu w zadanej odległości Levenshteina"
+
+#: dummy_translations.py:26
+msgid "Match headwords within given Levenshtein distance (normalized)"
+msgstr "Dopasowanie lematu w zadanej odległości Levenshteina (znormalizowane)"
+
+#: dummy_translations.py:27
+msgid "Match headwords within given Damerau-Levenshtein distance"
+msgstr "Dopasowanie lematu w zadanej odległości Damerau-Levenshteina"
+
+#: dummy_translations.py:28
+msgid "Match headwords within given Damerau-Levenshtein distance (normalized)"
+msgstr ""
+"Dopasowanie lematu w zadanej odległości Damerau-Levenshteina (znormalizowane)"
+
+#: dummy_translations.py:29
+msgid "POSIX 1003.2 (modern) regular expressions"
+msgstr "Wyrażenia regularne POSIX 1003.2"
+
+#: dummy_translations.py:30
+msgid "Old (basic) regular expressions"
+msgstr "Stare (podstawowe) wyrażenia regularne"
+
+#: dummy_translations.py:31
+msgid "Match word suffixes"
+msgstr "Dopasowanie sufiksów słów"
+
+#: dummy_translations.py:32
+msgid "Reverse search in Quechua databases"
+msgstr "Odwrotne poszukiwanie w bazie Quechua"
+
+#: dummy_translations.py:34
+msgid "Match headwords exactly"
+msgstr "Dokładne dopasowanie słów"
+
+#: dummy_translations.py:35
+msgid "Match prefixes"
+msgstr "Dopasowanie prefiksów słów"
+
+#: dummy_translations.py:36
+msgid "Match substring occurring anywhere in a headword"
+msgstr "Dopasowanie ciągu w dowolnym miejscu lematu"
+
+#: dummy_translations.py:37
+msgid "Match suffixes"
+msgstr "Dopasowanie sufiksów słów"
+
+#: dummy_translations.py:38
+msgid "Match headwords within Levenshtein distance one"
+msgstr "Dopasowanie lematu w odległości Levenshteina jeden"
+
+#: dummy_translations.py:39
+msgid "Match separate words within headwords"
+msgstr ""
+
+#: views.py:97
+msgid "First match"
+msgstr "Pierwsze dopasowanie"
+
+#: views.py:98
+msgid "All"
+msgstr "Wszystkie"
+
+#: views.py:99
+msgid "Default"
+msgstr "Domyślna"
+
+#: templates/index.html:12
+msgid "Search term:"
+msgstr "Szukana fraza:"
+
+#: templates/index.html:15 templates/index.html.py:117
+msgid "more options"
+msgstr "więcej opcji"
+
+#: templates/index.html:22
+msgid "DICT server:"
+msgstr "Server DICT:"
+
+#: templates/index.html:31
+msgid "Database:"
+msgstr "Baza danych:"
+
+#: templates/index.html:39
+msgid "Match strategy:"
+msgstr "Strategia dopasowania:"
+
+#: templates/index.html:51
+msgid "Search"
+msgstr "Szukaj"
+
+#: templates/index.html:52
+msgid "Define (I'm feeling lucky)"
+msgstr "Zdefiniuj (szczęśliwy traf)"
+
+#: templates/index.html:72
+msgid "last match results"
+msgstr "Ostatnio znalezione wyniki"
+
+#: templates/index.html:75
+#, python-format
+msgid "Found one definition"
+msgid_plural "Found %(rc)s definitions"
+msgstr[0] "Znaleziono jedną definicję"
+msgstr[1] "Znaleziono %(rc)s definicji"
+msgstr[2] "Znaleziono %(rc)s definicji"
+
+#: templates/index.html:79
+msgid "From"
+msgstr "Z"
+
+#: templates/index.html:101
+msgid "Last match results"
+msgstr "Ostatnio znalezione wyniki"
+
+#: templates/index.html:107
+#, python-format
+msgid "Define %(term)s"
+msgstr "Zdefiniuj %(term)s"
+
+#: templates/index.html:118
+msgid "less options"
+msgstr "mniej opcji"

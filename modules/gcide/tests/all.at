@@ -1,0 +1,89 @@
+# This file is part of GNU Dico. -*- Autotest -*-
+# Copyright (C) 2012 Sergey Poznyakoff
+#
+# GNU Dico is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# GNU Dico is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Dico.  If not, see <http://www.gnu.org/licenses/>.
+
+AT_SETUP(all)
+AT_KEYWORDS(match all)
+AT_DICOD([dnl
+match gcide all ""
+quit
+],
+[220
+152 60 matches found: list follows
+gcide "aardvark"
+gcide "Abandon"
+gcide "Adjective"
+gcide "Atlantes"
+gcide "Babel"
+gcide "Bloom"
+gcide "Bottle"
+gcide "C"
+gcide "camel"
+gcide "Cyclic"
+gcide "Cyclical"
+gcide "database"
+gcide "Double"
+gcide "Ed"
+gcide "Edit"
+gcide "Emacs"
+gcide "Enumeration"
+gcide "File"
+gcide "Float"
+gcide "FORTRAN"
+gcide "GNU"
+gcide "Grammar"
+gcide "Gyroscopic"
+gcide "Hack"
+gcide "Help"
+gcide "Integer"
+gcide "Iteration"
+gcide "Jabberwocky"
+gcide "January"
+gcide "kludge"
+gcide "long"
+gcide "loop"
+gcide "macro"
+gcide "Madman"
+gcide "Name"
+gcide "Negation"
+gcide "not"
+gcide "Occident"
+gcide "Odd"
+gcide "Offset"
+gcide "Page"
+gcide "Pooh"
+gcide "PROLOG"
+gcide "Q"
+gcide "Recursion"
+gcide "seek"
+gcide "Static"
+gcide "tee"
+gcide "telamones"
+gcide "Transpose"
+gcide "Transposition"
+gcide "UNIX"
+gcide "unsigned"
+gcide "value"
+gcide "vi"
+gcide "while"
+gcide "x"
+gcide "yank"
+gcide "zap"
+gcide "Zawinski's Law"
+.
+250
+221
+])
+AT_CLEANUP

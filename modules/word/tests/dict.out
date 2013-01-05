@@ -1,0 +1,26 @@
+* Description
+Test dictionary
+
+* Info
+No special info available
+
+* Dictionary   
+
+** bar
+
+** foo bar baz
+
+** quux bar
+
+** barry boom quux
+
+** quuxy cur
+
+** quux boom
+
+
+Local Variables:
+mode: outline
+paragraph-separate: "[ 	]*$"
+version-control: never
+End:

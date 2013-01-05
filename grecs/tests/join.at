@@ -1,0 +1,48 @@
+# This file is part of grecs  -*- Autotest -*-
+# Copyright (C) 2007, 2009-2012 Sergey Poznyakoff
+#
+# Grecs is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# Grecs is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Grecs.  If not, see <http://www.gnu.org/licenses/>.
+
+AT_SETUP(Join)
+AT_KEYWORDS([join])
+
+AT_DATA([1.cf],[a 1;
+b 2;
+c {
+ a x;
+ b y;
+}
+])
+
+AT_DATA([2.cf],[x 1;
+y 2;
+z {
+ x 3;
+ y 4;
+}
+])
+
+AT_CHECK([gcffmt -locus 1.cf 2.cf],
+[0],
+[1.cf:1.1-3: .a: "1"
+1.cf:2.1-3: .b: "2"
+1.cf:4.2-4: .c.a: "x"
+1.cf:5.2-4: .c.b: "y"
+2.cf:1.1-3: .x: "1"
+2.cf:2.1-3: .y: "2"
+2.cf:4.2-4: .z.x: "3"
+2.cf:5.2-4: .z.y: "4"
+])
+
+AT_CLEANUP

@@ -1,0 +1,215 @@
+This is dico.info, produced by makeinfo version 4.13 from
+/home/gray/src/dico/doc/dico.texi.
+
+INFO-DIR-SECTION Dictionary
+START-INFO-DIR-ENTRY
+* Dico: (dico).              A modular dictionary server package.
+* dicod: (dico) Dicod.       Dictionary server program.
+* dico: (dico) dico client.  Dictionary client program.
+END-INFO-DIR-ENTRY
+
+   Published by the Free Software Foundation, 51 Franklin Street, Fifth
+Floor, Boston, MA 02110-1301 USA
+
+   Copyright (C) 2008, 2010, 2012 Sergey Poznyakoff
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover, and no Back-Cover texts.  A copy of
+the license is included in the section entitled "GNU Free Documentation
+License".
+
+    
+
+
+
+
+
+
+
+
+
+     De'die' a` la me'moire de Jacques Brel.
+    
+
+    
+
+
+Indirect:
+dico.info-1: 938
+dico.info-2: 258176
+
+Tag Table:
+(Indirect)
+Node: Top938
+Node: Preface3837
+Node: Overview4497
+Ref: default strategy8025
+Node: Intro9019
+Node: Building11504
+Node: Default Preprocessor12241
+Ref: Default Preprocessor-Footnote-113544
+Node: Default Server13585
+Node: Guile Support14308
+Ref: Guile Support-Footnote-114877
+Node: Python Support14922
+Node: Other Settings15300
+Node: Dicod15816
+Node: Daemon Mode16246
+Node: Inetd Mode18372
+Node: Configuration18946
+Node: Syntax20675
+Node: Comments21228
+Node: Pragmatic Comments21831
+Node: Statements23709
+Ref: backslash-interpretation24978
+Ref: here-document26343
+Node: Server Settings28809
+Ref: user statement29027
+Ref: group statement29302
+Ref: mode statement29892
+Ref: inactivity-timeout32422
+Ref: shutdown-timeout32808
+Ref: identity-check32985
+Node: Authentication33492
+Node: text userdb37287
+Node: ldap userdb39026
+Node: SASL41570
+Node: ACL43595
+Node: Security Settings47618
+Node: Logging and Debugging49050
+Node: Access Log50799
+Node: General Settings54233
+Ref: initial reply54592
+Ref: hostname directive55406
+Node: Capabilities57503
+Node: Handlers58882
+Node: Databases62779
+Node: Database Visibility65854
+Node: Strategies and Default Searches67494
+Node: Tuning69899
+Node: Command Aliases71333
+Node: Preprocessor72420
+Node: Exit Codes75053
+Node: Dicod Invocation76428
+Ref: --define76601
+Ref: --config76802
+Ref: --foreground76931
+Ref: --stderr77002
+Ref: --syslog77082
+Ref: --preprocessor77259
+Ref: --no-preprocessor77507
+Ref: --include-dir77590
+Ref: --single-process77749
+Ref: --transcript78113
+Ref: --no-transcript78547
+Ref: --inetd78775
+Ref: --debug78836
+Ref: --source-info79008
+Ref: --trace-grammar79087
+Ref: --trace-lex79198
+Ref: --config-help79307
+Ref: --lint79430
+Ref: --help79581
+Ref: --usage79655
+Ref: --version79721
+Node: Modules79771
+Node: outline80430
+Node: dictorg82424
+Node: gcide85307
+Node: idxgcide88124
+Node: wordnet89735
+Ref: wordnet-Footnote-193512
+Node: guile93622
+Ref: guile-cmdline95453
+Node: Virtual Functions96312
+Node: Guile Initialization97859
+Node: Guile API99781
+Ref: open-db100333
+Ref: match-word103871
+Node: Dico Scheme Primitives105462
+Ref: dico-key->word105835
+Node: Example Module107036
+Node: python115152
+Node: Dictionary Class116503
+Node: Dico Python Primitives118377
+Ref: Python Selector118877
+Node: DicoSelectionKey120143
+Node: DicoStrategy120625
+Node: Python Example121330
+Node: stratall127695
+Node: substr128398
+Node: word128905
+Node: nprefix129821
+Node: pcre130461
+Node: ldap131845
+Node: pam132199
+Node: Interface133043
+Node: dico_database_module133295
+Ref: dico_init134626
+Ref: dico_db_info137504
+Ref: dico_result_count139888
+Node: Strategies140894
+Ref: selector142007
+Node: Key143045
+Ref: dico_key143165
+Node: Selector145324
+Node: Output148922
+Node: dico client150911
+Node: Single Query Mode151627
+Node: dico options152763
+Node: urls154358
+Node: Interactive Mode157092
+Node: Server Commands159324
+Node: Database and Strategy160406
+Node: Informational Commands162191
+Node: History Commands163861
+Node: Pager164940
+Node: Program Settings165715
+Node: Session Transcript167211
+Node: Other Commands168833
+Node: Command Summary170151
+Node: Initialization File172944
+Ref: Initialization File-Footnote-1174334
+Node: Autologin174441
+Node: Dico invocation179336
+Ref: dico-opmode181767
+Node: gcider183365
+Node: Reporting Bugs187644
+Node: Available Strategies188455
+Ref: Available Strategies-Footnote-1192634
+Node: Dictionary Server Protocol192685
+Node: Initial Reply193200
+Node: Standard Commands194466
+Node: DEFINE194795
+Node: MATCH197031
+Node: SHOW199274
+Node: OPTION201640
+Node: AUTH202508
+Node: CLIENT203562
+Node: STATUS203946
+Node: HELP204359
+Node: QUIT205804
+Node: Extended Commands206079
+Node: Time and Date Formats207469
+Ref: %c time format208343
+Ref: %s time format210917
+Ref: conversion specs212829
+Node: Libdico213495
+Node: strat213790
+Node: argcv214995
+Node: lists216635
+Node: assoc218981
+Node: diag219952
+Node: filter221194
+Node: parseopt222731
+Node: stream223970
+Node: url227836
+Node: utf8229147
+Node: util231651
+Node: xlat232252
+Node: Copying This Manual233020
+Node: Concept Index258176
+
+End Tag Table
